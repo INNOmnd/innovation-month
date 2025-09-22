@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Innovation Month — Wins & Learnings</title>
+  <meta name="description" content="An interactive collection of inspiring innovation stories—successes and smart failures—from around our organization and beyond." />
+  <!-- Tailwind via CDN for fast, no-build styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lightweight QR generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-MnQhY8Yv7iQeU2S7C4T+gHj8/x4pB+EUN0lXqsS7xX3f2pX9pL9W0Q6H9G3m0Z2R9n1mWk2y0k4Eo5uNJf+QhA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Smooth focus outlines for accessibility */
+    :focus-visible { outline: 3px solid #60a5fa; outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/70 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+      <div class="h-10 w-10 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">IM</div>
+      <div class="flex-1">
+        <h1 class="text-xl sm:text-2xl font-semibold">Innovation Month: Wins & Learnings</h1>
+        <p class="text-sm text-slate-600">Explore success stories and smart failures. Contribute your own links!</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="qrBtn" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-sm hover:bg-slate-700 active:scale-[.99]">Share / QR</button>
+        <a id="submitBtn" href="#" class="px-3 py-2 rounded-xl bg-indigo-600 text-white text-sm hover:bg-indigo-500" target="_blank" rel="noopener">Submit a link</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 pb-24">
+    <!-- Controls -->
+    <section class="mt-6 grid gap-4 md:grid-cols-3 md:items-start">
+      <div class="md:col-span-2 grid gap-3">
+        <label class="block">
+          <span class="sr-only">Search</span>
+          <input id="search" type="search" placeholder="Search titles, summaries, or tags…" class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 shadow-sm focus:border-indigo-500" />
+        </label>
+        <div class="flex flex-wrap gap-2">
+          <button data-type="all" class="filter-type px-3 py-1.5 rounded-full border border-slate-300 bg-white text-sm">All</button>
+          <button data-type="success" class="filter-type px-3 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-700 text-sm">Success</button>
+          <button data-type="failure" class="filter-type px-3 py-1.5 rounded-full border border-rose-300 bg-rose-50 text-rose-700 text-sm">Failure</button>
+          <div class="ml-auto">
+            <label class="text-sm mr-2 text-slate-600" for="sort">Sort</label>
+            <select id="sort" class="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-sm">
+              <option value="date_desc">Newest</option>
+              <option value="date_asc">Oldest</option>
+              <option value="title_asc">Title A→Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <aside class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm">
+        <h3 class="text-sm font-semibold mb-2">Popular tags</h3>
+        <div id="tagList" class="flex flex-wrap gap-2"></div>
+      </aside>
+    </section>
+
+    <!-- Counters -->
+    <div id="counts" class="mt-4 text-sm text-slate-600"></div>
+
+    <!-- Feed -->
+    <section id="feed" class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></section>
+
+    <!-- Empty state -->
+    <template id="emptyTpl">
+      <div class="col-span-full text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
+        <h3 class="text-lg font-semibold">No results</h3>
+        <p class="text-slate-600">Try adjusting filters or search terms.</p>
+      </div>
+    </template>
+
+    <!-- Card template -->
+    <template id="cardTpl">
+      <article class="group bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+        <div class="p-4 flex-1 flex flex-col">
+          <div class="flex items-start gap-2">
+            <span data-pill class="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full"></span>
+            <button data-like aria-label="Like" class="ml-auto rounded-full border border-slate-300 px-2 py-1 text-xs bg-white hover:bg-slate-50">♡ <span data-like-count>0</span></button>
+          </div>
+          <h2 data-title class="mt-2 text-lg font-semibold leading-snug"></h2>
+          <p data-summary class="mt-2 text-sm text-slate-600 line-clamp-3"></p>
+          <div data-tags class="mt-3 flex flex-wrap gap-2"></div>
+          <dl class="mt-3 text-xs text-slate-500 grid grid-cols-[auto,1fr] gap-x-2 gap-y-1">
+            <dt>Author</dt><dd data-author></dd>
+            <dt>Date</dt><dd data-date></dd>
+            <dt>Source</dt><dd data-source></dd>
+          </dl>
+        </div>
+        <div class="p-4 pt-0">
+          <a data-link href="#" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-700 hover:underline">Read post →</a>
+        </div>
+      </article>
+    </template>
+  </main>
+
+  <footer class="border-t border-slate-200 py-10">
+    <div class="max-w-6xl mx-auto px-4">
+      <h3 class="text-sm font-semibold mb-2">Discussion (optional)</h3>
+      <p class="text-sm text-slate-600 mb-3">You can enable comments via <strong>giscus</strong>. See the README section in the code comments to configure. Remove this note once enabled.</p>
+      <!-- giscus placeholder. Generate your script at https://giscus.app and paste below. -->
+      <div id="giscus_thread" class="bg-white border border-slate-200 rounded-xl p-4 text-sm text-slate-500">Comments are disabled. (Ask an admin to enable giscus.)</div>
+    </div>
+  </footer>
+
+  <!-- QR Modal -->
+  <div id="qrModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40" aria-hidden="true"></div>
+    <div class="relative mx-auto mt-24 w-[min(92vw,520px)] bg-white rounded-2xl shadow-xl p-6">
+      <div class="flex items-start gap-3">
+        <h3 class="text-lg font-semibold">Share this page</h3>
+        <button id="qrClose" class="ml-auto text-slate-500 hover:text-slate-700" aria-label="Close">✕</button>
+      </div>
+      <p class="text-sm text-slate-600 mt-1">Scan or download the QR for posters and screens. The code points to this page's URL.</p>
+      <div id="qrBox" class="mt-4 grid place-items-center p-4 rounded-xl border border-slate-200 bg-slate-50 min-h-[300px]"></div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button id="copyUrl" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm">Copy URL</button>
+        <a id="downloadQr" href="#" download="innovation-month-qr.png" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-sm">Download PNG</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // =========================
+  // CONFIG — EDIT THESE
+  // =========================
+  const SUBMIT_MAILBOX = "change-me@yourcompany.com"; // <-- set a real mailbox
+  const PAGE_TITLE = "Innovation Month — Wins & Learnings"; // appears in the header & tab
+
+  document.title = PAGE_TITLE;
+  document.querySelector('h1').textContent = PAGE_TITLE;
+
+  // Seed content (replace with your own). You can keep adding items in the same format.
+  // type: "success" | "failure"
+  const POSTS = [
+    {
+      id: "netflix-streaming",
+      title: "Netflix's pivot to streaming after the Qwikster misstep",
+      type: "success",
+      author: "Tech industry case study",
+      date: "2011-10-01",
+      tags: ["pivot", "customer-feedback", "strategy"],
+      summary: "After announcing Qwikster and facing backlash, Netflix course‑corrected and doubled down on streaming—now its core business.",
+      url: "https://www.nytimes.com/2011/10/11/technology/netflix-abandons-plan-to-split-its-services.html",
+      source: "NYTimes",
+      readTime: 5
+    },
+    {
+      id: "google-wave",
+      title: "Google Wave: ambitious, brilliant… and discontinued",
+      type: "failure",
+      author: "Google retrospective",
+      date: "2010-08-01",
+      tags: ["product-market-fit", "timing", "complexity"],
+      summary: "Wave blended email, IM, and docs in real time but struggled with onboarding and clear use cases.",
+      url: "https://googleblog.blogspot.com/2010/08/update-on-google-wave.html",
+      source: "Google Blog",
+      readTime: 4
+    },
+    {
+      id: "postit-notes",
+      title: "Post‑it Notes: a failed super‑glue becomes a sticky success",
+      type: "success",
+      author: "3M story",
+      date: "1980-04-06",
+      tags: ["serendipity", "experimentation", "culture"],
+      summary: "A weak adhesive found a killer use case—thanks to experimentation and internal champions.",
+      url: "https://www.sciencehistory.org/education/scientific-biographies/post-it-notes/",
+      source: "Science History Institute",
+      readTime: 6
+    },
+    {
+      id: "amazon-fire-phone",
+      title: "Amazon Fire Phone: a flop that helped spark Alexa",
+      type: "failure",
+      author: "Amazon leadership lessons",
+      date: "2015-09-01",
+      tags: ["failure-to-success", "hardware", "learnings"],
+      summary: "The Fire Phone underperformed, but its tech and learnings fed into the Echo/Alexa roadmap.",
+      url: "https://www.fastcompany.com/3050601/inside-amazons-failed-fire-phone-and-how-it-gave-birth-to-alexa",
+      source: "Fast Company",
+      readTime: 7
+    },
+    {
+      id: "spotify-squads",
+      title: "Spotify's Squad model: scaling agile with autonomy",
+      type: "success",
+      author: "Engineering culture",
+      date: "2014-01-01",
+      tags: ["org-design", "agile", "autonomy"],
+      summary: "Squads, tribes, chapters, guilds: a structure to scale innovation while keeping teams nimble.",
+      url: "https://www.atlassian.com/agile/agile-at-scale/spotify",
+      source: "Atlassian",
+      readTime: 8
+    },
+    {
+      id: "new-coke",
+      title: "New Coke: when market tests miss the bigger picture",
+      type: "failure",
+      author: "Brand strategy",
+      date: "1985-04-23",
+      tags: ["brand", "research", "customer-insight"],
+      summary: "Taste tests looked good, but loyalty and identity were underestimated—classic learning moment.",
+      url: "https://www.coca-colacompany.com/history/remembering-new-coke",
+      source: "Coca‑Cola Company",
+      readTime: 4
+    }
+  ];
+
+  // =========================
+  // UI logic
+  // =========================
+  const feed = document.getElementById('feed');
+  const search = document.getElementById('search');
+  const sortSel = document.getElementById('sort');
+  const counts = document.getElementById('counts');
+
+  const typeBtns = Array.from(document.querySelectorAll('.filter-type'));
+  let activeType = 'all';
+  let activeTags = new Set();
+  let q = '';
+
+  // Build tag list from posts
+  const tagCounts = POSTS.flatMap(p => p.tags).reduce((acc, t) => (acc[t] = (acc[t]||0)+1, acc), {});
+  const popularTags = Object.entries(tagCounts).sort((a,b) => b[1]-a[1]).slice(0, 16).map(([t]) => t);
+  const tagList = document.getElementById('tagList');
+  popularTags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.textContent = `#${tag}`;
+    btn.className = 'tag px-3 py-1.5 rounded-full border border-slate-300 bg-white text-sm';
+    btn.dataset.tag = tag;
+    btn.addEventListener('click', () => { toggleTag(tag); render(); });
+    tagList.appendChild(btn);
+  });
+
+  function toggleTag(tag) {
+    if (activeTags.has(tag)) activeTags.delete(tag); else activeTags.add(tag);
+    for (const b of tagList.querySelectorAll('button')) {
+      b.classList.toggle('bg-slate-900', activeTags.has(b.dataset.tag));
+      b.classList.toggle('text-white', activeTags.has(b.dataset.tag));
+    }
+  }
+
+  // Type filter buttons
+  typeBtns.forEach(btn => btn.addEventListener('click', () => { activeType = btn.dataset.type; render(); }));
+
+  // Search
+  search.addEventListener('input', () => { q = search.value.trim().toLowerCase(); render(); });
+
+  // Sort
+  sortSel.addEventListener('change', () => render());
+
+  // Render cards
+  function render() {
+    feed.innerHTML = '';
+    let items = POSTS.slice();
+
+    // Filter by type
+    if (activeType !== 'all') items = items.filter(p => p.type === activeType);
+
+    // Filter by tags
+    if (activeTags.size) items = items.filter(p => p.tags.some(t => activeTags.has(t)));
+
+    // Search
+    if (q) items = items.filter(p => (
+      p.title.toLowerCase().includes(q) ||
+      p.summary.toLowerCase().includes(q) ||
+      p.tags.join(' ').toLowerCase().includes(q)
+    ));
+
+    // Sort
+    const sort = sortSel.value;
+    if (sort === 'date_desc') items.sort((a,b) => new Date(b.date) - new Date(a.date));
+    if (sort === 'date_asc') items.sort((a,b) => new Date(a.date) - new Date(b.date));
+    if (sort === 'title_asc') items.sort((a,b) => a.title.localeCompare(b.title));
+
+    // Counts
+    const total = POSTS.length;
+    const shown = items.length;
+    counts.textContent = `${shown} shown • ${total} total` + (activeType !== 'all' ? ` • Filter: ${activeType}` : '') + (activeTags.size ? ` • Tags: ${Array.from(activeTags).join(', ')}` : '') + (q ? ` • Search: "${q}"` : '');
+
+    // Empty state
+    if (!items.length) {
+      const clone = document.getElementById('emptyTpl').content.cloneNode(true);
+      feed.appendChild(clone);
+      return;
+    }
+
+    const tpl = document.getElementById('cardTpl');
+    items.forEach(p => {
+      const node = tpl.content.cloneNode(true);
+      const article = node.querySelector('article');
+
+      const pill = node.querySelector('[data-pill]');
+      pill.textContent = p.type === 'success' ? 'Success' : 'Failure';
+      pill.className = 'inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ' + (p.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200');
+
+      node.querySelector('[data-title]').textContent = p.title;
+      node.querySelector('[data-summary]').textContent = p.summary;
+
+      const tags = node.querySelector('[data-tags]');
+      p.tags.forEach(t => {
+        const el = document.createElement('span');
+        el.textContent = `#${t}`;
+        el.className = 'text-xs px-2 py-1 rounded-full border border-slate-200 bg-slate-50';
+        el.role = 'listitem';
+        tags.appendChild(el);
+      });
+
+      node.querySelector('[data-author]').textContent = p.author;
+      node.querySelector('[data-date]').textContent = new Date(p.date).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+      node.querySelector('[data-source]').textContent = p.source || new URL(p.url).hostname;
+
+      const a = node.querySelector('[data-link]');
+      a.href = p.url; a.target = '_blank'; a.rel = 'noopener';
+
+      // Local like count (per-browser)
+      const likeBtn = node.querySelector('[data-like]');
+      const likeSpan = node.querySelector('[data-like-count]');
+      const key = `im_like_${p.id}`;
+      likeSpan.textContent = Number(localStorage.getItem(key) || 0);
+      likeBtn.addEventListener('click', () => {
+        const n = Number(localStorage.getItem(key) || 0) + 1;
+        localStorage.setItem(key, n);
+        likeSpan.textContent = n;
+      });
+
+      feed.appendChild(node);
+    });
+
+    // Update active styles
+    typeBtns.forEach(b => {
+      const active = b.dataset.type === activeType;
+      b.classList.toggle('bg-slate-900', active);
+      b.classList.toggle('text-white', active);
+    });
+  }
+
+  render();
+
+  // Submit a link → prefilled mailto
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const subject = encodeURIComponent('[Innovation Month] Link submission');
+    const body = encodeURIComponent(`Title:%0D%0AType: success | failure%0D%0ATags (comma-separated):%0D%0ASummary (1–2 sentences):%0D%0AURL:%0D%0AYour name:`);
+    const mailto = `mailto:${SUBMIT_MAILBOX}?subject=${subject}&body=${body}`;
+    window.open(mailto, '_blank');
+  });
+
+  // QR modal logic
+  const qrBtn = document.getElementById('qrBtn');
+  const qrModal = document.getElementById('qrModal');
+  const qrClose = document.getElementById('qrClose');
+  const qrBox = document.getElementById('qrBox');
+  const downloadQr = document.getElementById('downloadQr');
+  const copyUrl = document.getElementById('copyUrl');
+
+  function openQR() {
+    qrModal.classList.remove('hidden');
+    qrBox.innerHTML = '';
+    const qr = new QRCode(qrBox, { text: window.location.href, width: 256, height: 256, correctLevel: QRCode.CorrectLevel.M });
+    // Prepare download link once QR is rendered
+    setTimeout(() => {
+      const img = qrBox.querySelector('img');
+      const canvas = qrBox.querySelector('canvas');
+      let dataURL;
+      if (canvas) { dataURL = canvas.toDataURL('image/png'); }
+      else if (img) { // some browsers render to <img>
+        // Create a canvas and draw the image into it
+        const c = document.createElement('canvas');
+        c.width = 256; c.height = 256;
+        const ctx = c.getContext('2d');
+        const temp = new Image();
+        temp.crossOrigin = 'anonymous';
+        temp.onload = () => { ctx.drawImage(temp, 0, 0); downloadQr.href = c.toDataURL('image/png'); };
+        temp.src = img.src;
+        return;
+      }
+      if (dataURL) downloadQr.href = dataURL;
+    }, 250);
+  }
+  function closeQR() { qrModal.classList.add('hidden'); }
+  qrBtn.addEventListener('click', openQR);
+  qrClose.addEventListener('click', closeQR);
+  qrModal.addEventListener('click', (e) => { if (e.target === qrModal) closeQR(); });
+  copyUrl.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(window.location.href); copyUrl.textContent = 'Copied!'; setTimeout(()=>copyUrl.textContent='Copy URL', 1500); } catch {}
+  });
+
+  // =========================
+  // README (for maintainers)
+  // =========================
+  /*
+  HOW TO DEPLOY ON GITHUB PAGES
+  1) Create a public repo (e.g., innovation-month). Add this file as /index.html in the root.
+  2) In the repo: Settings → Pages → Build and deployment → Source: "Deploy from a branch".
+     Select branch "main" and folder "/ (root)" → Save.
+  3) GitHub will publish your site at https://<yourname>.github.io/innovation-month/ (or similar).
+
+  HOW TO ADD/EDIT POSTS
+  - Edit the POSTS[] array in this file. Keep the fields: id, title, type, author, date (YYYY-MM-DD), tags[], summary, url, source, readTime.
+  - Keep id unique. Newest posts appear first by default.
+
+  OPTIONAL: ENABLE COMMENTS WITH GISCUS (PUBLIC REPOS)
+  - In your repo, enable Discussions. Go to https://giscus.app, pick your repo, choose a light theme, and generate the <script> snippet.
+  - Replace the placeholder <div id="giscus_thread"> with the script provided by giscus.
+
+  OPTIONAL: BRANDING
+  - Replace the "IM" box with your logo. For example, add /assets/logo.svg to the repo and swap the element in the header.
+
+  OPTIONAL: CUSTOM DOMAIN
+  - In Settings → Pages, set a custom domain (e.g., innovation.example.com) and add a CNAME record at your DNS provider.
+
+  PRIVACY NOTE
+  - GitHub Pages is public by default. If you need internal‑only access, consider putting the site behind your SSO using a gateway (e.g., Cloudflare Access) or hosting on Netlify/Vercel with password protection.
+  */
+  </script>
+</body>
+</html>
