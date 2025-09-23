@@ -14,5 +14,144 @@
 </head>
 <body class="bg-slate-50">
   <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+      <img src="casade-logo.png" class="h-10" alt="Casade" />
+      <h1 class="text-xl font-bold" style="color:var(--brand)">November Planning</h1>
+      <nav class="ml-auto text-sm flex gap-6">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="blog.html" class="hover:underline">Blog</a>
+      </nav>
+    </div>
+  </header>
 
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-4">
+      <button id="prevWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">◀ Previous</button>
+      <h2 id="weekTitle" class="text-lg font-semibold"></h2>
+      <button id="nextWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Next ▶</button>
+    </div>
+
+    <div class="overflow-x-auto border border-slate-200 rounded-2xl bg-white">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100">
+          <tr>
+            <th class="w-24 p-3 text-left">Time</th>
+            <th class="p-3 text-left">Mon</th>
+            <th class="p-3 text-left">Tue</th>
+            <th class="p-3 text-left">Wed</th>
+            <th class="p-3 text-left">Thu</th>
+            <th class="p-3 text-left">Fri</th>
+          </tr>
+        </thead>
+        <tbody id="grid"></tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-500 mt-2">Click a session for details.</p>
+
+    <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/50">
+      <div class="bg-white max-w-xl w-[92vw] rounded-2xl p-6">
+        <div class="flex items-start gap-4">
+          <img id="mBanner" class="w-24 h-24 object-cover rounded-xl border border-slate-200" alt="" />
+          <div>
+            <h3 id="mTitle" class="text-xl font-bold"></h3>
+            <p id="mMeta" class="text-sm text-slate-600"></p>
+          </div>
+          <button id="closeModal" class="ml-auto text-slate-600">✕</button>
+        </div>
+        <p id="mDesc" class="mt-4 text-slate-700"></p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Use November of the current year (if Nov has passed this year, use next year)
+    const today=new Date();
+    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based months; 10 = November
+    const NOVEMBER=10;
+
+    // EDIT: your real workshops + banners in /assets/workshops/
+    const WORKSHOPS=[
+      { id:'ai-housing', title:'AI in Housing', date:`${currentYear}-11-03`, start:'10:00', end:'11:00', speaker:'Dr. Smith', banner:'assets/workshops/ai.jpg', desc:'Exploring AI solutions in housing management.' },
+      { id:'green-innovation', title:'Green Innovation', date:`${currentYear}-11-10`, start:'14:00', end:'15:30', speaker:'Jane Doe', banner:'assets/workshops/green.jpg', desc:'Sustainable strategies for future projects.' },
+      { id:'tenant-app', title:'Tenant App Prototypes', date:`${currentYear}-11-18`, start:'09:30', end:'10:30', speaker:'Casade Digital Team', banner:'assets/workshops/app.jpg', desc:'Walkthrough of rapid prototypes for tenant self-service.' },
+      { id:'data-ethics', title:'Data Ethics Roundtable', date:`${currentYear}-11-22`, start:'13:00', end:'14:00', speaker:'Panel', banner:'assets/workshops/ethics.jpg', desc:'Responsible data use in social housing.' },
+      { id:'design-sprint', title:'Mini Design Sprint', date:`${currentYear}-11-27`, start:'10:00', end:'12:00', speaker:'UX Team', banner:'assets/workshops/sprint.jpg', desc:'Hands-on sprint to frame a challenge and test fast.' }
+    ];
+
+    function getWeeks(year){
+      const first=new Date(year, NOVEMBER, 1);
+      const last=new Date(year, NOVEMBER+1, 0);
+      const start=new Date(first);
+      const day=(start.getDay()+6)%7; // Monday=0
+      start.setDate(start.getDate()-day);
+      const weeks=[];
+      let cur=new Date(start);
+      while(cur<=last){
+        const days=[];
+        for(let i=0;i<5;i++){ const d=new Date(cur); d.setDate(cur.getDate()+i); days.push(new Date(d)); }
+        weeks.push(days);
+        cur.setDate(cur.getDate()+7);
+      }
+      return weeks;
+    }
+
+    const weeks=getWeeks(currentYear);
+    let weekIdx=0;
+
+    const grid=document.getElementById('grid');
+    const weekTitle=document.getElementById('weekTitle');
+
+    function renderWeek(){
+      const days=weeks[weekIdx];
+      const opts={ day:'2-digit', month:'short' };
+      weekTitle.textContent=`Week ${weekIdx+1} • ${days[0].toLocaleDateString(undefined,opts)} – ${days[4].toLocaleDateString(undefined,opts)} ${currentYear}`;
+
+      // build time grid 09:00–17:00, 30-min slots
+      const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
+      grid.innerHTML='';
+      times.forEach(t=>{
+        const tr=document.createElement('tr');
+        const th=document.createElement('th'); th.className='align-top p-2 w-24 text-left text-slate-600'; th.textContent=t; tr.appendChild(th);
+        for(let c=0;c<5;c++){ const td=document.createElement('td'); td.className='relative h-14 align-top border-t border-slate-100 cell'; tr.appendChild(td); }
+        grid.appendChild(tr);
+      });
+
+      // place this week's events
+      const startOfWeek=days[0]; const endOfWeek=days[4];
+      const weekEvents=WORKSHOPS.filter(w=>{ const d=new Date(w.date); return d>=new Date(startOfWeek.toDateString()) && d<=new Date(endOfWeek.toDateString()); });
+
+      weekEvents.forEach(ev=>{
+        const d=new Date(ev.date); const col=((d.getDay()+6)%7); if(col>4) return;
+        const [sh,sm]=ev.start.split(':').map(Number); const [eh,em]=ev.end.split(':').map(Number);
+        const startIdx=(sh-9)*2 + (sm>=30?1:0);
+        const endIdx=(eh-9)*2 + (em>0?(em>=30?2:1):0);
+        const rows=grid.querySelectorAll('tr'); if(startIdx<0||startIdx>=rows.length) return;
+        const targetCell=rows[startIdx].children[col+1];
+        const durationRows=Math.max(1,endIdx-startIdx);
+        const slotHeight=rows[0].children[1].getBoundingClientRect().height || 56;
+        const div=document.createElement('div');
+        div.className='event';
+        div.style.top='2px';
+        div.style.height=`calc(${durationRows*slotHeight}px - 4px)`;
+        div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
+        div.addEventListener('click',()=>openModal(ev));
+        targetCell.appendChild(div);
+      });
+    }
+
+    function openModal(ev){
+      document.getElementById('mBanner').src=ev.banner;
+      document.getElementById('mTitle').textContent=ev.title;
+      document.getElementById('mMeta').textContent=`${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
+      document.getElementById('mDesc').textContent=ev.desc;
+      const modal=document.getElementById('modal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+    }
+
+    document.getElementById('closeModal').addEventListener('click',()=>document.getElementById('modal').classList.add('hidden'));
+    document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
+    document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
+
+    renderWeek();
+  </script>
+</body>
+</html>
