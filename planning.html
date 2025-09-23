@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
   <link rel="icon" type="image/png" href="casade-logo.png">
   <meta charset="utf-8">
@@ -16,6 +16,10 @@
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
     .event:hover { outline:2px solid var(--brand); }
+    .tab-btn { padding:.5rem .75rem; border-radius:.75rem .75rem 0 0; }
+    .tab-btn.active { background: white; border:1px solid #e2e8f0; border-bottom: none; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -43,7 +47,7 @@
       <table class="w-full text-sm">
         <thead class="bg-slate-100">
           <tr>
-            <th class="w-24 p-3 text-left">Time</th>
+            <th class="w-24 p-3 text-left">Tijd</th>
             <th class="p-3 text-left">Maandag</th>
             <th class="p-3 text-left">Dinsdag</th>
             <th class="p-3 text-left">Woensdag</th>
@@ -54,11 +58,11 @@
         <tbody id="grid"></tbody>
       </table>
     </div>
-    <p class="text-xs text-slate-500 mt-2">Click a session for details.</p>
+    <p class="text-xs text-slate-500 mt-2">Klik op een sessie voor details of inschrijven.</p>
 
     <!-- Modal -->
     <div id="modal" class="fixed inset-0 hidden z-50 items-center justify-center bg-black/50">
-      <div class="bg-white max-w-xl w-[92vw] rounded-2xl p-6">
+      <div class="bg-white max-w-2xl w-[92vw] rounded-2xl p-6">
         <div class="flex items-start gap-4">
           <img id="mBanner" class="w-24 h-24 object-cover rounded-xl border border-slate-200" alt="" />
           <div>
@@ -67,21 +71,37 @@
           </div>
           <button id="closeModal" class="ml-auto text-slate-600">✕</button>
         </div>
-        <p id="mDesc" class="mt-4 text-slate-700"></p>
 
-        <!-- Registration form placeholder -->
-        <div id="mForm" class="mt-6"></div>
+        <!-- Tabs -->
+        <div class="mt-4">
+          <div class="flex gap-2 border-b border-slate-200">
+            <button id="tab-info" class="tab-btn active">Info</button>
+            <button id="tab-inschrijven" class="tab-btn">Inschrijven</button>
+          </div>
+
+          <!-- Tab: Info -->
+          <div id="panel-info" class="tab-content active border border-slate-200 rounded-b-2xl rounded-tr-2xl p-4">
+            <p id="mDesc" class="text-slate-700"></p>
+          </div>
+
+          <!-- Tab: Inschrijven -->
+          <div id="panel-inschrijven" class="tab-content border border-slate-200 rounded-b-2xl rounded-tr-2xl p-0 overflow-hidden">
+            <!-- Iframe injected on demand -->
+            <div id="mFormLoader" class="p-4 text-sm text-slate-500">Formulier laden…</div>
+            <div id="mForm"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
   <script>
-    // Year handling
+    // Use November of this year (if Nov already passed, use next year)
     const today=new Date();
-    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1;
+    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based; 10 = Nov
     const NOVEMBER=10;
 
-    // Workshops list
+    // Workshops (edit as needed)
     const WORKSHOPS=[
       { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool' },
       { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie.' },
@@ -100,7 +120,26 @@
       { id:'taal-tool3',title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.' }
     ];
 
-    // Weeks of November
+    // Map workshop IDs to Microsoft Forms embed URLs
+    const formLinks = {
+      "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u",
+      "aftrap": "FORM_URL_AFTRAP",
+      "wrk-ai-beginner": "FORM_URL_AI_BEGINNER",
+      "goeie-buurtaal-ai": "FORM_URL_BUURTAAL_AI",
+      "dwam": "FORM_URL_DWAM",
+      "taal-tool2": "FORM_URL_TAALTOOL2",
+      "wrk-ai-intermediate": "FORM_URL_AI_ADVANCED",
+      "shortcut": "FORM_URL_SHORTCUT",
+      "agile-scrum": "FORM_URL_AGILE",
+      "omaia": "FORM_URL_OMAIA1",
+      "thuisapp": "FORM_URL_THUISAPP1",
+      "omaia2": "FORM_URL_OMAIA2",
+      "thuisapp2": "FORM_URL_THUISAPP2",
+      "goeie-buurtaal": "FORM_URL_BUURTAAL",
+      "taal-tool3": "FORM_URL_TAALTOOL3"
+    };
+
+    // Build weeks of November (Mon–Fri)
     function getWeeks(year){
       const first=new Date(year, NOVEMBER, 1);
       const last=new Date(year, NOVEMBER+1, 0);
@@ -120,16 +159,18 @@
 
     const weeks=getWeeks(currentYear);
     let weekIdx=0;
+
     const grid=document.getElementById('grid');
     const weekTitle=document.getElementById('weekTitle');
 
-    function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); }
+    function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); } // 09:00 baseline
 
     function renderWeek(){
       const days=weeks[weekIdx];
       const opts={ day:'2-digit', month:'short' };
       weekTitle.textContent=`Week ${weekIdx+1} • ${days[0].toLocaleDateString(undefined,opts)} – ${days[4].toLocaleDateString(undefined,opts)} ${currentYear}`;
 
+      // times 09:00..17:00 per 30 min slots
       const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
       grid.innerHTML='';
       times.forEach(t=>{
@@ -141,14 +182,19 @@
 
       const rows=grid.querySelectorAll('tr');
       const slotHeight=rows[0].children[1].getBoundingClientRect().height || 56;
+
+      // Collect events per weekday for this week (Mon..Fri)
       const startOfWeek=days[0]; const endOfWeek=days[4];
       const weekEvents=WORKSHOPS.filter(w=>{ const d=new Date(w.date); return d>=new Date(startOfWeek.toDateString()) && d<=new Date(endOfWeek.toDateString()); });
+
+      // Group by weekday (0..4 => Mon..Fri)
       const byDay=[[],[],[],[],[]];
       weekEvents.forEach(ev=>{
         const d=new Date(ev.date); const col=((d.getDay()+6)%7);
         if(col<=4) byDay[col].push(ev);
       });
 
+      // Render events
       byDay.forEach((events, col)=>{
         events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
         const active=[];
@@ -161,6 +207,7 @@
           ev._lane=lane; ev._startIdx=s; ev._endIdx=e;
           active.push({end:e, lane});
         });
+
         events.forEach(ev=>{
           const startCell = rows[ev._startIdx].children[col+1];
           const div=document.createElement('div');
@@ -168,7 +215,7 @@
           const durationRows=Math.max(1, ev._endIdx - ev._startIdx);
           div.style.top = '2px';
           div.style.height = `calc(${durationRows*slotHeight}px - 4px)`;
-          const lanes = 1; // simplified lane width
+          const lanes = 1;
           const gap = 4;
           const widthPct = (100 / lanes);
           div.style.width = `calc(${widthPct}% - ${gap}px)`;
@@ -180,56 +227,89 @@
       });
     }
 
+    // --- Modal logic with tabs ---
+    let currentWorkshopId = null;
+
     function openModal(ev){
+      currentWorkshopId = ev.id;
+
+      // Fill header
       document.getElementById('mBanner').src=ev.banner;
       document.getElementById('mTitle').textContent=ev.title;
       document.getElementById('mMeta').textContent=`${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
+
+      // Fill info tab
       document.getElementById('mDesc').textContent=ev.desc;
 
-      // Show correct Microsoft Form
-      const formContainer = document.getElementById('mForm');
-      formContainer.innerHTML = ''; // clear previous
-      const iframe = document.createElement('iframe');
-      iframe.width = "640";
-      iframe.height = "900";
-      iframe.style = "border:0;max-width:100%;min-height:600px";
-      iframe.frameBorder = "0";
-      iframe.allowFullscreen = true;
+      // Reset tabs
+      activateTab('info', false); // don't load form yet
+      document.getElementById('mForm').innerHTML = '';
+      document.getElementById('mFormLoader').style.display = '';
 
-      // Map workshop IDs to Microsoft Forms embed URLs
-      const formLinks = {
-        "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
-        "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AFTRAP&embed=true",
-        "wrk-ai-beginner": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AI_BEGINNER&embed=true",
-        "goeie-buurtaal-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_BUURTAAL_AI&embed=true",
-        "dwam": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_DWAM&embed=true",
-        "taal-tool2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_TAALTOOL2&embed=true",
-        "wrk-ai-intermediate": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AI_ADVANCED&embed=true",
-        "shortcut": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_SHORTCUT&embed=true",
-        "agile-scrum": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AGILE&embed=true",
-        "omaia": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_OMAIA1&embed=true",
-        "thuisapp": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_THUISAPP1&embed=true",
-        "omaia2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_OMAIA2&embed=true",
-        "thuisapp2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_THUISAPP2&embed=true",
-        "goeie-buurtaal": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_BUURTAAL&embed=true",
-        "taal-tool3": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_TAALTOOL3&embed=true"
-      };
-
-      if(formLinks[ev.id]){
-        iframe.src = formLinks[ev.id];
-        formContainer.appendChild(iframe);
-      }
-
+      // Show modal
       const modal=document.getElementById('modal');
       modal.classList.remove('hidden'); modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
     }
 
-    document.getElementById('closeModal').addEventListener('click',()=>{
+    function closeModal() {
       document.getElementById('modal').classList.add('hidden');
       document.body.style.overflow = '';
-    });
+      // optional: stop loading/unload iframe to save resources
+      document.getElementById('mForm').innerHTML = '';
+    }
 
+    // Tab activation helper
+    function activateTab(which, loadForm = true){
+      const btnInfo = document.getElementById('tab-info');
+      const btnReg  = document.getElementById('tab-inschrijven');
+      const panelInfo = document.getElementById('panel-info');
+      const panelReg  = document.getElementById('panel-inschrijven');
+
+      if(which === 'info'){
+        btnInfo.classList.add('active'); btnReg.classList.remove('active');
+        panelInfo.classList.add('active'); panelReg.classList.remove('active');
+      } else {
+        btnReg.classList.add('active'); btnInfo.classList.remove('active');
+        panelReg.classList.add('active'); panelInfo.classList.remove('active');
+
+        if(loadForm){
+          loadFormIframe(currentWorkshopId);
+        }
+      }
+    }
+
+    function loadFormIframe(workshopId){
+      const url = formLinks[workshopId];
+      const container = document.getElementById('mForm');
+      const loader = document.getElementById('mFormLoader');
+      container.innerHTML = '';
+
+      if(!url){
+        loader.textContent = 'Geen inschrijfformulier beschikbaar.';
+        return;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.width = '100%';
+      iframe.height = '900';
+      iframe.style.border = '0';
+      iframe.style.minHeight = '600px';
+      iframe.setAttribute('frameborder','0');
+      iframe.setAttribute('allowfullscreen','');
+      iframe.src = url;
+
+      // Show loader until first load event
+      loader.style.display = '';
+      iframe.addEventListener('load', () => { loader.style.display = 'none'; }, { once: true });
+
+      container.appendChild(iframe);
+    }
+
+    // Wire up UI controls
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('tab-info').addEventListener('click', () => activateTab('info', false));
+    document.getElementById('tab-inschrijven').addEventListener('click', () => activateTab('inschrijven', true));
     document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
 
