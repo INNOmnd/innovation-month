@@ -11,7 +11,7 @@
     .event {
       position:absolute; left:2px; right:2px;
       border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2;
-      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:5;
+      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
     .event:hover { outline:2px solid var(--brand); }
@@ -55,8 +55,8 @@
     </div>
     <p class="text-xs text-slate-500 mt-2">Click a session for details.</p>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/50">
+    <!-- Modal (z-50 ensures it sits above everything) -->
+    <div id="modal" class="fixed inset-0 hidden z-50 items-center justify-center bg-black/50">
       <div class="bg-white max-w-xl w-[92vw] rounded-2xl p-6">
         <div class="flex items-start gap-4">
           <img id="mBanner" class="w-24 h-24 object-cover rounded-xl border border-slate-200" alt="" />
@@ -77,23 +77,23 @@
     const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based months; 10 = Nov
     const NOVEMBER=10;
 
-    // EDIT: your real workshops + banners in /assets/workshops/
+    // Workshops (edit as needed)
     const WORKSHOPS=[
-      { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool' },
-      { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie.' },
-      { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Een AI cursus voor beginners' },
+      { id:'taal-tool', title:'Taaltool Sessie 1',    date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan',              banner:'pictures/taaltool.png',  desc:'Verkenning van de taaltool' },
+      { id:'aftrap',    title:'De Aftrap',            date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin',            banner:'pictures/aftrap.png',   desc:'We nemen jullie mee in het hele plaatje van innovatie.' },
+      { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job',    banner:'pictures/werkenmetai.png', desc:'Een AI cursus voor beginners' },
       { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Gebruik AI om jouw goeie buurtaal te verbeteren.' },
-      { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Zie hoe drones in ons werkveld zorgen voor innovatie.' },
-      { id:'taal-tool2', title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'10:00', end:'12:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool.' },
+      { id:'dwam',      title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen',    banner:'pictures/dwam.png',     desc:'Zie hoe drones in ons werkveld zorgen voor innovatie.' },
+      { id:'taal-tool2',title:'Taaltool Sessie 2',    date:`${currentYear}-11-13`, start:'10:00', end:'12:00', speaker:'Joan',              banner:'pictures/taaltool.png',  desc:'Verkenning van de taaltool.' },
       { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'werkenmetai.png', desc:'Werken met AI voor gevorderden.' },
-      { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'09:00', end:'11:00', speaker:'Sanne Cornelissen', banner:'pictures/sanna.jpg', desc:'Leer AI toe te passen in jouw werk.' },
-      { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile scrum.' },
-      { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA.' },
-      { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
-      { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA.' },
-      { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
-      { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie buurtaal zonder AI.' },
-      { id:'taal-tool3', title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.' }
+      { id:'shortcut',  title:'The Shortcut',         date:`${currentYear}-11-17`, start:'09:00', end:'11:00', speaker:'Sanne Cornelissen', banner:'pictures/sanna.jpg',    desc:'Leer AI toe te passen in jouw werk.' },
+      { id:'agile-scrum', title:'Agile Scrum',        date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier',          banner:'pictures/aftrap.png',   desc:'Agile scrum.' },
+      { id:'omaia',     title:'OMAIA Sessie 1',       date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier',          banner:'pictures/omaia.png',    desc:'OMAIA.' },
+      { id:'thuisapp',  title:'Thuisapp Sessie 1',    date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa',           banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
+      { id:'omaia2',    title:'OMAIA Sessie 2',       date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa',           banner:'pictures/omaia.png',    desc:'OMAIA.' },
+      { id:'thuisapp2', title:'Thuisapp Sessie 2',    date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa',           banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
+      { id:'goeie-buurtaal', title:'Goeie Buurtaal',  date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy',    banner:'pictures/buurtaal.png', desc:'Goeie buurtaal zonder AI.' },
+      { id:'taal-tool3',title:'Taaltool Sessie 3',    date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan',            banner:'pictures/taaltool.png', desc:'Taaltool.' }
     ];
 
     // Build weeks of November (Mon–Fri)
@@ -147,33 +147,26 @@
       // Group by weekday (0..4 => Mon..Fri)
       const byDay=[[],[],[],[],[]];
       weekEvents.forEach(ev=>{
-        const d=new Date(ev.date); const col=( (d.getDay()+6)%7 );
+        const d=new Date(ev.date); const col=((d.getDay()+6)%7);
         if(col<=4) byDay[col].push(ev);
       });
 
       // For each day, assign lanes to avoid overlaps and render
       byDay.forEach((events, col)=>{
-        // Sort by start time
         events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
 
-        // Sweep-line to assign lanes (interval graph coloring)
         const active=[]; // [{endIdx, lane}]
         events.forEach(ev=>{
           const s=timeToIdx(ev.start);
           const e=timeToIdx(ev.end);
-          // free lanes whose end <= s
           for(let i=active.length-1;i>=0;i--){ if(active[i].end<=s) active.splice(i,1); }
-          // find smallest available lane
           const used=new Set(active.map(a=>a.lane));
           let lane=0; while(used.has(lane)) lane++;
-          ev._lane=lane;
-          ev._startIdx=s; ev._endIdx=e;
+          ev._lane=lane; ev._startIdx=s; ev._endIdx=e;
           active.push({end:e, lane});
-          // also track max lanes overlapping this interval (for width calc later)
         });
 
-        // Determine overlapping cluster widths:
-        // For every event, compute how many are active with it
+        // Compute lanes per overlapping cluster
         events.forEach(ev=>{
           const s=ev._startIdx, e=ev._endIdx;
           ev._lanes = Math.max(...events.map(o=>{
@@ -183,25 +176,20 @@
           }));
         });
 
-        // Render events into the *start row* cell of the day
         events.forEach(ev=>{
           const startCell = rows[ev._startIdx].children[col+1];
           const div=document.createElement('div');
           div.className='event';
-          // vertical position/height
           const durationRows=Math.max(1, ev._endIdx - ev._startIdx);
           div.style.top = '2px';
           div.style.height = `calc(${durationRows*slotHeight}px - 4px)`;
-          // horizontal lane layout
           const lanes = Math.max(ev._lanes, ...events.filter(o=>{
-            // consider other events that overlap with this one
             return Math.max(0, Math.min(ev._endIdx,o._endIdx) - Math.max(ev._startIdx,o._startIdx)) > 0;
           }).map(o=>o._lane+1), ev._lane+1);
-          const gap = 4; // px total gap between columns
+          const gap = 4;
           const widthPct = (100 / lanes);
           div.style.width = `calc(${widthPct}% - ${gap}px)`;
           div.style.left  = `calc(${ev._lane * widthPct}% + 2px)`;
-          // content
           div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
           div.addEventListener('click',()=>openModal(ev));
           startCell.appendChild(div);
@@ -216,9 +204,16 @@
       document.getElementById('mDesc').textContent=ev.desc;
       const modal=document.getElementById('modal');
       modal.classList.remove('hidden'); modal.classList.add('flex');
+      // lock background scroll while modal is open
+      document.body.style.overflow = 'hidden';
     }
 
-    document.getElementById('closeModal').addEventListener('click',()=>document.getElementById('modal').classList.add('hidden'));
+    document.getElementById('closeModal').addEventListener('click',()=>{
+      document.getElementById('modal').classList.add('hidden');
+      // restore scroll
+      document.body.style.overflow = '';
+    });
+
     document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
 
