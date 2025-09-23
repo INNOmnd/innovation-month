@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Casade Blog — Innovation Month</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root { --brand:#86BC25; --brand-dark:#5D7A15; }
-  </style>
+  <style>:root{--brand:#86BC25;--brand-dark:#5D7A15}</style>
 </head>
 <body class="bg-slate-50">
   <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200">
@@ -38,7 +36,7 @@
     <template id="cardTpl">
       <article class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
         <img data-banner class="h-40 w-full object-cover" alt="Banner" />
-        <div class="p-4 flex-1 flex flex-col">
+        <div class="p-4 flex-1">
           <h2 data-title class="text-lg font-semibold leading-snug"></h2>
           <p data-summary class="mt-2 text-sm text-slate-600 line-clamp-3"></p>
           <p class="mt-3 text-xs text-slate-500">Company: <span data-company></span></p>
@@ -51,7 +49,7 @@
   </main>
 
   <script>
-    // Replace banners with your own images in /assets/blog
+    // EDIT: your real items + banner files in /assets/blog/
     const POSTS = [
       { id:"firephone", title:"Amazon Fire Phone: a flop that helped spark Alexa", company:"Amazon", summary:"The Fire Phone underperformed, but its learnings fed into the Echo/Alexa roadmap.", url:"https://www.fastcompany.com/3050601/inside-amazons-failed-fire-phone-and-how-it-gave-birth-to-alexa", banner:"assets/blog/firephone.jpg", date:"2015-09-01" },
       { id:"spotify", title:"Spotify's Squad model: scaling agile with autonomy", company:"Spotify", summary:"Squads, tribes, chapters, guilds: a structure to scale innovation while keeping teams nimble.", url:"https://www.atlassian.com/agile/agile-at-scale/spotify", banner:"assets/blog/spotify.jpg", date:"2014-01-01" },
@@ -88,4 +86,3 @@
   </script>
 </body>
 </html>
-
