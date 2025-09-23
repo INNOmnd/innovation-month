@@ -8,7 +8,12 @@
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
     .cell { position: relative; }
-    .event { position:absolute; left:2px; right:2px; border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2; background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; }
+    .event {
+      position:absolute; left:2px; right:2px;
+      border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2;
+      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:5;
+      box-shadow: 0 1px 0 rgba(0,0,0,.04);
+    }
     .event:hover { outline:2px solid var(--brand); }
   </style>
 </head>
@@ -25,12 +30,14 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Week navigation -->
     <div class="flex items-center justify-between mb-4">
-      <button id="prevWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">◀ Vorige</button>
+      <button id="prevWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">◀ Previous</button>
       <h2 id="weekTitle" class="text-lg font-semibold"></h2>
-      <button id="nextWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Volgende ▶</button>
+      <button id="nextWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Next ▶</button>
     </div>
 
+    <!-- Timetable -->
     <div class="overflow-x-auto border border-slate-200 rounded-2xl bg-white">
       <table class="w-full text-sm">
         <thead class="bg-slate-100">
@@ -48,6 +55,7 @@
     </div>
     <p class="text-xs text-slate-500 mt-2">Click a session for details.</p>
 
+    <!-- Modal -->
     <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/50">
       <div class="bg-white max-w-xl w-[92vw] rounded-2xl p-6">
         <div class="flex items-start gap-4">
@@ -64,9 +72,9 @@
   </main>
 
   <script>
-    // Use November of the current year (if Nov has passed this year, use next year)
+    // Use November of this year (if Nov already passed, use next year)
     const today=new Date();
-    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based months; 10 = November
+    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based months; 10 = Nov
     const NOVEMBER=10;
 
     // EDIT: your real workshops + banners in /assets/workshops/
@@ -88,11 +96,12 @@
       { id:'taal-tool3', title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.' }
     ];
 
+    // Build weeks of November (Mon–Fri)
     function getWeeks(year){
       const first=new Date(year, NOVEMBER, 1);
       const last=new Date(year, NOVEMBER+1, 0);
       const start=new Date(first);
-      const day=(start.getDay()+6)%7; // Monday=0
+      const day=(start.getDay()+6)%7; // Mon=0
       start.setDate(start.getDate()-day);
       const weeks=[];
       let cur=new Date(start);
@@ -111,12 +120,14 @@
     const grid=document.getElementById('grid');
     const weekTitle=document.getElementById('weekTitle');
 
+    function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); } // 09:00 baseline
+
     function renderWeek(){
       const days=weeks[weekIdx];
       const opts={ day:'2-digit', month:'short' };
       weekTitle.textContent=`Week ${weekIdx+1} • ${days[0].toLocaleDateString(undefined,opts)} – ${days[4].toLocaleDateString(undefined,opts)} ${currentYear}`;
 
-      // build time grid 09:00–17:00, 30-min slots
+      // times 09:00..17:00 per 30 min slots
       const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
       grid.innerHTML='';
       times.forEach(t=>{
@@ -126,26 +137,75 @@
         grid.appendChild(tr);
       });
 
-      // place this week's events
+      const rows=grid.querySelectorAll('tr');
+      const slotHeight=rows[0].children[1].getBoundingClientRect().height || 56;
+
+      // Collect events per weekday for this week (Mon..Fri)
       const startOfWeek=days[0]; const endOfWeek=days[4];
       const weekEvents=WORKSHOPS.filter(w=>{ const d=new Date(w.date); return d>=new Date(startOfWeek.toDateString()) && d<=new Date(endOfWeek.toDateString()); });
 
+      // Group by weekday (0..4 => Mon..Fri)
+      const byDay=[[],[],[],[],[]];
       weekEvents.forEach(ev=>{
-        const d=new Date(ev.date); const col=((d.getDay()+6)%7); if(col>4) return;
-        const [sh,sm]=ev.start.split(':').map(Number); const [eh,em]=ev.end.split(':').map(Number);
-        const startIdx=(sh-9)*2 + (sm>=30?1:0);
-        const endIdx=(eh-9)*2 + (em>0?(em>=30?2:1):0);
-        const rows=grid.querySelectorAll('tr'); if(startIdx<0||startIdx>=rows.length) return;
-        const targetCell=rows[startIdx].children[col+1];
-        const durationRows=Math.max(1,endIdx-startIdx);
-        const slotHeight=rows[0].children[1].getBoundingClientRect().height || 56;
-        const div=document.createElement('div');
-        div.className='event';
-        div.style.top='2px';
-        div.style.height=`calc(${durationRows*slotHeight}px - 4px)`;
-        div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
-        div.addEventListener('click',()=>openModal(ev));
-        targetCell.appendChild(div);
+        const d=new Date(ev.date); const col=( (d.getDay()+6)%7 );
+        if(col<=4) byDay[col].push(ev);
+      });
+
+      // For each day, assign lanes to avoid overlaps and render
+      byDay.forEach((events, col)=>{
+        // Sort by start time
+        events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
+
+        // Sweep-line to assign lanes (interval graph coloring)
+        const active=[]; // [{endIdx, lane}]
+        events.forEach(ev=>{
+          const s=timeToIdx(ev.start);
+          const e=timeToIdx(ev.end);
+          // free lanes whose end <= s
+          for(let i=active.length-1;i>=0;i--){ if(active[i].end<=s) active.splice(i,1); }
+          // find smallest available lane
+          const used=new Set(active.map(a=>a.lane));
+          let lane=0; while(used.has(lane)) lane++;
+          ev._lane=lane;
+          ev._startIdx=s; ev._endIdx=e;
+          active.push({end:e, lane});
+          // also track max lanes overlapping this interval (for width calc later)
+        });
+
+        // Determine overlapping cluster widths:
+        // For every event, compute how many are active with it
+        events.forEach(ev=>{
+          const s=ev._startIdx, e=ev._endIdx;
+          ev._lanes = Math.max(...events.map(o=>{
+            const os=o._startIdx, oe=o._endIdx;
+            const overlap = Math.max(0, Math.min(e,oe) - Math.max(s,os)) > 0;
+            return overlap ? Math.max(ev._lane, o._lane)+1 : 1;
+          }));
+        });
+
+        // Render events into the *start row* cell of the day
+        events.forEach(ev=>{
+          const startCell = rows[ev._startIdx].children[col+1];
+          const div=document.createElement('div');
+          div.className='event';
+          // vertical position/height
+          const durationRows=Math.max(1, ev._endIdx - ev._startIdx);
+          div.style.top = '2px';
+          div.style.height = `calc(${durationRows*slotHeight}px - 4px)`;
+          // horizontal lane layout
+          const lanes = Math.max(ev._lanes, ...events.filter(o=>{
+            // consider other events that overlap with this one
+            return Math.max(0, Math.min(ev._endIdx,o._endIdx) - Math.max(ev._startIdx,o._startIdx)) > 0;
+          }).map(o=>o._lane+1), ev._lane+1);
+          const gap = 4; // px total gap between columns
+          const widthPct = (100 / lanes);
+          div.style.width = `calc(${widthPct}% - ${gap}px)`;
+          div.style.left  = `calc(${ev._lane * widthPct}% + 2px)`;
+          // content
+          div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
+          div.addEventListener('click',()=>openModal(ev));
+          startCell.appendChild(div);
+        });
       });
     }
 
@@ -154,7 +214,8 @@
       document.getElementById('mTitle').textContent=ev.title;
       document.getElementById('mMeta').textContent=`${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
       document.getElementById('mDesc').textContent=ev.desc;
-      const modal=document.getElementById('modal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+      const modal=document.getElementById('modal');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
     }
 
     document.getElementById('closeModal').addEventListener('click',()=>document.getElementById('modal').classList.add('hidden'));
