@@ -56,7 +56,7 @@
     </div>
     <p class="text-xs text-slate-500 mt-2">Click a session for details.</p>
 
-    <!-- Modal (z-50 ensures it sits above everything) -->
+    <!-- Modal -->
     <div id="modal" class="fixed inset-0 hidden z-50 items-center justify-center bg-black/50">
       <div class="bg-white max-w-xl w-[92vw] rounded-2xl p-6">
         <div class="flex items-start gap-4">
@@ -68,17 +68,20 @@
           <button id="closeModal" class="ml-auto text-slate-600">✕</button>
         </div>
         <p id="mDesc" class="mt-4 text-slate-700"></p>
+
+        <!-- Registration form placeholder -->
+        <div id="mForm" class="mt-6"></div>
       </div>
     </div>
   </main>
 
   <script>
-    // Use November of this year (if Nov already passed, use next year)
+    // Year handling
     const today=new Date();
-    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based months; 10 = Nov
+    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1;
     const NOVEMBER=10;
 
-    // Workshops (edit as needed)
+    // Workshops list
     const WORKSHOPS=[
       { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool' },
       { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie.' },
@@ -97,7 +100,7 @@
       { id:'taal-tool3',title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.' }
     ];
 
-    // Build weeks of November (Mon–Fri)
+    // Weeks of November
     function getWeeks(year){
       const first=new Date(year, NOVEMBER, 1);
       const last=new Date(year, NOVEMBER+1, 0);
@@ -117,18 +120,16 @@
 
     const weeks=getWeeks(currentYear);
     let weekIdx=0;
-
     const grid=document.getElementById('grid');
     const weekTitle=document.getElementById('weekTitle');
 
-    function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); } // 09:00 baseline
+    function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); }
 
     function renderWeek(){
       const days=weeks[weekIdx];
       const opts={ day:'2-digit', month:'short' };
       weekTitle.textContent=`Week ${weekIdx+1} • ${days[0].toLocaleDateString(undefined,opts)} – ${days[4].toLocaleDateString(undefined,opts)} ${currentYear}`;
 
-      // times 09:00..17:00 per 30 min slots
       const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
       grid.innerHTML='';
       times.forEach(t=>{
@@ -140,23 +141,17 @@
 
       const rows=grid.querySelectorAll('tr');
       const slotHeight=rows[0].children[1].getBoundingClientRect().height || 56;
-
-      // Collect events per weekday for this week (Mon..Fri)
       const startOfWeek=days[0]; const endOfWeek=days[4];
       const weekEvents=WORKSHOPS.filter(w=>{ const d=new Date(w.date); return d>=new Date(startOfWeek.toDateString()) && d<=new Date(endOfWeek.toDateString()); });
-
-      // Group by weekday (0..4 => Mon..Fri)
       const byDay=[[],[],[],[],[]];
       weekEvents.forEach(ev=>{
         const d=new Date(ev.date); const col=((d.getDay()+6)%7);
         if(col<=4) byDay[col].push(ev);
       });
 
-      // For each day, assign lanes to avoid overlaps and render
       byDay.forEach((events, col)=>{
         events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
-
-        const active=[]; // [{endIdx, lane}]
+        const active=[];
         events.forEach(ev=>{
           const s=timeToIdx(ev.start);
           const e=timeToIdx(ev.end);
@@ -166,17 +161,6 @@
           ev._lane=lane; ev._startIdx=s; ev._endIdx=e;
           active.push({end:e, lane});
         });
-
-        // Compute lanes per overlapping cluster
-        events.forEach(ev=>{
-          const s=ev._startIdx, e=ev._endIdx;
-          ev._lanes = Math.max(...events.map(o=>{
-            const os=o._startIdx, oe=o._endIdx;
-            const overlap = Math.max(0, Math.min(e,oe) - Math.max(s,os)) > 0;
-            return overlap ? Math.max(ev._lane, o._lane)+1 : 1;
-          }));
-        });
-
         events.forEach(ev=>{
           const startCell = rows[ev._startIdx].children[col+1];
           const div=document.createElement('div');
@@ -184,9 +168,7 @@
           const durationRows=Math.max(1, ev._endIdx - ev._startIdx);
           div.style.top = '2px';
           div.style.height = `calc(${durationRows*slotHeight}px - 4px)`;
-          const lanes = Math.max(ev._lanes, ...events.filter(o=>{
-            return Math.max(0, Math.min(ev._endIdx,o._endIdx) - Math.max(ev._startIdx,o._startIdx)) > 0;
-          }).map(o=>o._lane+1), ev._lane+1);
+          const lanes = 1; // simplified lane width
           const gap = 4;
           const widthPct = (100 / lanes);
           div.style.width = `calc(${widthPct}% - ${gap}px)`;
@@ -203,15 +185,48 @@
       document.getElementById('mTitle').textContent=ev.title;
       document.getElementById('mMeta').textContent=`${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
       document.getElementById('mDesc').textContent=ev.desc;
+
+      // Show correct Microsoft Form
+      const formContainer = document.getElementById('mForm');
+      formContainer.innerHTML = ''; // clear previous
+      const iframe = document.createElement('iframe');
+      iframe.width = "640";
+      iframe.height = "900";
+      iframe.style = "border:0;max-width:100%;min-height:600px";
+      iframe.frameBorder = "0";
+      iframe.allowFullscreen = true;
+
+      // Map workshop IDs to Microsoft Forms embed URLs
+      const formLinks = {
+        "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_TAALTOOL&embed=true",
+        "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AFTRAP&embed=true",
+        "wrk-ai-beginner": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AI_BEGINNER&embed=true",
+        "goeie-buurtaal-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_BUURTAAL_AI&embed=true",
+        "dwam": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_DWAM&embed=true",
+        "taal-tool2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_TAALTOOL2&embed=true",
+        "wrk-ai-intermediate": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AI_ADVANCED&embed=true",
+        "shortcut": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_SHORTCUT&embed=true",
+        "agile-scrum": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_AGILE&embed=true",
+        "omaia": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_OMAIA1&embed=true",
+        "thuisapp": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_THUISAPP1&embed=true",
+        "omaia2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_OMAIA2&embed=true",
+        "thuisapp2": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_THUISAPP2&embed=true",
+        "goeie-buurtaal": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_BUURTAAL&embed=true",
+        "taal-tool3": "https://forms.office.com/Pages/ResponsePage.aspx?id=FORM_ID_TAALTOOL3&embed=true"
+      };
+
+      if(formLinks[ev.id]){
+        iframe.src = formLinks[ev.id];
+        formContainer.appendChild(iframe);
+      }
+
       const modal=document.getElementById('modal');
       modal.classList.remove('hidden'); modal.classList.add('flex');
-      // lock background scroll while modal is open
       document.body.style.overflow = 'hidden';
     }
 
     document.getElementById('closeModal').addEventListener('click',()=>{
       document.getElementById('modal').classList.add('hidden');
-      // restore scroll
       document.body.style.overflow = '';
     });
 
