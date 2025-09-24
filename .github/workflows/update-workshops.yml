@@ -2,7 +2,7 @@ name: Workshop JSON Update
 
 on:
   repository_dispatch:
-    types: [workshop_update]
+    types: [update_workshops]
 
 # Prevent concurrent runs from racing each other
 concurrency:
