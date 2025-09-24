@@ -9,6 +9,7 @@
   <style>:root{--brand:#86BC25;--brand-dark:#5D7A15}</style>
 </head>
 <body class="bg-slate-50">
+  <!-- Header -->
   <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200 z-10">
     <div class="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
       <img src="casade-logo.png" class="h-10" alt="Casade" />
@@ -25,6 +26,7 @@
     <img id="banner" class="w-full h-56 sm:h-72 object-cover" alt="">
   </div>
 
+  <!-- Content -->
   <main class="max-w-4xl mx-auto px-4 py-8">
     <a href="blog.html" class="inline-flex items-center gap-2 text-sm font-medium mb-6 px-3 py-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50" style="color:var(--brand)">
       ← Terug naar blogs
@@ -54,13 +56,41 @@
     function formatDate(iso){
       if(!iso) return '';
       const d = new Date(iso);
-      return isNaN(d) ? iso : d.toLocaleDateString('nl-NL', {year:'numeric', month:'long', day:'numeric'});
+      return isNaN(d) ? iso : d.toLocaleDateString('nl-NL', {
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+      });
     }
 
-    function toParagraphs(content){
-      if(Array.isArray(content)) return content;
-      if(typeof content === 'string') return content.split(/\n{2,}/);
-      return [];
+    // Renderer: kan paragrafen (string) en kopjes ({type:'h2'}) tonen
+    function renderBlocks(blocks, container){
+      container.innerHTML = '';
+      (blocks || []).forEach(b => {
+        if (typeof b === 'string') {
+          const p = document.createElement('p');
+          p.textContent = b.trim();
+          if (p.textContent) container.appendChild(p);
+          return;
+        }
+        if (b && b.type === 'h2') {
+          const h = document.createElement('h2');
+          h.className = 'text-xl sm:text-2xl font-semibold mt-8';
+          h.textContent = b.text || '';
+          container.appendChild(h);
+          return;
+        }
+        if (b && b.type === 'hr') {
+          const hr = document.createElement('hr');
+          hr.className = 'my-6 border-slate-200';
+          container.appendChild(hr);
+          return;
+        }
+        // fallback: behandel als paragraaf
+        const p = document.createElement('p');
+        p.textContent = String(b || '').trim();
+        if (p.textContent) container.appendChild(p);
+      });
     }
 
     function render(){
@@ -81,13 +111,7 @@
       $('#meta').textContent = [post.company, formatDate(post.date)].filter(Boolean).join(' • ');
       $('#title').textContent = post.title;
 
-      const contentWrap = $('#content');
-      contentWrap.innerHTML = '';
-      toParagraphs(post.content).forEach(txt => {
-        const p = document.createElement('p');
-        p.textContent = (txt || '').trim();
-        if(p.textContent) contentWrap.appendChild(p);
-      });
+      renderBlocks(post.content, $('#content'));
     }
 
     render();
