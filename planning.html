@@ -144,7 +144,7 @@
     // Map workshop IDs to Microsoft Forms embed URLs
     const formLinks = {
       "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
-      "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
+      "aftrap": "https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
       "wrk-ai-beginner": "FORM_URL_AI_BEGINNER",
       "goeie-buurtaal-ai": "FORM_URL_BUURTAAL_AI",
       "dwam": "FORM_URL_DWAM",
@@ -160,7 +160,7 @@
       "taal-tool3": "FORM_URL_TAALTOOL3"
     };
 
-    // BESCHIKBAARHEID (gevuld vanuit data/workshops.json)
+    // BESCHIKBAARHEID (nu per-workshop file i.p.v. één lijst)
     let AVAIL = {}; // { id: {capacity, registered, ...}, ... }
 
     // Build weeks of November (Mon–Fri)
@@ -413,56 +413,96 @@
     document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
 
-    // Beschikbaarheid laden uit data/workshops.json (relatief pad)
+    // ---------- Nieuw: per-workshop availability ----------
+    // Tries two locations for each file:
+    //   1) data/availability/<id>.json
+    //   2) data/<id>.json  (fallback)
+    async function fetchAvailabilityFor(id){
+      const tryPaths = [
+        `data/availability/${id}.json`,
+        `data/${id}.json`
+      ];
+      for(const path of tryPaths){
+        try{
+          const res = await fetch(path, { cache: 'no-store' });
+          if(res.ok){
+            const json = await res.json();
+            // Normalize minimal fields
+            const capacity = Number(json.capacity ?? 0);
+            const registered = Number(json.registered ?? 0);
+            return { id, capacity, registered, ...json };
+          }
+        }catch(e){
+          // ignore and try next path
+        }
+      }
+      // If nothing found, return null so UI can degrade gracefully
+      return null;
+    }
+
+    async function loadAllAvailability(){
+      const ids = [...new Set(WORKSHOPS.map(w => w.id))];
+      const results = await Promise.allSettled(ids.map(fetchAvailabilityFor));
+      const map = {};
+      results.forEach((r, idx) => {
+        if(r.status === 'fulfilled' && r.value){
+          map[r.value.id] = r.value;
+        } else {
+          // If a file is missing, we leave it out (no badge shown)
+          // console.warn(`No availability file for ${ids[idx]}`);
+        }
+      });
+      AVAIL = map;
+    }
+    // ------------------------------------------------------
+
+    // Beschikbaarheid-lijst opbouwen uit AVAIL (sectie blijft hidden om je layout niet te wijzigen)
+    function buildAvailabilityList(){
+      const byId = Object.fromEntries(WORKSHOPS.map(w => [w.id, w]));
+      const $ul = document.getElementById('workshops');
+      if(!$ul) return;
+
+      $ul.innerHTML = '';
+      Object.keys(AVAIL).forEach(id => {
+        const a = AVAIL[id];
+        const left = Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0);
+        const meta = byId[id] || { title: id };
+        const li = document.createElement('li');
+        li.className = 'workshop';
+        li.innerHTML = `
+          <h3 class="font-semibold">${meta.title}</h3>
+          <span class="badge ${left===0 ? 'full' : ''}">
+            ${left===0 ? 'Vol' : `${left} plekken over`}
+          </span>
+          ${left===0 ? '' : `<p><button class="btn" data-wsid="${id}">Inschrijven</button></p>`}
+        `;
+        $ul.appendChild(li);
+      });
+
+      // open modal op "Inschrijven" en ga direct naar Inschrijven-tab
+      $ul.addEventListener('click', (e) => {
+        const btn = e.target.closest('button.btn');
+        if(!btn) return;
+        const id = btn.dataset.wsid;
+        const ev = WORKSHOPS.find(x => x.id === id);
+        if(ev){
+          openModal(ev);
+          activateTab('inschrijven', true);
+        }
+      }, { once: true });
+    }
+
+    // Render flow
     async function renderWorkshops(){
       try{
-        const res = await fetch('data/workshops.json', { cache: 'no-store' });
-        if(!res.ok) throw new Error('HTTP ' + res.status);
-        const list = await res.json();
-
-        // vul globale AVAIL
-        AVAIL = Object.fromEntries(list.map(w => [w.id, w]));
-
-        // (Sectie onder planning blijft verborgen, maar we bouwen de lijst zodat niets breekt)
-        const byId = Object.fromEntries(WORKSHOPS.map(w => [w.id, w]));
-        const $ul = document.getElementById('workshops');
-        if($ul){
-          $ul.innerHTML = '';
-          list.forEach(w => {
-            const left = Math.max((w.capacity ?? 0) - (w.registered ?? 0), 0);
-            const meta = byId[w.id] || { title: w.title || w.id };
-            const li = document.createElement('li');
-            li.className = 'workshop';
-            li.innerHTML = `
-              <h3 class="font-semibold">${meta.title}</h3>
-              <span class="badge ${left===0 ? 'full' : ''}">
-                ${left===0 ? 'Vol' : `${left} plekken over`}
-              </span>
-              ${left===0 ? '' : `<p><button class="btn" data-wsid="${w.id}">Inschrijven</button></p>`}
-            `;
-            $ul.appendChild(li);
-          });
-
-          // open modal op "Inschrijven" en ga direct naar Inschrijven-tab
-          $ul.addEventListener('click', (e) => {
-            const btn = e.target.closest('button.btn');
-            if(!btn) return;
-            const id = btn.dataset.wsid;
-            const ev = WORKSHOPS.find(x => x.id === id);
-            if(ev){
-              openModal(ev);
-              activateTab('inschrijven', true);
-            }
-          }, { once: true });
-        }
-
-        // Nu we AVAIL hebben, rooster opnieuw tekenen (badges in cellen)
-        renderWeek();
-
+        await loadAllAvailability();   // <-- per-file fetch
+        buildAvailabilityList();       // (optional UI list; section remains hidden)
+        renderWeek();                  // draw calendar badges using AVAIL
       }catch(err){
-        console.error('Fout bij laden workshops.json', err);
+        console.error('Fout bij laden beschikbaarheid', err);
         const $ul = document.getElementById('workshops');
         if($ul) $ul.innerHTML = '<li class="text-sm text-slate-500">Kon de beschikbaarheid niet laden.</li>';
+        renderWeek();
       }
     }
 
