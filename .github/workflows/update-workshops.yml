@@ -35,17 +35,22 @@ jobs:
           # strip CR/LF/spaties en zet URL-safe b64 om
           CONTENT=$(echo "$CONTENT" | tr -d '\r\n ' | tr '_-' '/+')
       
-          # Decode en verwijder een extra array-laag als de top een array-van-arrays is
+          # Decode en verwijder extra array-lagen als de top een array-van-arrays is
           printf %s "$CONTENT" | base64 -d \
-            | jq -c 'if type=="array" and (map(type=="array")|all) then add
-                     elif type=="array" and length==1 and (.[0]|type=="array" or type=="object") then .[0]
-                     else . end' \
+            | jq -c '
+                def unwrap:
+                  if type=="array" and length==1 and (.[0]|type=="array" or type=="object") then .[0]|unwrap
+                  elif type=="array" and (map(type=="array")|all) then add|unwrap
+                  else . end;
+                unwrap
+              ' \
             > tmp.json
       
           FP="${{ github.event.client_payload.filePath }}"
           mkdir -p "$(dirname "$FP")"
           mv tmp.json "$FP"
           echo "FILEPATH=$FP" >> $GITHUB_OUTPUT
+
 
 
       - name: Rebuild workshops index
