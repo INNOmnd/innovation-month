@@ -4,7 +4,7 @@
   <link rel="icon" type="image/png" href="casade-logo.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Casade Blog — Innovation Month</title>
+  <title>Casade Blog — INNOvember</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>:root{--brand:#86BC25;--brand-dark:#5D7A15}</style>
 </head>
@@ -12,7 +12,7 @@
   <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
       <img src="casade-logo.png" class="h-10" alt="Casade" />
-      <h1 class="text-xl font-bold" style="color:var(--brand)">Innovation Blog</h1>
+      <h1 class="text-xl font-bold" style="color:var(--brand)">Innovatie Blog</h1>
       <nav class="ml-auto text-sm flex gap-6">
         <a href="index.html" class="hover:underline">Home</a>
         <a href="planning.html" class="hover:underline">Planning</a>
@@ -22,12 +22,12 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
-      <input id="search" type="search" placeholder="Search blog posts…" class="grow min-w-[260px] rounded-xl border border-slate-300 px-4 py-2 bg-white" />
-      <label class="text-sm text-slate-600">Sort
+      <input id="search" type="search" placeholder="Zoek blog posts…" class="grow min-w-[260px] rounded-xl border border-slate-300 px-4 py-2 bg-white" />
+      <label class="text-sm text-slate-600">Sorteer
         <select id="sort" class="ml-2 rounded-xl border border-slate-300 px-3 py-2 bg-white">
-          <option value="date_desc">Newest</option>
-          <option value="date_asc">Oldest</option>
-          <option value="title_asc">Title A→Z</option>
+          <option value="date_desc">Nieuwste</option>
+          <option value="date_asc">Oudste</option>
+          <option value="title_asc">Titel A→Z</option>
         </select>
       </label>
     </div>
@@ -40,10 +40,10 @@
         <div class="p-4 flex-1">
           <h2 data-title class="text-lg font-semibold leading-snug"></h2>
           <p data-summary class="mt-2 text-sm text-slate-600 line-clamp-3"></p>
-          <p class="mt-3 text-xs text-slate-500">Company: <span data-company></span></p>
+          <p class="mt-3 text-xs text-slate-500">Bedrijf: <span data-company></span></p>
         </div>
         <div class="p-4 pt-0">
-          <a data-link href="#" class="inline-flex items-center gap-2 text-sm font-medium hover:underline" style="color:var(--brand)">Read post →</a>
+          <a data-link href="#" class="inline-flex items-center gap-2 text-sm font-medium hover:underline" style="color:var(--brand)">Lees post →</a>
         </div>
       </article>
     </template>
@@ -52,7 +52,7 @@
   <script>
     // EDIT: your real items + banner files in /assets/blog/
     const POSTS = [
-      { id:"Kodak", title:"Hoe Kodak de Toekomst in Handen Had - en Losliet", company:"Kodak", summary:"The Fire Phone underperformed, but its learnings fed into the Echo/Alexa roadmap.", url:"https://www.fastcompany.com/3050601/inside-amazons-failed-fire-phone-and-how-it-gave-birth-to-alexa", banner:"picturesblog/kodak.webp", date:"2015-09-01" },
+      { id:"Kodak", title:"Hoe Kodak de Toekomst in Handen Had - en Losliet", company:"Kodak", summary:"Het verhaal van Kodak", url:"https://www.fastcompany.com/3050601/inside-amazons-failed-fire-phone-and-how-it-gave-birth-to-alexa", banner:"picturesblog/kodak.webp", date:"2015-09-01" },
     ];
 
     const feed=document.getElementById('feed');
