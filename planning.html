@@ -371,98 +371,45 @@
       }
     }
 
-    function loadFormIframe(workshopId){
-      const url = formLinks[workshopId];
-      const container = document.getElementById('mForm');
-      const loader = document.getElementById('mFormLoader');
-      container.innerHTML = '';
+    /* ======== CHANGE #1: availability robuust inladen ======== */
+    async function fetchAvailabilityFor(id){
+      const tryPaths = [
+        `data/availability/${id}.json`,
+        `data/${id}.json`
+      ];
 
-      if(!url){
-        loader.textContent = 'Geen inschrijfformulier beschikbaar.';
-        return;
-      }
-
-      const iframe = document.createElement('iframe');
-      iframe.width = '100%';
-      iframe.height = '900';
-      iframe.style.height = '70vh';
-      iframe.style.maxHeight = '900px';
-      iframe.style.border = '0';
-      iframe.style.minHeight = '600px';
-      iframe.setAttribute('frameborder','0');
-      iframe.setAttribute('allowfullscreen','');
-      iframe.src = url;
-
-      // Show loader until first load event
-      loader.style.display = '';
-      iframe.addEventListener('load', () => { loader.style.display = 'none'; }, { once: true });
-
-      container.appendChild(iframe);
-    }
-
-    // Close when clicking the dark backdrop (outside the card)
-    document.getElementById('modal').addEventListener('click', (e) => {if (e.target === e.currentTarget) closeModal();});
-
-    // Close with Escape key
-    document.addEventListener('keydown', (e) => {if (e.key === 'Escape') closeModal();});
-    
-    // Wire up UI controls
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('tab-info').addEventListener('click', () => activateTab('info', false));
-    document.getElementById('tab-inschrijven').addEventListener('click', () => activateTab('inschrijven', true));
-    document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
-    document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
-
-    // ---------- Nieuw: per-workshop availability ----------
-    // ---------- VERVANG HELE FUNCTIE ----------
-async function fetchAvailabilityFor(id){
-  const tryPaths = [
-    `data/availability/${id}.json`,
-    `data/${id}.json`
-  ];
-
-  // helpers
-  const toNum = (v) => {
-    if (v === null || v === undefined || v === '') return null;
-    const n = Number(String(v).replace(',', '.').trim());
-    return Number.isFinite(n) ? n : null;
-  };
-  const firstNonNull = (...vals) => vals.find(v => v !== null && v !== undefined);
-
-  for (const path of tryPaths){
-    try{
-      const res = await fetch(path, { cache: 'no-store' });
-      if (!res.ok) continue;
-
-      const json = await res.json();
-
-      // vang verschillende sleutel-namen op (NL/EN/varianten)
-      const capRaw = firstNonNull(
-        json.capacity, json.cap, json.max, json.maxSeats, json.max_seats,
-        json.places, json.plaatsen, json.aantal, json.total
-      );
-      const regRaw = firstNonNull(
-        json.registered, json.registrations, json.taken, json.occupied,
-        json.ingeschreven, json.inschrijvingen
-      );
-
-      const capacity   = toNum(capRaw);
-      const registered = toNum(regRaw);
-
-      // Belangrijk: eerst ...json en daarna onze genormaliseerde velden
-      return {
-        ...json,
-        id,
-        capacity: capacity ?? 0,
-        registered: registered ?? 0
+      const toNum = (v) => {
+        if (v === null || v === undefined || v === '') return 0;
+        const n = Number(String(v).replace(',', '.').trim());
+        return Number.isFinite(n) ? n : 0;
       };
-    } catch(e){
-      // probeer volgende pad
-    }
-  }
-  return null;
-}
 
+      for (const path of tryPaths){
+        try{
+          const res = await fetch(path, { cache: 'no-store' });
+          if (!res.ok) continue;
+
+          let json = await res.json();
+
+          // haal eerste element op zolang het een array is (dekt [], [ {} ], [ [ {} ] ] )
+          while (Array.isArray(json)) json = json[0];
+          if (!json || typeof json !== 'object') continue;
+
+          const capacity   = toNum(json.capacity);
+          const registered = toNum(json.registered);
+
+          return {
+            ...json,         // behoud overige velden
+            id,
+            capacity,
+            registered
+          };
+        } catch(e){
+          // probeer volgende pad
+        }
+      }
+      return null;
+    }
 
     async function loadAllAvailability(){
       const ids = [...new Set(WORKSHOPS.map(w => w.id))];
@@ -471,14 +418,11 @@ async function fetchAvailabilityFor(id){
       results.forEach((r, idx) => {
         if(r.status === 'fulfilled' && r.value){
           map[r.value.id] = r.value;
-        } else {
-          // If a file is missing, we leave it out (no badge shown)
-          // console.warn(`No availability file for ${ids[idx]}`);
         }
       });
       AVAIL = map;
     }
-    // ------------------------------------------------------
+    /* ======== /CHANGE #1 ======== */
 
     // Beschikbaarheid-lijst opbouwen uit AVAIL (sectie blijft hidden om je layout niet te wijzigen)
     function buildAvailabilityList(){
@@ -529,6 +473,47 @@ async function fetchAvailabilityFor(id){
         renderWeek();
       }
     }
+
+    /* ======== CHANGE #2: formulier verbergen als vol ======== */
+    function loadFormIframe(workshopId){
+      const container = document.getElementById('mForm');
+      const loader = document.getElementById('mFormLoader');
+      container.innerHTML = '';
+
+      // Check beschikbaarheid
+      const a = AVAIL[workshopId];
+      const left = a ? Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0) : null;
+
+      if (left === 0) {
+        loader.style.display = 'none';
+        container.innerHTML = `<div class="p-6 text-center text-sm text-slate-700">
+          Helaas, deze workshop is vol.
+        </div>`;
+        return;
+      }
+
+      const url = formLinks[workshopId];
+      if(!url){
+        loader.textContent = 'Geen inschrijfformulier beschikbaar.';
+        return;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.width = '100%';
+      iframe.height = '900';
+      iframe.style.height = '70vh';
+      iframe.style.maxHeight = '900px';
+      iframe.style.border = '0';
+      iframe.style.minHeight = '600px';
+      iframe.setAttribute('frameborder','0');
+      iframe.setAttribute('allowfullscreen','');
+      iframe.src = url;
+
+      loader.style.display = '';
+      iframe.addEventListener('load', () => { loader.style.display = 'none'; }, { once: true });
+      container.appendChild(iframe);
+    }
+    /* ======== /CHANGE #2 ======== */
 
     renderWeek();
     renderWorkshops();
