@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <link rel="icon" type="image/png" href="casade-logo.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casade Blog — Post</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>:root{--brand:#86BC25;--brand-dark:#5D7A15}</style>
+</head>
+<body class="bg-slate-50">
+  <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200 z-10">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
+      <img src="casade-logo.png" class="h-10" alt="Casade" />
+      <h1 class="text-xl font-bold" style="color:var(--brand)">Innovatie Blog</h1>
+      <nav class="ml-auto text-sm flex gap-6">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="planning.html" class="hover:underline">Planning</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <div class="bg-slate-200">
+    <img id="banner" class="w-full h-56 sm:h-72 object-cover" alt="">
+  </div>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <a href="blog.html" class="inline-flex items-center gap-2 text-sm font-medium mb-6 px-3 py-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50" style="color:var(--brand)">
+      ← Terug naar blogs
+    </a>
+
+    <article id="post" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="p-6 sm:p-8">
+        <p id="meta" class="text-xs text-slate-500"></p>
+        <h1 id="title" class="mt-1 text-2xl sm:text-3xl font-bold leading-tight"></h1>
+        <div id="content" class="prose max-w-none mt-5"></div>
+      </div>
+    </article>
+
+    <div id="notFound" class="hidden text-center text-slate-600 mt-16">
+      <p class="text-xl font-semibold">Deze blogpost is niet gevonden.</p>
+      <p class="mt-2">Ga terug naar het <a href="blog.html" class="underline" style="color:var(--brand)">overzicht</a>.</p>
+    </div>
+  </main>
+
+  <script>
+    // Voor nu: lokale data (breid uit met meer posts als je wilt)
+    const POSTS = [
+      {
+        id:"Kodak",
+        title:"Hoe Kodak de Toekomst in Handen Had - en Losliet",
+        company:"Kodak",
+        banner:"picturesblog/kodak.webp",
+        date:"2015-09-01",
+        content: [
+          "Kodak was vroeg met digitale fotografie, maar kampte met het innovatiedilemma: hoe omarm je iets nieuws dat je bestaande inkomsten kannibaliseert?",
+          "De incentives (marges op film, verkoopkanalen, interne KPI’s) waren niet afgestemd op een digitale toekomst. Daardoor bleef de organisatie vasthouden aan het oude succes.",
+          "Les: organiseer innovatie met aparte doelen en metrics, bescherm nieuwe proposities tegen legacy-KPI’s en maak cannibalisatie een expliciete strategie."
+        ]
+      },
+    ];
+
+    const $ = s => document.querySelector(s);
+    const id = new URLSearchParams(location.search).get('id');
+
+    function formatDate(iso){
+      if(!iso) return '';
+      const d = new Date(iso);
+      return isNaN(d) ? iso : d.toLocaleDateString('nl-NL', {year:'numeric', month:'long', day:'numeric'});
+    }
+
+    function render(){
+      const post = POSTS.find(p => String(p.id) === String(id));
+      if(!post){
+        $('#post').classList.add('hidden');
+        $('#notFound').classList.remove('hidden');
+        document.title = 'Casade Blog — Niet gevonden';
+        return;
+      }
+
+      document.title = `Casade Blog — ${post.title}`;
+      const banner = $('#banner');
+      banner.src = post.banner;
+      banner.alt = `Banner: ${post.title}`;
+
+      $('#meta').textContent = [post.company, formatDate(post.date)].filter(Boolean).join(' • ');
+      $('#title').textContent = post.title;
+
+      const contentWrap = $('#content');
+      contentWrap.innerHTML = '';
+      (Array.isArray(post.content) ? post.content : String(post.content).split(/\n{2,}/))
+        .forEach(par => {
+          const p = document.createElement('p');
+          p.textContent = (par||'').trim();
+          if(p.textContent) contentWrap.appendChild(p);
+        });
+    }
+
+    render();
+  </script>
+</body>
+</html>
