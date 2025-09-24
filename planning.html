@@ -414,31 +414,55 @@
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
 
     // ---------- Nieuw: per-workshop availability ----------
-    // Tries two locations for each file:
-    //   1) data/availability/<id>.json
-    //   2) data/<id>.json  (fallback)
-    async function fetchAvailabilityFor(id){
-      const tryPaths = [
-        `data/availability/${id}.json`,
-        `data/${id}.json`
-      ];
-      for(const path of tryPaths){
-        try{
-          const res = await fetch(path, { cache: 'no-store' });
-          if(res.ok){
-            const json = await res.json();
-            // Normalize minimal fields
-            const capacity = Number(json.capacity ?? 0);
-            const registered = Number(json.registered ?? 0);
-            return { id, capacity, registered, ...json };
-          }
-        }catch(e){
-          // ignore and try next path
-        }
-      }
-      // If nothing found, return null so UI can degrade gracefully
-      return null;
+    // ---------- VERVANG HELE FUNCTIE ----------
+async function fetchAvailabilityFor(id){
+  const tryPaths = [
+    `data/availability/${id}.json`,
+    `data/${id}.json`
+  ];
+
+  // helpers
+  const toNum = (v) => {
+    if (v === null || v === undefined || v === '') return null;
+    const n = Number(String(v).replace(',', '.').trim());
+    return Number.isFinite(n) ? n : null;
+  };
+  const firstNonNull = (...vals) => vals.find(v => v !== null && v !== undefined);
+
+  for (const path of tryPaths){
+    try{
+      const res = await fetch(path, { cache: 'no-store' });
+      if (!res.ok) continue;
+
+      const json = await res.json();
+
+      // vang verschillende sleutel-namen op (NL/EN/varianten)
+      const capRaw = firstNonNull(
+        json.capacity, json.cap, json.max, json.maxSeats, json.max_seats,
+        json.places, json.plaatsen, json.aantal, json.total
+      );
+      const regRaw = firstNonNull(
+        json.registered, json.registrations, json.taken, json.occupied,
+        json.ingeschreven, json.inschrijvingen
+      );
+
+      const capacity   = toNum(capRaw);
+      const registered = toNum(regRaw);
+
+      // Belangrijk: eerst ...json en daarna onze genormaliseerde velden
+      return {
+        ...json,
+        id,
+        capacity: capacity ?? 0,
+        registered: registered ?? 0
+      };
+    } catch(e){
+      // probeer volgende pad
     }
+  }
+  return null;
+}
+
 
     async function loadAllAvailability(){
       const ids = [...new Set(WORKSHOPS.map(w => w.id))];
