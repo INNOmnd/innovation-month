@@ -1,5 +1,4 @@
-<script>
-  window.POSTS = [
+window.POSTS = [
     {
       id:"Kodak",
       title:"Hoe Kodak de Toekomst in Handen Had - en Losliet",
@@ -27,4 +26,4 @@
       ]
     }
   ];
-</script>
+
