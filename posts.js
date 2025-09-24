@@ -3,7 +3,7 @@ window.POSTS = [
     id:"Kodak",
     title:"Hoe Kodak de Toekomst in Handen Had – en Losliet",
     company:"Kodak",
-    summary:"Het verhaal van Kodak en het innovatiedilemma.",
+    summary:"Het verhaal van Kodak en het innovatie dilemma.",
     banner:"picturesblog/kodak.webp",
     date:"2015-09-01",
     content: [
@@ -40,6 +40,46 @@ window.POSTS = [
       { type: "h2", text: "Tot slot" },
       "Kodak is geen verhaal om medelijden mee te hebben, maar een spiegel. Een spiegel die ons dwingt na te denken: welke kansen liggen er bij ons op de plank? Welke ideeën schuiven we weg omdat ze te bedreigend lijken voor het bestaande? En welke sprong durven we nog niet te maken?",
       "Het verhaal van Kodak leert ons dat je de toekomst niet kunt vasthouden door stil te blijven staan. Soms moet je de sprong wagen, juist omdat de grond onder je voeten langzaam verschuift."
+    ]
+  },
+    {
+    id:"PostIt",
+    title:"Hoe 3M een Plakkerige Revolutie Startte – en de Post-it Redde",
+    company:"3M",
+    summary:"Het verhaal van de toevallige uitvinding van de Post-it Note en hoe 3M het tot wereldsucces maakte.",
+    banner:"picturesblog/postit.jpg", 
+    date:"1980-04-06",
+    content: [
+      "Er zijn innovaties die niet geboren zijn uit ambities, maar uit toevalligheden. Toevallen die, met de juiste mindset, kunnen uitgroeien tot iconen. Het verhaal van de Post-it Notes van 3M is zo’n verhaal: een kleverige plakker die de manier waarop we werken veranderde. Hoe één mislukte lijm de basis legde voor een wereldwijd succes.",
+  
+      { type: "h2", text: "De mislukte lijm die bleef hangen" },
+      "In de jaren 1960 ontwikkelde Spencer Silver, een ingenieur bij 3M, een nieuwe lijm die anders was dan verwacht: niet sterk genoeg om permanent te kleven, maar zwak genoeg om te kunnen worden losgemaakt zonder sporen achter te laten.",
+      "Silver kon er aanvankelijk geen praktische toepassing voor bedenken — de lijm was immers “te zwak” voor standaard gebruik. Maar hij bleef de uitvinding intern promoten, gaf presentaties en organiseerde seminars binnen 3M. Zo bleef het idee op de radar.",
+  
+      { type: "h2", text: "Het moment van inspiratie" },
+      "Arthur Fry, een collega van Silver, zong in de kerk en gebruikte papieren bladwijzers in zijn liedboek. Die vielen telkens uit. Hij herinnerde zich Silver’s lijm en dacht: wat als ik dat voorzichtig op een bladwijzer gebruik? Zo bleef het papier vastzitten zonder schade.",
+      "Dat was het keerpunt: een simpele bladwijzer werd de basis voor een communicatie­middel dat je kon plakken, loshalen en opnieuw gebruiken.",
+  
+      { type: "h2", text: "Van idee tot product" },
+      "3M gaf Silver en Fry ruimte om in hun eigen tijd met het idee te experimenteren, dankzij hun interne “bootlegging” beleid. In 1977 werd het product getest onder de naam “Press ’n Peel” in vier steden, maar de verkoopresultaten waren teleurstellend.",
+      "Daarna volgde een slimme zet: gratis monsters uitdelen. In Boise, Idaho, bleek dat meer dan 90% van de gebruikers het product wilde blijven gebruiken. Dat gaf 3M vertrouwen om door te zetten.",
+      "In 1980 lanceerde 3M de “Post-it Note” officieel in de VS, en niet veel later wereldwijd.",
+  
+      { type: "h2", text: "Waarom het werkte" },
+      "• Geduld en vertrouwen in ideeën: Silver’s uitvinding werd niet direct afgewezen, maar kreeg tijd om te rijpen.",
+      "• Cultuur van experimenteren: het bootlegging-beleid stimuleerde medewerkers om te spelen met nieuwe ideeën.",
+      "• Slimme marktvalidatie: door gratis monsters kon 3M snel leren van echte gebruikers.",
+      "• Commitment van de organisatie: toen de potentie duidelijk werd, investeerde 3M in productie en marketing.",
+  
+      { type: "h2", text: "Wat we kunnen leren" },
+      "Een idee dat nutteloos lijkt, kan juist waardevol blijken in een ander perspectief.",
+      "Innovatie vraagt om een cultuur die experimenten accepteert, ook als ze niet direct succes opleveren.",
+      "Marktfeedback en kleine pilots zijn cruciaal om nieuwe concepten te valideren.",
+      "Het succes van Post-it toont aan dat toeval en creativiteit samen een grote impact kunnen maken.",
+  
+      { type: "h2", text: "Conclusie" },
+      "De Post-it Note is meer dan een stukje papier met lijm. Het is een symbool van innovatie die begint met een fout en eindigt als wereldwijd icoon.",
+      "Het verhaal van 3M laat zien dat de echte kunst van innoveren niet alleen in het bedenken van ideeën ligt, maar in het bouwen van een omgeving waar zelfs ‘mislukkingen’ kunnen uitgroeien tot revoluties."
     ]
   }
 ];
