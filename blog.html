@@ -49,13 +49,10 @@
     </template>
   </main>
 
-  <script>
-    // Jouw originele items (Kodak blijft zichtbaar)
-    const POSTS = [
-      { id:"Kodak", title:"Hoe Kodak de Toekomst in Handen Had - en Losliet", company:"Kodak", summary:"Het verhaal van Kodak", url:"https://www.fastcompany.com/3050601/inside-amazons-failed-fire-phone-and-how-it-gave-birth-to-alexa", banner:"picturesblog/kodak.webp", date:"2015-09-01" },
-      { id:"AI-Risks", title:"AI-risico’s in de praktijk", company:"Casade", summary:"Welke risico’s kom je echt tegen bij AI in organisaties?", url:"#", banner:"picturesblog/ai-risks.webp", date:"2025-06-12"},
-    ];
+  <!-- shared posts -->
+  <script src="posts.js"></script>
 
+  <script>
     const feed=document.getElementById('feed');
     const tpl=document.getElementById('cardTpl');
     const search=document.getElementById('search');
@@ -63,20 +60,25 @@
 
     function render(){
       feed.innerHTML='';
-      let items=POSTS.slice();
+      let items=(window.POSTS||[]).slice();
       const q=(search.value||'').toLowerCase();
-      if(q) items=items.filter(p=>p.title.toLowerCase().includes(q)||p.summary.toLowerCase().includes(q)||p.company.toLowerCase().includes(q));
+      if(q) items=items.filter(p=>
+        (p.title||'').toLowerCase().includes(q) ||
+        (p.summary||'').toLowerCase().includes(q) ||
+        (p.company||'').toLowerCase().includes(q)
+      );
       const s=sort.value;
       if(s==='date_desc') items.sort((a,b)=>new Date(b.date)-new Date(a.date));
       if(s==='date_asc') items.sort((a,b)=>new Date(a.date)-new Date(b.date));
-      if(s==='title_asc') items.sort((a,b)=>a.title.localeCompare(b.title));
+      if(s==='title_asc') items.sort((a,b)=>String(a.title).localeCompare(String(b.title)));
+
       items.forEach(p=>{
         const node=tpl.content.cloneNode(true);
-        node.querySelector('[data-title]').textContent=p.title;
-        node.querySelector('[data-summary]').textContent=p.summary;
-        node.querySelector('[data-company]').textContent=p.company;
+        node.querySelector('[data-title]').textContent=p.title||'';
+        node.querySelector('[data-summary]').textContent=p.summary||'';
+        node.querySelector('[data-company]').textContent=p.company||'';
         node.querySelector('[data-banner]').src=p.banner;
-        // HIER DE ENIGE WIJZIGING: interne detailpagina
+        node.querySelector('[data-banner]').alt=`Banner: ${p.title||''}`;
         node.querySelector('[data-link]').href=`post.html?id=${encodeURIComponent(p.id)}`;
         feed.appendChild(node);
       });
