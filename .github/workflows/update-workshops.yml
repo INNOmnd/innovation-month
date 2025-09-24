@@ -2,9 +2,11 @@ name: Workshop JSON Update
 
 on:
   repository_dispatch:
-    types: [workshop_update]
+    types: [update_workshops]   # <— zelfde naam als in Power Automate
 
-# Prevent concurrent runs from racing each other
+permissions:
+  contents: write               # expliciet maken dat we mogen pushen
+
 concurrency:
   group: workshop-json-updates
   cancel-in-progress: false
@@ -31,20 +33,14 @@ jobs:
       - name: Prepare content file
         id: prep
         run: |
-          # Decode de base64 content naar een tijdelijk bestand
           echo "${{ github.event.client_payload.content_b64 }}" | base64 --decode > tmp.json
-          
-          # Zorg dat de map bestaat en verplaats bestand naar het opgegeven pad
           mkdir -p "$(dirname "${{ github.event.client_payload.filePath }}")"
           mv tmp.json "${{ github.event.client_payload.filePath }}"
-          
-          # Output filePath zodat we hem later kunnen gebruiken
           echo "FILEPATH=${{ github.event.client_payload.filePath }}" >> $GITHUB_OUTPUT
 
       - name: Rebuild workshops index
         run: |
           mkdir -p data/workshops
-          # Bouw een minimale index [{id,title}] op basis van alle JSON bestanden
           if ls data/workshops/*.json >/dev/null 2>&1; then
             jq -s '[.[] | {id: .id, title: .title}]' data/workshops/*.json > data/workshops/index.json
           else
@@ -56,21 +52,11 @@ jobs:
           set -e
           git add "${{ steps.prep.outputs.FILEPATH }}" data/workshops/index.json
           git commit -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
-
-          # Retry push tot max 5 keer om race conditions op te vangen
           n=0
           until [ $n -ge 5 ]
           do
-            if git push origin main; then
-              echo "Pushed successfully"; break
-            fi
-            echo "Push failed — retrying ($((n+1))/5) after rebase..."
+            if git push origin main; then break; fi
             git pull --rebase --autostash origin main || true
-            n=$((n+1))
-            sleep 2
+            n=$((n+1)); sleep 2
           done
-
-          if [ $n -ge 5 ]; then
-            echo "ERROR: Could not push after 5 attempts" >&2
-            exit 1
-          fi
+          [ $n -lt 5 ]
