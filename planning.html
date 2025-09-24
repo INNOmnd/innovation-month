@@ -14,7 +14,7 @@
       /* was: left:2px; right:2px; */
       left:2px;               /* JS controls left + width per lane */
       border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2;
-      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1;
+      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:0;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
     .event:hover { outline:2px solid var(--brand); }
@@ -35,7 +35,7 @@
   </style>
 </head>
 <body class="bg-slate-50">
-  <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200">
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
       <img src="casade-logo.png" class="h-10" alt="Casade" />
       <h1 class="text-xl font-bold" style="color:var(--brand)">Planning INNOvember</h1>
