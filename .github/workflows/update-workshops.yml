@@ -1,62 +1,28 @@
-name: Workshop JSON Update
+name: Update workshops from Flow
 
 on:
   repository_dispatch:
-    types: [update_workshops]   # <— zelfde naam als in Power Automate
-
-permissions:
-  contents: write               # expliciet maken dat we mogen pushen
-
-concurrency:
-  group: workshop-json-updates
-  cancel-in-progress: false
+    types: [update_workshops]
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout (full history)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - name: Configure Git
+      - name: Write workshops.json
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p data
+          echo "${{ github.event.client_payload.content_b64 }}" | base64 -d > data/workshops.json
 
-      - name: Ensure we're on latest main
+      - name: Commit and push changes
         run: |
-          git checkout main
-          git pull --rebase origin main
-
-      - name: Prepare content file
-        id: prep
-        run: |
-          echo "${{ github.event.client_payload.content_b64 }}" | base64 --decode > tmp.json
-          mkdir -p "$(dirname "${{ github.event.client_payload.filePath }}")"
-          mv tmp.json "${{ github.event.client_payload.filePath }}"
-          echo "FILEPATH=${{ github.event.client_payload.filePath }}" >> $GITHUB_OUTPUT
-
-      - name: Rebuild workshops index
-        run: |
-          mkdir -p data/workshops
-          if ls data/workshops/*.json >/dev/null 2>&1; then
-            jq -s '[.[] | {id: .id, title: .title}]' data/workshops/*.json > data/workshops/index.json
-          else
-            echo "[]" > data/workshops/index.json
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/workshops.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
           fi
-
-      - name: Commit & push to main with retries
-        run: |
-          set -e
-          git add "${{ steps.prep.outputs.FILEPATH }}" data/workshops/index.json
-          git commit -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
-          n=0
-          until [ $n -ge 5 ]
-          do
-            if git push origin main; then break; fi
-            git pull --rebase --autostash origin main || true
-            n=$((n+1)); sleep 2
-          done
-          [ $n -lt 5 ]
+          git commit -m "chore: update workshops.json - automated update from Power Automate"
+          git push origin main
