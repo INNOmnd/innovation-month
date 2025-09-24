@@ -8,13 +8,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
-    .cell { position: relative; }
+    .cell { position: relative;
+          pointer-events: none;}
     .event {
       position:absolute; 
       /* was: left:2px; right:2px; */
       left:2px;               /* JS controls left + width per lane */
       border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2;
-      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:0;
+      background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1; pointer-events:auto;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
     .event:hover { outline:2px solid var(--brand); }
