@@ -1,0 +1,27 @@
+name: Update workshops from Flow
+
+on:
+  repository_dispatch:
+    types: [update_workshops]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write workshops.json
+        run: |
+          mkdir -p data
+          echo "${{ github.event.client_payload.content_b64 }}" | base64 -d > data/workshops.json
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update workshops.json"
+          branch: ${{ github.event.client_payload.branch }}
+          title: "Update workshop availability"
+          body: "Automated update from Power Automate"
+          base: main
+          add-paths: |
+            data/workshops.json
