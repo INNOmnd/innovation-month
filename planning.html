@@ -10,7 +10,9 @@
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
     .cell { position: relative; }
     .event {
-      position:absolute; left:2px; right:2px;
+      position:absolute; 
+      /* was: left:2px; right:2px; */
+      left:2px;               /* JS controls left + width per lane */
       border-radius:10px; padding:6px 8px; font-size:12px; line-height:1.2;
       background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
@@ -216,32 +218,65 @@
         if(col<=4) byDay[col].push(ev);
       });
 
-      // Render events
-      byDay.forEach((events, col)=>{
+      // ---- Render events (fixed overlap + width per lane) ----
+      byDay.forEach((events, col) => {
+        // sort stable: start, then end
         events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
-        const active=[];
-        events.forEach(ev=>{
-          const s=timeToIdx(ev.start);
-          const e=timeToIdx(ev.end);
-          for(let i=active.length-1;i>=0;i--){ if(active[i].end<=s) active.splice(i,1); }
-          const used=new Set(active.map(a=>a.lane));
-          let lane=0; while(used.has(lane)) lane++;
-          ev._lane=lane; ev._startIdx=s; ev._endIdx=e;
-          active.push({end:e, lane});
+
+        const active = [];
+        let cluster = [];
+        let clusterMaxLane = -1;
+
+        function finalizeCluster(){
+          const total = clusterMaxLane + 1;
+          cluster.forEach(ev => ev._lanes = total);
+          cluster = [];
+          clusterMaxLane = -1;
+        }
+
+        // assign lanes + clusters
+        events.forEach(ev => {
+          const s = timeToIdx(ev.start);
+          const e = timeToIdx(ev.end);
+
+          // drop finished from active
+          for (let i = active.length - 1; i >= 0; i--) {
+            if (active[i].end <= s) active.splice(i,1);
+          }
+
+          // if no active, a new cluster starts
+          if (active.length === 0 && cluster.length) finalizeCluster();
+
+          // pick first free lane index
+          const used = new Set(active.map(a => a.lane));
+          let lane = 0; while (used.has(lane)) lane++;
+          ev._lane = lane;
+          ev._startIdx = s;
+          ev._endIdx = e;
+
+          active.push({ end: e, lane });
+          cluster.push(ev);
+          if (lane > clusterMaxLane) clusterMaxLane = lane;
         });
 
-        events.forEach(ev=>{
-          const startCell = rows[ev._startIdx].children[col+1];
-          const div=document.createElement('div');
-          div.className='event';
-          const durationRows=Math.max(1, ev._endIdx - ev._startIdx);
+        if (cluster.length) finalizeCluster();
+
+        // paint
+        events.forEach(ev => {
+          const startCell = rows[ev._startIdx].children[col + 1];
+          const div = document.createElement('div');
+          div.className = 'event';
+
+          const durationRows = Math.max(1, ev._endIdx - ev._startIdx);
           div.style.top = '2px';
-          div.style.height = `calc(${durationRows*slotHeight}px - 4px)`;
-          const lanes = 1;
+          div.style.height = `calc(${durationRows * slotHeight}px - 4px)`;
+
+          // width/left per lane within the day column
           const gap = 4;
-          const widthPct = (100 / lanes);
+          const widthPct = 100 / ev._lanes;
           div.style.width = `calc(${widthPct}% - ${gap}px)`;
           div.style.left  = `calc(${ev._lane * widthPct}% + 2px)`;
+
           div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
 
           // Nieuw: badge met beschikbaarheid in het roosterblok
@@ -257,6 +292,7 @@
           startCell.appendChild(div);
         });
       });
+      // ---- end render events ----
     }
 
     // --- Modal logic with tabs ---
