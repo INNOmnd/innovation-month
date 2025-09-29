@@ -51,7 +51,9 @@
     <section id="feed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></section>
 
     <template id="cardTpl">
-      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition hover:shadow-md hover:-translate-y-0.5">
+      <article
+        class="relative bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition hover:shadow-md hover:-translate-y-0.5 hover:ring-2 hover:ring-[var(--brand)] ring-offset-1 ring-offset-white"
+      >
         <img data-banner class="h-40 w-full object-cover aspect-[16/9]" alt="Banner" loading="lazy" />
         <div class="p-4 flex-1">
           <h2 data-title class="text-lg font-semibold leading-snug"></h2>
@@ -61,6 +63,13 @@
         <div class="p-4 pt-0">
           <a data-link href="#" class="inline-flex items-center gap-2 text-sm font-medium hover:underline" style="color:var(--brand)">Lees post →</a>
         </div>
+    
+        <!-- NEW: full-card overlay link (makes whole card clickable) -->
+        <a data-card-link
+           href="#"
+           class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
+           aria-label="Open blogpost">
+        </a>
       </article>
     </template>
   </main>
@@ -96,6 +105,7 @@
         node.querySelector('[data-banner]').src=p.banner;
         node.querySelector('[data-banner]').alt=`Banner: ${p.title||''}`;
         node.querySelector('[data-link]').href=`post.html?id=${encodeURIComponent(p.id)}`;
+        node.querySelector('[data-card-link]').href = `post.html?id=${encodeURIComponent(p.id)}`;
         feed.appendChild(node);
       });
     }
