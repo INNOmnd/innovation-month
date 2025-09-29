@@ -10,6 +10,12 @@
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
     :focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+    /* Active nav state (gekoppeld aan aria-current="page") */
+    .nav-link[aria-current="page"]{
+      color: var(--brand);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
   </style>
 </head>
 <body class="bg-white text-slate-800">
@@ -53,5 +59,14 @@
       © 2025 Casade — INNOvember
     </div>
   </footer>
+
+  <script>
+  (() => {
+    const here = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(a => {
+      if (a.getAttribute('href') === here) a.setAttribute('aria-current','page');
+    });
+  })();
+  </script> 
 </body>
 </html>
