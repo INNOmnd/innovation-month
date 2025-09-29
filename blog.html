@@ -41,8 +41,8 @@
     <section id="feed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></section>
 
     <template id="cardTpl">
-      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-        <img data-banner class="h-40 w-full object-cover" alt="Banner" />
+      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition hover:shadow-md hover:-translate-y-0.5">
+        <img data-banner class="h-40 w-full object-cover aspect-[16/9]" alt="Banner" loading="lazy" />
         <div class="p-4 flex-1">
           <h2 data-title class="text-lg font-semibold leading-snug"></h2>
           <p data-summary class="mt-2 text-sm text-slate-600 line-clamp-3"></p>
