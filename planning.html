@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
-    .cell { position: relative; pointer-events: none; }
+    .cell { position: relative; pointer-events: none;}
     .event {
       position:absolute; 
       /* was: left:2px; right:2px; */
@@ -41,39 +41,54 @@
       border:1px solid rgba(0,0,0,.06); box-shadow:0 1px 0 rgba(0,0,0,.04);
       background:#F0FDF4; color:#166534;           /* soft green */
     }
-
-    /* Chip icon */
     .event .avail-chip svg{ width:14px; height:14px; display:block; }
-
-    /* Full (= no seats left) */
     .event .avail-chip.full{
       background:#FEF2F2; color:#991B1B;           /* soft red */
       border-color: rgba(153,27,27,.15);
     }
 
+    /* Active nav state */
     .nav-link[aria-current="page"]{ color:var(--brand); text-underline-offset:4px; text-decoration:underline; }
 
-    /* ============================= */
-    /*  NEW: Sticky table head       */
-    /* ============================= */
-    /* Make header cells stick under the page header when scrolling */
-    #calendarWrap thead th{ position: sticky; top: 0; z-index: 20; background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);} 
+    /* ---- NEW: animated underline like Home/Blog ---- */
+    .link-underline{
+      background-image:linear-gradient(currentColor,currentColor);
+      background-repeat:no-repeat; background-position:0 100%;
+      background-size:0% 2px; transition:background-size .25s ease;
+    }
+    .link-underline:hover{ background-size:100% 2px; }
 
-    /* ============================= */
-    /*  NEW: Mobile-friendly tweaks  */
-    /* ============================= */
-    @media (max-width: 640px){ /* < sm */
+    /* ---- NEW: header fade on scroll ---- */
+    #siteHeader{
+      background-color: rgba(255,255,255,.85);
+      transition: background-color .25s ease, box-shadow .25s ease;
+    }
+    body.scrolled #siteHeader{
+      background-color: rgba(255,255,255,.72);
+      box-shadow: 0 1px 0 rgba(0,0,0,.06);
+    }
+
+    /* ---- NEW: sticky table head inside wrapper ---- */
+    #calendarWrap thead th{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #f1f5f9; /* slate-100 */
+      box-shadow: 0 1px 0 rgba(0,0,0,.06);
+    }
+
+    /* Mobile-friendly tweaks (light) */
+    @media (max-width: 640px){
       .event{ font-size:11px; padding:6px 6px 24px; }
     }
-    /* Sticky first column (time) on small screens */
+    /* Optional: keep the first (time) column visible on small screens while swiping */
     @media (max-width: 768px){
-      #calendarWrap th:first-child{ position: sticky; left: 0; z-index: 25; background: #ffffff; }
-    }
+      #calendarWrap th:first-child{ position: sticky; left: 0; z-index: 25; background:#ffffff; }
     }
   </style>
 </head>
 <body class="bg-slate-50">
-  <header class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
+  <header id="siteHeader" class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
       <a href="index.html" aria-label="Naar home" class="inline-flex items-center gap-2 shrink-0">
         <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto block" height="64" decoding="async" />
@@ -83,9 +98,9 @@
         Planning INNOvember
       </strong>
       <nav class="ml-auto text-sm flex items-center gap-6">
-        <a href="index.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Home</a>
-        <a href="blog.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Blog</a>
-        <a href="planning.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Planning</a>
+        <a href="index.html" class="nav-link link-underline hover:text-slate-900">Home</a>
+        <a href="blog.html" class="nav-link link-underline hover:text-slate-900">Blog</a>
+        <a href="planning.html" class="nav-link link-underline hover:text-slate-900">Planning</a>
       </nav>
     </div>
   </header>
@@ -103,12 +118,12 @@
       <table class="w-full text-sm" id="timetable">
         <thead class="bg-slate-100">
           <tr>
-            <th class="w-20 sm:w-24 p-2 sm:p-3 text-left">Tijd</th>
-            <th class="p-2 sm:p-3 text-left">Maandag</th>
-            <th class="p-2 sm:p-3 text-left">Dinsdag</th>
-            <th class="p-2 sm:p-3 text-left">Woensdag</th>
-            <th class="p-2 sm:p-3 text-left">Donderdag</th>
-            <th class="p-2 sm:p-3 text-left">Vrijdag</th>
+            <th class="w-24 p-3 text-left">Tijd</th>
+            <th class="p-3 text-left">Maandag</th>
+            <th class="p-3 text-left">Dinsdag</th>
+            <th class="p-3 text-left">Woensdag</th>
+            <th class="p-3 text-left">Donderdag</th>
+            <th class="p-3 text-left">Vrijdag</th>
           </tr>
         </thead>
         <tbody id="grid"></tbody>
@@ -243,8 +258,8 @@
       grid.innerHTML='';
       times.forEach(t=>{
         const tr=document.createElement('tr');
-        const th=document.createElement('th'); th.className='align-top p-2 sm:p-2 w-20 sm:w-24 text-left text-slate-600'; th.textContent=t; tr.appendChild(th);
-        for(let c=0;c<5;c++){ const td=document.createElement('td'); td.className='relative h-12 sm:h-14 align-top border-t border-slate-100 cell'; tr.appendChild(td); }
+        const th=document.createElement('th'); th.className='align-top p-2 w-24 text-left text-slate-600'; th.textContent=t; tr.appendChild(th);
+        for(let c=0;c<5;c++){ const td=document.createElement('td'); td.className='relative h-14 align-top border-t border-slate-100 cell'; tr.appendChild(td); }
         grid.appendChild(tr);
       });
 
@@ -497,6 +512,7 @@
 
           const json = await res.json();
 
+          // vang verschillende sleutel-namen op (NL/EN/varianten)
           const capRaw = firstNonNull(
             json.capacity, json.cap, json.max, json.maxSeats, json.max_seats,
             json.places, json.plaatsen, json.aantal, json.total
@@ -509,6 +525,7 @@
           const capacity   = toNum(capRaw);
           const registered = toNum(regRaw);
 
+          // Belangrijk: eerst ...json en daarna onze genormaliseerde velden
           return {
             ...json,
             id,
@@ -516,7 +533,7 @@
             registered: registered ?? 0
           };
         } catch(e){
-          // try next path
+          // probeer volgende pad
         }
       }
       return null;
@@ -526,12 +543,16 @@
       const ids = [...new Set(WORKSHOPS.map(w => w.id))];
       const results = await Promise.allSettled(ids.map(fetchAvailabilityFor));
       const map = {};
-      results.forEach((r) => {
-        if(r.status === 'fulfilled' && r.value){ map[r.value.id] = r.value; }
+      results.forEach((r, idx) => {
+        if(r.status === 'fulfilled' && r.value){
+          map[r.value.id] = r.value;
+        }
       });
       AVAIL = map;
     }
+    // ------------------------------------------------------
 
+    // Beschikbaarheid-lijst opbouwen uit AVAIL (sectie blijft hidden)
     function buildAvailabilityList(){
       const byId = Object.fromEntries(WORKSHOPS.map(w => [w.id, w]));
       const $ul = document.getElementById('workshops');
@@ -554,6 +575,7 @@
         $ul.appendChild(li);
       });
 
+      // open modal op "Inschrijven" en ga direct naar Inschrijven-tab
       $ul.addEventListener('click', (e) => {
         const btn = e.target.closest('button.btn');
         if(!btn) return;
@@ -569,8 +591,8 @@
     // Render flow
     async function renderWorkshops(){
       try{
-        await loadAllAvailability();   // per-file fetch
-        buildAvailabilityList();       // optional UI list; section remains hidden
+        await loadAllAvailability();   // <-- per-file fetch
+        buildAvailabilityList();       // (optional UI list; section remains hidden)
         renderWeek();                  // draw calendar badges using AVAIL
       }catch(err){
         console.error('Fout bij laden beschikbaarheid', err);
@@ -578,19 +600,20 @@
       }
     }
 
+    // Size the scroll wrapper so the thead can stick cleanly
     (function(){
-  const wrap = document.getElementById('calendarWrap');
-  function setMaxHeight(){
-    if(!wrap) return;
-    const headerH = document.querySelector('header')?.offsetHeight || 0;
-    const controlsH = document.querySelector('.week-controls')?.offsetHeight || 0;
-    const extras = 56; // padding/margins
-    wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
-  }
-  addEventListener('resize', setMaxHeight, {passive:true});
-  addEventListener('load', setMaxHeight);
-  setMaxHeight();
-})();
+      const wrap = document.getElementById('calendarWrap');
+      function setMaxHeight(){
+        if(!wrap) return;
+        const headerH = document.getElementById('siteHeader')?.offsetHeight || 0;
+        const controlsH = document.querySelector('.week-controls')?.offsetHeight || 0;
+        const extras = 56; // padding/margins
+        wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
+      }
+      addEventListener('resize', setMaxHeight, {passive:true});
+      addEventListener('load', setMaxHeight);
+      setMaxHeight();
+    })();
 
     renderWeek();
     renderWorkshops();
@@ -603,6 +626,11 @@
       if (a.getAttribute('href') === here) a.setAttribute('aria-current','page');
     });
   })();
+
+  // fade header on scroll (matches post/blog)
+  addEventListener('scroll', () => {
+    document.body.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
   </script>
 </body>
 </html>
