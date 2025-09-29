@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
   <link rel="icon" type="image/png" href="casade-logo.png">
   <meta charset="utf-8">
@@ -8,18 +8,34 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{--brand:#86BC25;--brand-dark:#5D7A15}
-  
-    /* Active nav state (gekoppeld aan aria-current="page") */
+
+    /* Sticky-footer layout */
+    html,body{height:100%}
+    .page{min-height:100%; min-height:100dvh; display:flex; flex-direction:column}
+    .grow-main{flex:1}
+
+    /* Active nav */
     .nav-link[aria-current="page"]{
       color: var(--brand);
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-  </style>
 
+    /* Animated underline on hover */
+    .link-underline{
+      background-image:linear-gradient(currentColor,currentColor);
+      background-repeat:no-repeat;background-position:0 100%;
+      background-size:0% 2px;transition:background-size .25s ease
+    }
+    .link-underline:hover{background-size:100% 2px}
+  </style>
 </head>
 <body class="bg-slate-50">
-  <header class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
+<div class="page">
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200 relative">
+    <!-- brand line -->
+    <div class="absolute inset-x-0 top-0 h-1" style="background:linear-gradient(90deg,#86BC25,#5D7A15)"></div>
+
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
       <a href="index.html" aria-label="Naar home" class="inline-flex items-center gap-2 shrink-0">
         <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto block" height="64" decoding="async" />
@@ -29,14 +45,14 @@
         Innovatie Blog
       </strong>
       <nav class="ml-auto text-sm flex items-center gap-6">
-        <a href="index.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Home</a>
-        <a href="blog.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Blog</a>
-        <a href="planning.html" class="nav-link hover:underline hover:text-slate-900 underline-offset-4">Planning</a>
+        <a href="index.html" class="nav-link link-underline hover:text-slate-900">Home</a>
+        <a href="blog.html" class="nav-link link-underline hover:text-slate-900">Blog</a>
+        <a href="planning.html" class="nav-link link-underline hover:text-slate-900">Planning</a>
       </nav>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-8">
+  <main class="grow-main max-w-6xl mx-auto px-4 py-8">
     <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
       <input id="search" type="search" placeholder="Zoek blog posts…" class="grow min-w-[260px] rounded-xl border border-slate-300 px-4 py-2 bg-white" />
       <label class="text-sm text-slate-600">Sorteer
@@ -63,8 +79,8 @@
         <div class="p-4 pt-0">
           <a data-link href="#" class="inline-flex items-center gap-2 text-sm font-medium hover:underline" style="color:var(--brand)">Lees post →</a>
         </div>
-    
-        <!-- NEW: full-card overlay link (makes whole card clickable) -->
+
+        <!-- overlay link -->
         <a data-card-link
            href="#"
            class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
@@ -74,53 +90,60 @@
     </template>
   </main>
 
-  <!-- shared posts -->
-  <script src="posts.js"></script>
+  <footer class="border-t border-slate-200 py-10">
+    <div class="max-w-6xl mx-auto px-4 text-sm text-slate-600">
+      © 2025 Casade — INNOvember
+    </div>
+  </footer>
+</div>
 
-  <script>
-    const feed=document.getElementById('feed');
-    const tpl=document.getElementById('cardTpl');
-    const search=document.getElementById('search');
-    const sort=document.getElementById('sort');
+<!-- shared posts -->
+<script src="posts.js"></script>
 
-    function render(){
-      feed.innerHTML='';
-      let items=(window.POSTS||[]).slice();
-      const q=(search.value||'').toLowerCase();
-      if(q) items=items.filter(p=>
-        (p.title||'').toLowerCase().includes(q) ||
-        (p.summary||'').toLowerCase().includes(q) ||
-        (p.company||'').toLowerCase().includes(q)
-      );
-      const s=sort.value;
-      if(s==='date_desc') items.sort((a,b)=>new Date(b.date)-new Date(a.date));
-      if(s==='date_asc') items.sort((a,b)=>new Date(a.date)-new Date(b.date));
-      if(s==='title_asc') items.sort((a,b)=>String(a.title).localeCompare(String(b.title)));
+<script>
+  const feed=document.getElementById('feed');
+  const tpl=document.getElementById('cardTpl');
+  const search=document.getElementById('search');
+  const sort=document.getElementById('sort');
 
-      items.forEach(p=>{
-        const node=tpl.content.cloneNode(true);
-        node.querySelector('[data-title]').textContent=p.title||'';
-        node.querySelector('[data-summary]').textContent=p.summary||'';
-        node.querySelector('[data-company]').textContent=p.company||'';
-        node.querySelector('[data-banner]').src=p.banner;
-        node.querySelector('[data-banner]').alt=`Banner: ${p.title||''}`;
-        node.querySelector('[data-link]').href=`post.html?id=${encodeURIComponent(p.id)}`;
-        node.querySelector('[data-card-link]').href = `post.html?id=${encodeURIComponent(p.id)}`;
-        feed.appendChild(node);
-      });
-    }
-    search.addEventListener('input',render);
-    sort.addEventListener('change',render);
-    render();
-  </script>
+  function render(){
+    feed.innerHTML='';
+    let items=(window.POSTS||[]).slice();
+    const q=(search.value||'').toLowerCase();
+    if(q) items=items.filter(p=>
+      (p.title||'').toLowerCase().includes(q) ||
+      (p.summary||'').toLowerCase().includes(q) ||
+      (p.company||'').toLowerCase().includes(q)
+    );
+    const s=sort.value;
+    if(s==='date_desc') items.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    if(s==='date_asc') items.sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(s==='title_asc') items.sort((a,b)=>String(a.title).localeCompare(String(b.title)));
 
-  <script>
+    items.forEach(p=>{
+      const node=tpl.content.cloneNode(true);
+      node.querySelector('[data-title]').textContent=p.title||'';
+      node.querySelector('[data-summary]').textContent=p.summary||'';
+      node.querySelector('[data-company]').textContent=p.company||'';
+      node.querySelector('[data-banner]').src=p.banner;
+      node.querySelector('[data-banner]').alt=`Banner: ${p.title||''}`;
+      node.querySelector('[data-link]').href=`post.html?id=${encodeURIComponent(p.id)}`;
+      node.querySelector('[data-card-link]').href = `post.html?id=${encodeURIComponent(p.id)}`;
+      feed.appendChild(node);
+    });
+  }
+  search.addEventListener('input',render);
+  sort.addEventListener('change',render);
+  render();
+</script>
+
+<script>
   (() => {
     const here = location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-link').forEach(a => {
       if (a.getAttribute('href') === here) a.setAttribute('aria-current','page');
     });
   })();
-  </script>
+</script>
 </body>
 </html>
