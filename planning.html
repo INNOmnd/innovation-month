@@ -10,8 +10,8 @@
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
     .cell { position: relative; pointer-events: none;}
     .event {
-      position:absolute; 
-      left:2px; /* JS sets lane width/left */
+      position:absolute;
+      left:2px;
       border-radius:10px; padding:6px 8px 28px; font-size:12px; line-height:1.2;
       background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1; pointer-events:auto;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
@@ -80,21 +80,21 @@
       #calendarWrap th:first-child{ position: sticky; left: 0; z-index: 25; background:#ffffff; }
     }
 
-    /* --- New helpers for compact planner bar --- */
+    /* --- Planner bar helpers --- */
     #weekRange { word-break: keep-all; }
     #weekChip  { transition: border-color .2s ease, box-shadow .2s ease; }
     #weekChip:hover { border-color: rgba(0,0,0,.15); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
   </style>
 </head>
 <body class="bg-slate-50">
+  <!-- Header matches blog: logo + title left, nav right -->
   <header id="siteHeader" class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
       <a href="index.html" aria-label="Naar home" class="inline-flex items-center gap-2 shrink-0">
         <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto block" height="64" decoding="async" />
-        <span class="sr-only">Casade</span>
       </a>
-      <strong class="text-lg md:text-xl font-bold leading-tight" style="color:var(--brand)">
-        Planning INNOvember
+      <strong class="text-xl font-bold leading-tight" style="color:var(--brand)">
+        Innovatie Blog
       </strong>
       <nav class="ml-auto text-sm flex items-center gap-6">
         <a href="index.html" class="nav-link link-underline hover:text-slate-900">Home</a>
@@ -106,22 +106,21 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8">
 
-    <!-- Week navigation (new compact planner bar) -->
+    <!-- Planner bar: Vorige | center date + chip | Volgende (no 'Vandaag') -->
     <section class="mb-4">
-      <div class="flex items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur px-3 py-2 shadow-sm">
-
-        <!-- Left: Prev -->
-        <button id="prevWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+      <div class="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur px-4 py-3 shadow-sm">
+        <!-- Left -->
+        <button id="prevWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          <span class="hidden sm:inline">Vorige</span>
+          <span>Vorige</span>
         </button>
 
-        <!-- Center: range + (chip) -->
+        <!-- Center -->
         <div class="min-w-0 text-center leading-tight">
-          <div id="weekRange" class="text-lg md:text-xl font-bold text-slate-900 md:whitespace-nowrap"></div>
-          <div class="mt-1 md:mt-0.5 md:flex md:items-center md:justify-center md:gap-2">
-            <span id="weekChip" class="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2.5 py-1 text-xs font-semibold md:text-sm" style="color:var(--brand)">
-              <svg viewBox="0 0 24 24" class="h-4 w-4 md:h-4 md:w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <h2 id="weekRange" class="text-2xl font-bold text-slate-900 md:text-3xl md:leading-tight"></h2>
+          <div class="mt-2 flex items-center justify-center">
+            <span id="weekChip" class="inline-flex items-center gap-1 rounded-full border border-slate-300 px-3 py-1.5 text-sm font-semibold" style="color:var(--brand)">
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
               </svg>
               <span id="weekChipLabel">Week</span>
@@ -129,18 +128,11 @@
           </div>
         </div>
 
-        <!-- Right: Today + Next -->
-        <div class="flex items-center gap-2">
-          <button id="todayBtn" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Vandaag
-          </button>
-          <button id="nextWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-            <span class="hidden sm:inline">Volgende</span>
-            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-
+        <!-- Right -->
+        <button id="nextWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <span>Volgende</span>
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </section>
 
@@ -228,7 +220,7 @@
       const last=new Date(year, NOVEMBER+1, 0);
       const start=new Date(first);
       const day=(start.getDay()+6)%7; // Mon=0
-      start.setDate(start.getDate()-day);
+      start.setDate(start.setDate(start.getDate())-day);
       const weeks=[];
       let cur=new Date(start);
       while(cur<=last){
@@ -247,46 +239,28 @@
 
     function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); } // 09:00 baseline
 
-    function formatWeekRange(days, year){
-      // Base range without year
+    // Short date range without year, month collapsed when possible
+    function formatShortRange(days){
       const sameMonth = days[0].getMonth() === days[4].getMonth();
       const fmtMonth  = new Intl.DateTimeFormat('nl-NL', { month: 'short' });
       const d2 = d => String(d.getDate()).padStart(2,'0');
       const m0 = fmtMonth.format(days[0]);
       const m4 = fmtMonth.format(days[4]);
-
-      const base = sameMonth
+      return sameMonth
         ? `${d2(days[0])}–${d2(days[4])} ${m4}`
         : `${d2(days[0])} ${m0}–${d2(days[4])} ${m4}`;
-
-      const isMobile = matchMedia('(max-width: 640px)').matches;
-      const currentYearLocal = new Date().getFullYear();
-
-      // Mobile: NO year (per your request), but prepend "Week X •" in the render step.
-      if (isMobile) return { mobile: base, desktop: `${base}${year !== currentYearLocal ? ' ' + year : ''}` };
-
-      // Desktop: append year only if it differs from current year
-      return { mobile: base, desktop: `${base}${year !== currentYearLocal ? ' ' + year : ''}` };
     }
 
     function renderWeek(){
       const days=weeks[weekIdx];
 
-      // --- Compact week heading compute
-      const { mobile, desktop } = formatWeekRange(days, currentYear);
+      // --- Planner bar text (no year anywhere) ---
+      const range  = formatShortRange(days);
       const weekNo = weekIdx + 1;
       const $weekRange   = document.getElementById('weekRange');
       const $weekChipLbl = document.getElementById('weekChipLabel');
-
-      if (matchMedia('(max-width: 640px)').matches) {
-        // Mobile label: "Week X • 03–07 nov"
-        if ($weekRange)   $weekRange.textContent   = `Week ${weekNo} • ${mobile}`;
-        if ($weekChipLbl) $weekChipLbl.textContent = `Week ${weekNo}`;
-      } else {
-        // Desktop: range (maybe with year) + separate chip
-        if ($weekRange)   $weekRange.textContent   = desktop;
-        if ($weekChipLbl) $weekChipLbl.textContent = `Week ${weekNo}`;
-      }
+      if ($weekRange)   $weekRange.textContent   = range;
+      if ($weekChipLbl) $weekChipLbl.textContent = `Week ${weekNo}`;
 
       // times 09:00..17:00 per 30 min slots
       const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
@@ -359,7 +333,6 @@
           div.style.top = '2px';
           div.style.height = `calc(${durationRows * slotHeight}px - 4px)`;
 
-          // width/left per lane within the day column
           const gap = 4;
           const widthPct = 100 / ev._lanes;
           div.style.width = `calc(${widthPct}% - ${gap}px)`;
@@ -367,7 +340,6 @@
 
           div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
 
-          // Availability chip
           (function(){
             const a = AVAIL[ev.id];
             if (!a) return;
@@ -441,7 +413,6 @@
           const card = document.createElement('article');
           card.className = 'bg-white border border-slate-200 rounded-2xl p-4 shadow-sm';
 
-          // availability chip
           let chip = '';
           const a = AVAIL[ev.id];
           if (a) {
@@ -468,7 +439,6 @@
         });
       });
 
-      // Wire modal
       list.querySelectorAll('button[data-open]').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-open');
@@ -513,7 +483,7 @@
       document.getElementById('mFormLoader').style.display = '';
 
       const modal = document.getElementById('modal');
-      modal.classList.remove('hidden'); 
+      modal.classList.remove('hidden');
       modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
     }
@@ -577,24 +547,6 @@
     document.getElementById('tab-inschrijven').addEventListener('click', () => activateTab('inschrijven', true));
     document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
-
-    // Jump to "Vandaag"
-    function findWeekIndexForDate(d){
-      for (let i = 0; i < weeks.length; i++){
-        const w = weeks[i];
-        const start = new Date(w[0].toDateString());
-        const end   = new Date(w[4].toDateString());
-        if (d >= start && d <= end) return i;
-      }
-      return Math.min(
-        Math.max(0, weeks.findIndex(w => new Date(w[0].toDateString()) >= d)),
-        weeks.length - 1
-      );
-    }
-    document.getElementById('todayBtn')?.addEventListener('click', () => {
-      weekIdx = findWeekIndexForDate(new Date());
-      renderWeek();
-    });
 
     // ---------- Availability (per-workshop JSON) ----------
     async function fetchAvailabilityFor(id){
@@ -692,7 +644,7 @@
       function setMaxHeight(){
         if(!wrap) return;
         const headerH = document.getElementById('siteHeader')?.offsetHeight || 0;
-        const controlsH = document.querySelector('.week-controls')?.offsetHeight || 0;
+        const controlsH = 56;
         const extras = 56;
         wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
       }
