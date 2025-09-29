@@ -93,5 +93,14 @@
     sort.addEventListener('change',render);
     render();
   </script>
+
+  <script>
+  (() => {
+    const here = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(a => {
+      if (a.getAttribute('href') === here) a.setAttribute('aria-current','page');
+    });
+  })();
+  </script>
 </body>
 </html>
