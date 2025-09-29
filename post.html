@@ -6,7 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Casade Blog — Post</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>:root{--brand:#86BC25;--brand-dark:#5D7A15}</style>
+  <style>
+    :root{--brand:#86BC25;--brand-dark:#5D7A15}
+  
+    /* Active nav state (gekoppeld aan aria-current="page") */
+    .nav-link[aria-current="page"]{
+      color: var(--brand);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  </style>
+
 </head>
 <body class="bg-slate-50">
   <!-- Header -->
