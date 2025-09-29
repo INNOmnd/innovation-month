@@ -114,7 +114,7 @@
     </div>
 
     <!-- Timetable -->
-    <div id="calendarWrap" class="overflow-auto border border-slate-200 rounded-2xl bg-white">
+    <div id="calendarWrap" class="hidden md:block overflow-auto border border-slate-200 rounded-2xl bg-white">
       <table class="w-full text-sm" id="timetable">
         <thead class="bg-slate-100">
           <tr>
@@ -129,6 +129,10 @@
         <tbody id="grid"></tbody>
       </table>
     </div>
+    <!-- Mobile agenda (shown < md) -->
+    <section id="mobileAgenda" class="md:hidden mt-4">
+      <div id="mobileList" class="space-y-4"></div>
+    </section>
     <p class="text-xs text-slate-500 mt-2">Klik op een sessie voor details of inschrijven.</p>
 
     <!-- Availability-lijst (NIET tonen onderaan de planning) -->
@@ -370,8 +374,93 @@
         });
       });
       // ---- end render events ----
+      renderMobileAgenda();
     }
 
+    function renderMobileAgenda(){
+      const list = document.getElementById('mobileList');
+      if(!list) return;
+    
+      // Determine current week range
+      const days = weeks[weekIdx];
+      const startOfWeek = new Date(days[0].toDateString());
+      const endOfWeek   = new Date(days[4].toDateString());
+    
+      // Gather events for the week and sort
+      const weekEvents = WORKSHOPS
+        .filter(w => {
+          const d = new Date(w.date);
+          return d >= startOfWeek && d <= endOfWeek;
+        })
+        .sort((a,b) => {
+          const da = +new Date(a.date) - +new Date(b.date);
+          if (da !== 0) return da;
+          return a.start.localeCompare(b.start);
+        });
+    
+      // Group by day
+      const fmtDay = new Intl.DateTimeFormat('nl-NL', { weekday:'long', day:'2-digit', month:'short' });
+      const groups = new Map();
+      weekEvents.forEach(ev => {
+        const key = new Date(ev.date).toDateString();
+        if(!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(ev);
+      });
+    
+      list.innerHTML = '';
+      if(groups.size === 0){
+        list.innerHTML = '<p class="text-sm text-slate-600">Geen sessies deze week.</p>';
+        return;
+      }
+    
+      groups.forEach((events, key) => {
+        const d = new Date(key);
+        const dayHeader = document.createElement('h3');
+        dayHeader.className = 'text-base font-semibold text-slate-700 mt-4';
+        dayHeader.textContent = fmtDay.format(d);
+        list.appendChild(dayHeader);
+    
+        events.forEach(ev => {
+          const card = document.createElement('article');
+          card.className = 'bg-white border border-slate-200 rounded-2xl p-4 shadow-sm';
+    
+          // availability chip
+          let chip = '';
+          const a = AVAIL[ev.id];
+          if (a) {
+            const left = Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0);
+            const full = left === 0;
+            chip = `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border ${full ? 'bg-red-50 text-red-800 border-red-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'}">
+                      ${full ? 'Vol' : `${left} vrij`}
+                    </span>`;
+          }
+    
+          card.innerHTML = `
+            <div class="flex items-start gap-3">
+              <img src="${ev.banner}" alt="" class="w-14 h-14 rounded-lg object-cover border border-slate-200">
+              <div class="flex-1">
+                <h4 class="font-semibold leading-snug">${ev.title}</h4>
+                <p class="text-sm text-slate-600">${ev.start}–${ev.end} • ${ev.speaker}</p>
+                <div class="mt-2 flex items-center gap-2">${chip}</div>
+              </div>
+              <button class="text-sm font-medium px-3 py-1.5 rounded-full border border-slate-300 hover:bg-slate-50" data-open="${ev.id}" style="color:var(--brand)">Details</button>
+            </div>
+          `;
+    
+          list.appendChild(card);
+        });
+      });
+    
+      // Wire modal
+      list.querySelectorAll('button[data-open]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-open');
+          const ev = WORKSHOPS.find(x => x.id === id);
+          if (ev) openModal(ev);
+        });
+      });
+    }
+    
     // --- Modal logic with tabs ---
     let currentWorkshopId = null;
 
@@ -594,6 +683,7 @@
         await loadAllAvailability();   // <-- per-file fetch
         buildAvailabilityList();       // (optional UI list; section remains hidden)
         renderWeek();                  // draw calendar badges using AVAIL
+        renderMobileAgenda();
       }catch(err){
         console.error('Fout bij laden beschikbaarheid', err);
         renderWeek();
