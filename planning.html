@@ -19,16 +19,39 @@
     }
     .event:hover { outline:2px solid var(--brand); }
 
-    .event .avail-chip{
-      position:absolute; bottom:8px; left:8px;
-      display:inline-flex; align-items:center; gap:6px;
-      padding:4px 8px; border-radius:9999px; font-size:11px; font-weight:600;
-      border:1px solid rgba(0,0,0,.06); box-shadow:0 1px 0 rgba(0,0,0,.04);
-      background:#F0FDF4; color:#166534;
+    .event .avail-chip {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+    
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+    
+      background: #F0FDF4;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
-    .event .avail-chip.full{
-      background:#FEF2F2; color:#991B1B; border-color: rgba(153,27,27,.15);
+    
+    .event .avail-chip svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
+    
+    .event .avail-chip.full {
+      background: #FEF2F2;
+      color: #991B1B;
+      border-color: #FECACA;
+    }
+
 
     /* ——— Modal tabs ——— */
     .tab-btn { padding:.5rem .75rem; border-radius:.75rem .75rem 0 0; }
