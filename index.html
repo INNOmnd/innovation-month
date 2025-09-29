@@ -23,8 +23,8 @@
 
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
-    html { scroll-behavior: smooth; }
     :focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+    html { scroll-behavior: smooth; }
 
     /* Active nav */
     .nav-link[aria-current="page"]{
@@ -58,16 +58,29 @@
       pointer-events:none;
     }
 
-    /* Shared card hover */
-    .card { transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.06); border-color: var(--brand); }
+    /* Cards: lighter shadow to reduce paint cost */
+    .card { transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease; will-change: transform, box-shadow; }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.05); border-color: var(--brand); }
 
     .ratio-16x9 { aspect-ratio: 16/9; }
     .ratio-4x3  { aspect-ratio: 4/3; }
 
-    /* Reveal on scroll */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .6s ease; }
-    .reveal.inview { opacity: 1; transform: none; }
+    /* Reveal on scroll – GPU only (no layout) */
+    .reveal {
+      opacity: 0;
+      translate: 0 10px;          /* GPU-composited transform */
+      transition: opacity .38s ease-out, translate .42s ease-out;
+      will-change: opacity, transform;
+      contain: paint;             /* isolate paints */
+    }
+    .reveal.inview { opacity: 1; translate: 0 0; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      html { scroll-behavior: auto; }
+      .reveal, .reveal.inview { opacity:1; translate:0; transition:none }
+      .card, .card:hover { transform:none; box-shadow:none; }
+    }
 
     /* Mobile-first sizing */
     @media (max-width: 640px){
@@ -88,7 +101,7 @@
 
     <div class="header-inner max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
       <a href="index.html" class="shrink-0">
-        <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto align-middle" />
+        <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto align-middle" width="128" height="64" />
       </a>
       <strong class="text-2xl font-bold" style="color:var(--brand)">Casade INNOvember</strong>
       <nav class="ml-auto flex items-center gap-6 text-sm">
@@ -214,12 +227,17 @@
     }, {passive:true});
   })();
 
-  // IntersectionObserver reveal
+  // IntersectionObserver reveal – pre-trigger slightly before entering viewport
   (function(){
     const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('inview'); });
-    }, { root:null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('inview');
+          io.unobserve(e.target); // animate once to prevent repeated work
+        }
+      });
+    }, { root:null, rootMargin: '10% 0px -5% 0px', threshold: 0.01 });
     els.forEach(el => io.observe(el));
   })();
 
@@ -234,7 +252,7 @@
 
     const card = (p)=> `
       <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
-        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-44 object-cover" loading="lazy">
+        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-44 object-cover" width="800" height="450" loading="lazy">
         <div class="p-4 flex-1 flex flex-col">
           <h4 class="font-semibold leading-snug">${p.title}</h4>
           <p class="text-sm text-slate-600 line-clamp-2 mt-1">${p.summary || ''}</p>
@@ -271,7 +289,7 @@
 
     const card = (w)=>`
       <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden">
-        <img src="${w.banner}" alt="${w.title}" class="w-full h-40 object-cover" loading="lazy">
+        <img src="${w.banner}" alt="${w.title}" class="w-full h-40 object-cover" width="800" height="450" loading="lazy">
         <div class="p-4">
           <p class="text-xs text-slate-500 mb-1">${days[new Date(w.date).getDay()]} ${fmt(w.date)} • ${w.start}–${w.end}</p>
           <h4 class="font-semibold leading-snug">${w.title}</h4>
