@@ -179,49 +179,15 @@
     </div>
   </main>
 
+  <script src="workshops.js"></script>
+  
   <script>
     // Use November of this year (if Nov already passed, use next year)
     const today=new Date();
     const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based; 10 = Nov
     const NOVEMBER=10;
 
-    // Workshops (edit as needed)
-    const WORKSHOPS=[
-      { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool' },
-      { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie.' },
-      { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Een AI cursus voor beginners' },
-      { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Gebruik AI om jouw goeie buurtaal te verbeteren.' },
-      { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Zie hoe drones in ons werkveld zorgen voor innovatie.' },
-      { id:'taal-tool2',title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'10:00', end:'12:00', speaker:'Joan', banner:'pictures/taaltool.png',  desc:'Verkenning van de taaltool.' },
-      { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Werken met AI voor gevorderden.' },
-      { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'09:00', end:'11:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'Leer AI toe te passen in jouw werk.' },
-      { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile scrum.' },
-      { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA.' },
-      { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
-      { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA.' },
-      { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.' },
-      { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie buurtaal zonder AI.' },
-      { id:'taal-tool3',title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.' }
-    ];
-
-    // Map workshop IDs to Microsoft Forms embed URLs
-    const formLinks = {
-      "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
-      "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
-      "wrk-ai-beginner": "FORM_URL_AI_BEGINNER",
-      "goeie-buurtaal-ai": "FORM_URL_BUURTAAL_AI",
-      "dwam": "FORM_URL_DWAM",
-      "taal-tool2": "FORM_URL_TAALTOOL2",
-      "wrk-ai-intermediate": "FORM_URL_AI_ADVANCED",
-      "shortcut": "FORM_URL_SHORTCUT",
-      "agile-scrum": "FORM_URL_AGILE",
-      "omaia": "FORM_URL_OMAIA1",
-      "thuisapp": "FORM_URL_THUISAPP1",
-      "omaia2": "FORM_URL_OMAIA2",
-      "thuisapp2": "FORM_URL_THUISAPP2",
-      "goeie-buurtaal": "FORM_URL_BUURTAAL",
-      "taal-tool3": "FORM_URL_TAALTOOL3"
-    };
+    const WORKSHOPS = Array.isArray(window.WORKSHOPS) ? window.WORKSHOPS : [];
 
     // BESCHIKBAARHEID (nu per-workshop file i.p.v. één lijst)
     let AVAIL = {}; // { id: {capacity, registered, ...}, ... }
@@ -466,20 +432,23 @@
 
     function openModal(ev){
       currentWorkshopId = ev.id;
-
+    
       // Fill header
-      document.getElementById('mBanner').src=ev.banner;
-      document.getElementById('mTitle').textContent=ev.title;
-      document.getElementById('mMeta').textContent=`${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
-
+      document.getElementById('mBanner').src = ev.banner;
+      document.getElementById('mTitle').textContent = ev.title;
+      document.getElementById('mMeta').textContent =
+        `${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
+    
       // Fill info tab
-      document.getElementById('mDesc').textContent=ev.desc;
-
-      // Nieuw: Toon beschikbaarheid in Info-tab en disable Inschrijven-tab indien vol
+      document.getElementById('mDesc').textContent = ev.desc || '';
+    
+      // Availability + form presence → tab state
       (function(){
         const a = AVAIL[ev.id];
         const left = a ? Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0) : null;
-
+        const hasForm = !!ev.form;
+    
+        // Info text
         const mAvail = document.getElementById('mAvail');
         if (left === null) {
           mAvail.textContent = '';
@@ -488,25 +457,24 @@
         } else {
           mAvail.textContent = `Beschikbaarheid: ${left} plekken over`;
         }
-
+    
+        // Disable "Inschrijven" when either full OR no form URL
         const tabBtn = document.getElementById('tab-inschrijven');
-        if (left === 0) {
-          tabBtn.disabled = true;
-          tabBtn.classList.add('opacity-50','cursor-not-allowed');
-        } else {
-          tabBtn.disabled = false;
-          tabBtn.classList.remove('opacity-50','cursor-not-allowed');
-        }
+        const shouldDisable = (left === 0) || !hasForm;
+        tabBtn.disabled = shouldDisable;
+        tabBtn.classList.toggle('opacity-50', shouldDisable);
+        tabBtn.classList.toggle('cursor-not-allowed', shouldDisable);
       })();
-
+    
       // Reset tabs
       activateTab('info', false); // don't load form yet
       document.getElementById('mForm').innerHTML = '';
       document.getElementById('mFormLoader').style.display = '';
-
+    
       // Show modal
-      const modal=document.getElementById('modal');
-      modal.classList.remove('hidden'); modal.classList.add('flex');
+      const modal = document.getElementById('modal');
+      modal.classList.remove('hidden'); 
+      modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
     }
 
@@ -538,16 +506,19 @@
     }
 
     function loadFormIframe(workshopId){
-      const url = formLinks[workshopId];
+      // Read the URL from the shared workshop object
+      const ev = WORKSHOPS.find(w => w.id === workshopId);
+      const url = ev && ev.form;
+    
       const container = document.getElementById('mForm');
       const loader = document.getElementById('mFormLoader');
       container.innerHTML = '';
-
+    
       if(!url){
         loader.textContent = 'Geen inschrijfformulier beschikbaar.';
         return;
       }
-
+    
       const iframe = document.createElement('iframe');
       iframe.width = '100%';
       iframe.height = '900';
@@ -558,13 +529,14 @@
       iframe.setAttribute('frameborder','0');
       iframe.setAttribute('allowfullscreen','');
       iframe.src = url;
-
+    
       // Show loader until first load event
       loader.style.display = '';
       iframe.addEventListener('load', () => { loader.style.display = 'none'; }, { once: true });
-
+    
       container.appendChild(iframe);
     }
+
 
     // Close when clicking the dark backdrop (outside the card)
     document.getElementById('modal').addEventListener('click', (e) => {if (e.target === e.currentTarget) closeModal();});
