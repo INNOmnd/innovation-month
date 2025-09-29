@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Casade INNOvember</title>
-  <meta name="description" content="Casade INNOvember — Bekijk inspirerende blogposts over innovatie en verken de planning met workshops en sessies." />
+  <meta name="description" content="Casade INNOvember — Inspirerende blogposts en een overzicht van workshops en sessies." />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="casade-logo.png">
+  <link rel="icon" type="image/svg" href="casade-logo.svg">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -32,31 +32,32 @@
       text-underline-offset: 4px;
     }
     /* Animated underline on hover */
-    .link-underline {
-      background-image: linear-gradient(currentColor, currentColor);
-      background-repeat: no-repeat;
-      background-position: 0 100%;
-      background-size: 0% 2px;
-      transition: background-size .25s ease;
-    }
-    .link-underline:hover { background-size: 100% 2px; }
+    .link-underline { background-image: linear-gradient(currentColor,currentColor); background-repeat:no-repeat; background-position:0 100%; background-size:0% 2px; transition:background-size .25s ease }
+    .link-underline:hover { background-size:100% 2px }
 
     /* Header compact on scroll */
     .header-compact .header-inner { padding-top:.5rem; padding-bottom:.5rem; }
 
-    /* Soft background for hero (toned down) */
-    .parallax{
+    /* Hero (calm wow) */
+    .hero-bg {
       background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(134,188,37,.10), transparent 60%),
-        radial-gradient(900px 500px at -10% 110%, rgba(93,122,21,.08), transparent 60%),
+        radial-gradient(1100px 520px at 90% -10%, rgba(134,188,37,.10), transparent 60%),
+        radial-gradient(900px 400px at -10% 110%, rgba(93,122,21,.08), transparent 60%),
         linear-gradient(180deg,#ffffff, #fafafa);
     }
 
-    /* Underline reveal for headline */
-    @keyframes underline { to { width: 100%; } }
+    /* Shared card hover */
+    .card { transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.06); border-color: var(--brand); }
 
-    /* Gentle blob drift */
-    @keyframes drift { 0%,100% { transform: translateY(0) } 50% { transform: translateY(8px) } }
+    .ratio-16x9 { aspect-ratio: 16/9; }
+    .ratio-4x3  { aspect-ratio: 4/3; }
+
+    /* Mobile typographic tweaks */
+    @media (max-width: 640px){
+      .hero-title { font-size: 2rem; line-height: 1.15; }
+      .hero-sub   { font-size: 1rem; }
+    }
   </style>
 </head>
 <body class="bg-white text-slate-800 min-h-screen flex flex-col">
@@ -68,7 +69,9 @@
     <div class="absolute inset-x-0 top-0 h-1" style="background:linear-gradient(90deg,#86BC25,#5D7A15)"></div>
 
     <div class="header-inner max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
-      <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto align-middle" />
+      <a href="index.html" class="shrink-0">
+        <img src="casade-logo.svg" alt="Casade" class="h-16 w-auto align-middle" />
+      </a>
       <div class="flex-1">
         <h1 class="text-2xl font-bold" style="color:var(--brand)">Casade INNOvember</h1>
       </div>
@@ -80,93 +83,77 @@
     </div>
   </header>
 
-  <main id="main" class="flex-1 px-4 py-12">
+  <main id="main" class="flex-1 px-4 py-10">
     <div class="max-w-6xl mx-auto">
 
       <!-- HERO -->
-      <section class="relative overflow-hidden rounded-3xl">
-        <div class="absolute inset-0 -z-10 parallax"></div>
-
-        <!-- very subtle blobs -->
-        <div class="pointer-events-none absolute -z-10 -top-10 -left-10 h-40 w-40 rounded-full opacity-10 animate-[drift_18s_ease-in-out_infinite]"
-             style="background:radial-gradient(circle,#86BC25,transparent 60%)"></div>
-        <div class="pointer-events-none absolute -z-10 -bottom-10 -right-10 h-52 w-52 rounded-full opacity-10 animate-[drift_22s_ease-in-out_infinite]"
-             style="background:radial-gradient(circle,#5D7A15,transparent 60%)"></div>
-
-        <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12 bg-white/75 backdrop-blur rounded-3xl border border-slate-200">
-          <div>
+      <section class="hero-bg rounded-3xl border border-slate-200 overflow-hidden">
+        <div class="grid md:grid-cols-2 items-stretch">
+          <div class="p-8 md:p-12">
             <p class="inline-flex items-center gap-2 text-xs font-medium text-slate-600 mb-3">
               <span class="inline-block h-2 w-2 rounded-full" style="background:var(--brand)"></span>
               INNOvember bij Casade
             </p>
-
-            <h2 class="relative inline-block text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6">
-              Welkom bij de <span style="color:var(--brand)">Innovatiemaand</span>
-              <span class="absolute left-0 -bottom-2 h-[3px] w-0 bg-[var(--brand)] animate-[underline_1.2s_ease-out_forwards]"></span>
+            <h2 class="hero-title text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-5">
+              Samen <span style="color:var(--brand)">innoveren</span> bij Casade
             </h2>
-
-            <p class="text-lg text-slate-700 mb-6">
-              In november vieren we innovatie bij Casade. Lees inspirerende blogposts en bekijk de interactieve planning met workshops en sessies.
+            <p class="hero-sub text-lg text-slate-700 mb-6 max-w-prose">
+              Lees inspirerende verhalen en ontdek workshops die je direct kunt toepassen in je werk.
             </p>
-
             <div class="flex flex-wrap gap-3">
-              <a href="blog.html"
-                 class="px-5 py-3 rounded-xl text-white font-medium transition transform hover:scale-[1.02] focus:scale-[1.02] focus-visible:outline-none ring-0 focus:ring-4 focus:ring-[#86BC25]/30 inline-flex items-center"
-                 style="background:var(--brand)">
-                 Verken Blogs
-                 <svg aria-hidden="true" class="inline ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M7 5l5 5-5 5"/></svg>
-              </a>
-
-              <a href="planning.html"
-                 class="px-5 py-3 rounded-xl font-medium border transition transform hover:scale-[1.02] focus:scale-[1.02] focus-visible:outline-none ring-0 focus:ring-4 focus:ring-[#86BC25]/20"
-                 style="border-color:var(--brand); color:var(--brand)">
-                 Bekijk de Planning
-              </a>
+              <a href="planning.html" class="px-5 py-3 rounded-xl text-white font-medium focus:ring-4 focus:ring-[#86BC25]/30" style="background:var(--brand)">Bekijk workshops</a>
+              <a href="blog.html" class="px-5 py-3 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Lees blogs</a>
             </div>
           </div>
+          <div class="ratio-4x3 md:ratio-16x9 bg-center bg-cover" style="background-image:url('pictures/werkenmetai.png')"></div>
+        </div>
+      </section>
 
-          <!-- Collage (kept, but calm) -->
-          <div class="grid grid-cols-3 gap-3">
-            <div class="col-span-2 aspect-[4/3] rounded-2xl shadow-sm bg-center bg-cover"
-                 style="background-image:
-                    url('pictures/werkenmetai.png'),
-                    linear-gradient(135deg, rgba(134,188,37,.12), rgba(93,122,21,.08));"></div>
-            <div class="aspect-square rounded-2xl shadow-sm bg-center bg-cover"
-                 style="background-image:
-                    url('pictures/aftrap.png'),
-                    linear-gradient(135deg, rgba(134,188,37,.10), rgba(0,0,0,.02));"></div>
-            <div class="aspect-square rounded-2xl shadow-sm bg-center bg-cover"
-                 style="background-image:
-                    url('pictures/dwam.png'),
-                    linear-gradient(135deg, rgba(93,122,21,.10), rgba(0,0,0,.02));"></div>
-            <div class="col-span-2 aspect-[4/3] rounded-2xl shadow-sm bg-center bg-cover"
-                 style="background-image:
-                    url('pictures/omaia.png'),
-                    linear-gradient(135deg, rgba(134,188,37,.12), rgba(93,122,21,.08));"></div>
+      <!-- Feature strip -->
+      <section class="mt-10 grid gap-4 sm:grid-cols-3">
+        <article class="card bg-white border border-slate-200 rounded-2xl p-4 flex items-start gap-3">
+          <h3 class="font-semibold">Overzichtelijke planning</h3>
+          <p class="text-sm text-slate-600">Bekijk per week wat er speelt en schrijf je in.</p>
+        </article>
+        <article class="card bg-white border border-slate-200 rounded-2xl p-4 flex items-start gap-3">
+          <h3 class="font-semibold">Praktische verhalen</h3>
+          <p class="text-sm text-slate-600">Lees hoe collega’s innovatie toepassen.</p>
+        </article>
+        <article class="card bg-white border border-slate-200 rounded-2xl p-4 flex items-start gap-3">
+          <h3 class="font-semibold">Snel aan de slag</h3>
+          <p class="text-sm text-slate-600">Kleine stap, groot effect — doe vandaag mee.</p>
+        </article>
+      </section>
+
+      <!-- Upcoming Workshops -->
+      <section class="mt-12">
+        <div class="flex items-end justify-between gap-4 mb-4">
+          <h3 class="text-xl font-semibold">Upcoming workshops</h3>
+          <a href="planning.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle workshops →</a>
+        </div>
+        <div id="upcoming" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </section>
+
+      <!-- Blog teaser -->
+      <section class="mt-12">
+        <div class="flex items-end justify-between gap-4 mb-4">
+          <h3 class="text-xl font-semibold">Nieuw op de blog</h3>
+          <a href="blog.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle posts →</a>
+        </div>
+        <div id="blogTeaser" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </section>
+
+      <!-- CTA banner -->
+      <section class="mt-12">
+        <div class="rounded-3xl border border-slate-200 p-6 md:p-8 bg-gradient-to-r from-white to-[#F7FAEF] flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold">Mis niets in INNOvember</h3>
+            <p class="text-slate-700">Plan je week en kies een workshop die bij je past.</p>
           </div>
-        </div>
-      </section>
-
-      <!-- Divider -->
-      <div class="my-8 h-px bg-slate-100"></div>
-
-      <!-- Blog teaser (auto from posts.js) -->
-      <section class="mt-2">
-        <h3 class="text-xl font-semibold mb-3">Nieuw op de blog</h3>
-        <div id="blogTeaser" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-        <div class="mt-4">
-          <a href="blog.html" class="link-underline font-medium" style="color:var(--brand)">Bekijk alle posts →</a>
-        </div>
-      </section>
-
-      <!-- Planning teaser (this week, auto from workshops.js) -->
-      <section class="mt-12 rounded-2xl border border-slate-200 p-6 bg-white">
-        <h3 class="font-semibold mb-4">Deze week</h3>
-        <ol id="weekList" class="relative border-l pl-5 space-y-4 border-slate-200"></ol>
-        <div class="mt-5">
-          <a href="planning.html" class="inline-flex items-center gap-2 font-medium link-underline" style="color:var(--brand)">
-            Bekijk volledige planning →
-          </a>
+          <div class="flex gap-3">
+            <a href="planning.html" class="px-5 py-3 rounded-xl text-white font-medium" style="background:var(--brand)">Naar de planning</a>
+            <a href="blog.html" class="px-5 py-3 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Lees blogs</a>
+          </div>
         </div>
       </section>
 
@@ -182,8 +169,8 @@
 
   <!-- Mobile sticky CTA bar -->
   <div class="md:hidden fixed bottom-3 inset-x-3 z-40 bg-white/90 backdrop-blur border border-slate-200 shadow-lg rounded-2xl p-3 flex items-center gap-3">
-    <button onclick="location.href='blog.html'" class="flex-1 py-2 rounded-xl text-white font-medium" style="background:var(--brand)">Blogs</button>
-    <button onclick="location.href='planning.html'" class="flex-1 py-2 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Planning</button>
+    <button onclick="location.href='planning.html'" class="flex-1 py-2 rounded-xl text-white font-medium" style="background:var(--brand)">Workshops</button>
+    <button onclick="location.href='blog.html'" class="flex-1 py-2 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Blogs</button>
   </div>
 
   <!-- Data sources -->
@@ -208,93 +195,66 @@
     }, {passive:true});
   })();
 
-  // ---- BLOG TEASER (reads from posts.js) ----
+  // BLOG TEASER
   (function(){
     const container = document.getElementById('blogTeaser');
     const posts = (window.POSTS || []).slice();
-
-    // Guard: nothing to show
     if (!container) return;
 
-    // newest first by date (fallback to keep order)
-    posts.sort((a,b)=>{
-      const da = new Date(a.date), db = new Date(b.date);
-      return (isNaN(db)-isNaN(da)) || (db - da);
-    });
-
-    // take up to 3
+    posts.sort((a,b)=> (new Date(b.date) - new Date(a.date)) || 0);
     const pick = posts.slice(0,3);
-    if(pick.length === 0){
-      container.innerHTML = '<p class="text-sm text-slate-600">Nog geen blogposts.</p>';
-      return;
-    }
 
-    const tpl = (p)=> `
-      <article class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
-        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-36 object-cover rounded-xl mb-3 border border-slate-100">
-        <h4 class="font-semibold leading-snug">${p.title}</h4>
-        <p class="text-sm text-slate-600 line-clamp-2 mt-1">${p.summary || ''}</p>
-        <a href="post.html?id=${encodeURIComponent(p.id)}" class="inline-block mt-3 link-underline font-medium" style="color:var(--brand)">Lees meer →</a>
-      </article>
-    `;
+    const card = (p)=> `
+      <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-40 object-cover">
+        <div class="p-4 flex-1 flex flex-col">
+          <h4 class="font-semibold leading-snug">${p.title}</h4>
+          <p class="text-sm text-slate-600 line-clamp-2 mt-1">${p.summary || ''}</p>
+          <div class="mt-auto pt-3">
+            <a href="post.html?id=${encodeURIComponent(p.id)}" class="inline-flex items-center gap-2 text-sm font-medium" style="color:var(--brand)">Lees meer →</a>
+          </div>
+        </div>
+      </article>`;
 
-    container.innerHTML = pick.map(tpl).join('');
+    container.innerHTML = pick.length ? pick.map(card).join('') : '<p class="text-sm text-slate-600">Nog geen blogposts.</p>';
   })();
 
-  // ---- PLANNING TEASER (reads from workshops.js) ----
+  // UPCOMING TEASER
   (function(){
-    const list = document.getElementById('weekList');
-    if(!list) return;
+    const target = document.getElementById('upcoming');
+    const list = (window.WORKSHOPS || []).slice();
+    if(!target) return;
 
-    const WORKSHOPS = (window.WORKSHOPS || []).slice();
-    if(WORKSHOPS.length === 0){
-      list.innerHTML = '<li class="text-sm text-slate-600">Planning wordt binnenkort toegevoegd.</li>';
+    const now = new Date();
+    const addTime = (d, t) => new Date(`${d}T${t}:00`);
+
+    const upcoming = list
+      .filter(w => addTime(w.date, w.end) >= now)
+      .sort((a,b)=> addTime(a.date,a.start) - addTime(b.date,b.start))
+      .slice(0,3);
+
+    if(upcoming.length === 0){
+      target.innerHTML = '<p class="text-sm text-slate-600">Nieuwe sessies worden binnenkort toegevoegd.</p>';
       return;
     }
 
-    // Build current year's November weeks (Mon..Fri) like planning.html
-    const today = new Date();
-    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 10 = Nov
-    const NOVEMBER = 10;
+    const days = ['zo','ma','di','wo','do','vr','za'];
+    const fmt = (d) => new Date(d).toLocaleDateString('nl-NL',{ day:'2-digit', month:'short' });
 
-    function weekRange(d){
-      // get Monday of current week
-      const t = new Date(d);
-      const day = (t.getDay()+6)%7;
-      t.setDate(t.getDate()-day);
-      const start = new Date(t);
-      const end = new Date(t); end.setDate(end.getDate()+4);
-      return [start, end];
-    }
+    const card = (w)=>`
+      <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <img src="${w.banner}" alt="${w.title}" class="w-full h-40 object-cover">
+        <div class="p-4">
+          <p class="text-xs text-slate-500 mb-1">${days[new Date(w.date).getDay()]} ${fmt(w.date)} • ${w.start}–${w.end}</p>
+          <h4 class="font-semibold leading-snug">${w.title}</h4>
+          <p class="text-sm text-slate-600">${w.speaker || ''}</p>
+          <div class="mt-3">
+            <a href="planning.html" class="inline-flex items-center gap-2 text-sm font-medium" style="color:var(--brand)">Bekijk & schrijf je in →</a>
+          </div>
+        </div>
+      </article>`;
 
-    const [start, end] = weekRange(new Date());
-    const weekEvents = WORKSHOPS
-      .filter(w=>{
-        const wd = new Date(w.date);
-        // only show this current week and only Nov of the right year
-        return wd >= new Date(start.toDateString()) && wd <= new Date(end.toDateString())
-               && wd.getMonth() === NOVEMBER
-               && wd.getFullYear() === currentYear;
-      })
-      .sort((a,b)=> new Date(a.date)-new Date(b.date) || a.start.localeCompare(b.start))
-      .slice(0,5); // show up to 5 items
-
-    if(weekEvents.length === 0){
-      list.innerHTML = '<li class="text-sm text-slate-600">Geen sessies deze week.</li>';
-      return;
-    }
-
-    const days = ['Zo','Ma','Di','Wo','Do','Vr','Za'];
-    list.innerHTML = weekEvents.map(ev=>{
-      const d = new Date(ev.date);
-      const day = days[d.getDay()];
-      return `
-        <li class="pl-4">
-          <span class="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full" style="background:var(--brand)"></span>
-          <p class="font-medium">${ev.title}</p>
-          <p class="text-sm text-slate-600">${day} ${ev.start} – ${ev.end} • ${ev.speaker || ''}</p>
-        </li>`;
-    }).join('');
+    target.innerHTML = upcoming.map(card).join('');
   })();
   </script>
 </body>
