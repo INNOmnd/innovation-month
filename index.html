@@ -23,6 +23,7 @@
 
   <style>
     :root { --brand:#86BC25; --brand-dark:#5D7A15; }
+    html { scroll-behavior: smooth; }
     :focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 
     /* Active nav */
@@ -31,7 +32,6 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-    /* Underline hover */
     .link-underline{
       background-image:linear-gradient(currentColor,currentColor);
       background-repeat:no-repeat;background-position:0 100%;
@@ -42,12 +42,20 @@
     /* Header compact on scroll */
     .header-compact .header-inner { padding-top:.5rem; padding-bottom:.5rem; }
 
-    /* Calm hero background */
+    /* Calm hero background + subtle bottom fade */
     .hero-bg{
       background:
         radial-gradient(1100px 520px at 90% -10%, rgba(134,188,37,.10), transparent 60%),
         radial-gradient(900px 400px at -10% 110%, rgba(93,122,21,.08), transparent 60%),
         linear-gradient(180deg,#ffffff, #fafafa);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg:after{
+      content:"";
+      position:absolute; inset-x:0; bottom:0; height:70px;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 100%);
+      pointer-events:none;
     }
 
     /* Shared card hover */
@@ -57,7 +65,11 @@
     .ratio-16x9 { aspect-ratio: 16/9; }
     .ratio-4x3  { aspect-ratio: 4/3; }
 
-    /* Mobile-first sizing & spacing */
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .6s ease; }
+    .reveal.inview { opacity: 1; transform: none; }
+
+    /* Mobile-first sizing */
     @media (max-width: 640px){
       .hero-title { font-size: 1.9rem; line-height: 1.15; letter-spacing:-.01em; }
       .hero-sub   { font-size: 1rem; }
@@ -68,7 +80,7 @@
 </head>
 <body class="bg-white text-slate-800 min-h-screen flex flex-col">
   <!-- Skip link -->
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 bg-white text-slate-900 px-3 py-2 rounded-md shadow">Naar de inhoud</a>
+  <a href="#contentStart" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 bg-white text-slate-900 px-3 py-2 rounded-md shadow">Naar de inhoud</a>
 
   <!-- Header -->
   <header id="site-header" class="sticky top-0 z-30 backdrop-blur bg-white/80 border-b border-slate-200 transition">
@@ -87,13 +99,13 @@
     </div>
   </header>
 
-  <main id="main" class="flex-1 px-4 py-8 md:py-10">
+  <main id="main" class="flex-1 px-4">
     <div class="max-w-6xl mx-auto">
 
-      <!-- HERO: single message + two CTAs -->
-      <section class="hero-bg rounded-3xl border border-slate-200 overflow-hidden">
-        <div class="grid md:grid-cols-2 items-stretch">
-          <div class="hero-pad p-8 md:p-12">
+      <!-- HERO: tall, calm first view -->
+      <section class="hero-bg rounded-3xl border border-slate-200 mt-8 md:mt-10">
+        <div class="grid md:grid-cols-2 items-stretch min-h-[68vh] md:min-h-[72vh]">
+          <div class="hero-pad p-8 md:p-12 flex flex-col justify-center">
             <p class="inline-flex items-center gap-2 text-xs font-medium text-slate-600 mb-3">
               <span class="inline-block h-2 w-2 rounded-full" style="background:var(--brand)"></span>
               INNOvember bij Casade
@@ -113,12 +125,27 @@
                  style="border-color:var(--brand); color:var(--brand)">Lees blogs</a>
             </div>
           </div>
-          <div class="ratio-4x3 md:ratio-16x9 bg-center bg-cover" style="background-image:url('pictures/werkenmetai.png')" role="img" aria-label="Illustratie: AI en innovatie"></div>
+          <!-- Desktop-only hero image -->
+          <div class="hidden md:block ratio-4x3 md:ratio-16x9 bg-center bg-cover m-6 rounded-3xl"
+               style="background-image:url('pictures/aftrap.png')"
+               role="img" aria-label="Aftrap workshop afbeelding"></div>
+        </div>
+
+        <!-- scroll cue -->
+        <div class="absolute inset-x-0 bottom-4 flex justify-center">
+          <a href="#contentStart" class="inline-flex items-center gap-2 text-sm font-medium px-3 py-1.5 rounded-full border bg-white/80 backdrop-blur"
+             style="border-color:var(--brand); color:var(--brand)">
+            Verder verkennen
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M5 7l5 5 5-5"/></svg>
+          </a>
         </div>
       </section>
 
-      <!-- UPCOMING WORKSHOPS (first 3) -->
-      <section class="mt-10 md:mt-12">
+      <!-- CONTENT START (reveals on scroll) -->
+      <div id="contentStart" class="h-4 md:h-8"></div>
+
+      <!-- UPCOMING WORKSHOPS -->
+      <section class="reveal mt-8 md:mt-10">
         <div class="flex items-end justify-between gap-4 mb-3 md:mb-4">
           <h2 class="text-xl font-semibold">Upcoming workshops</h2>
           <a href="planning.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle workshops →</a>
@@ -126,8 +153,8 @@
         <div id="upcoming" class="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
       </section>
 
-      <!-- BLOG TEASER (2 cards for calmness) -->
-      <section class="mt-10 md:mt-12">
+      <!-- BLOG TEASER -->
+      <section class="reveal mt-8 md:mt-10">
         <div class="flex items-end justify-between gap-4 mb-3 md:mb-4">
           <h2 class="text-xl font-semibold">Nieuw op de blog</h2>
           <a href="blog.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle posts →</a>
@@ -136,7 +163,7 @@
       </section>
 
       <!-- CTA BANNER -->
-      <section class="mt-10 md:mt-12">
+      <section class="reveal mt-8 md:mt-12 mb-10">
         <div class="rounded-3xl border border-slate-200 p-6 md:p-8 bg-gradient-to-r from-white to-[#F7FAEF] flex flex-col md:flex-row items-start md:items-center gap-4">
           <div class="flex-1">
             <h3 class="text-xl font-semibold">Doe mee in INNOvember</h3>
@@ -187,7 +214,16 @@
     }, {passive:true});
   })();
 
-  // BLOG TEASER (newest first) — show 2 for calmness
+  // IntersectionObserver reveal
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('inview'); });
+    }, { root:null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // BLOG TEASER (2 latest)
   (function(){
     const container = document.getElementById('blogTeaser');
     const posts = (window.POSTS || []).slice();
@@ -211,7 +247,7 @@
     container.innerHTML = pick.length ? pick.map(card).join('') : '<p class="text-sm text-slate-600">Nog geen blogposts.</p>';
   })();
 
-  // UPCOMING TEASER (first 3 futures from workshops.js)
+  // UPCOMING TEASER (3 future workshops)
   (function(){
     const target = document.getElementById('upcoming');
     const list = (window.WORKSHOPS || []).slice();
