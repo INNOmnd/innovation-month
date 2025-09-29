@@ -57,19 +57,18 @@
     /*  NEW: Sticky table head       */
     /* ============================= */
     /* Make header cells stick under the page header when scrolling */
-    table.sticky-head thead th{
-      position: sticky; 
-      top: calc(var(--stickyTop, 64px));
-      z-index: 20;               /* sit above events */
-      background: #f1f5f9;       /* slate-100 */
-      box-shadow: 0 1px 0 rgba(0,0,0,.06);
-    }
+    #calendarWrap thead th{ position: sticky; top: 0; z-index: 20; background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);} 
 
     /* ============================= */
     /*  NEW: Mobile-friendly tweaks  */
     /* ============================= */
     @media (max-width: 640px){ /* < sm */
       .event{ font-size:11px; padding:6px 6px 24px; }
+    }
+    /* Sticky first column (time) on small screens */
+    @media (max-width: 768px){
+      #calendarWrap th:first-child{ position: sticky; left: 0; z-index: 25; background: #ffffff; }
+    }
     }
   </style>
 </head>
@@ -93,15 +92,15 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8">
     <!-- Week navigation -->
-    <div class="flex items-center justify-between mb-4">
+    <div class="week-controls flex items-center justify-between mb-4">
       <button id="prevWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Vorige</button>
       <h2 id="weekTitle" class="text-lg font-semibold"></h2>
       <button id="nextWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Volgende</button>
     </div>
 
     <!-- Timetable -->
-    <div class="overflow-x-auto border border-slate-200 rounded-2xl bg-white">
-      <table class="sticky-head w-full text-sm" id="timetable">
+    <div id="calendarWrap" class="overflow-auto border border-slate-200 rounded-2xl bg-white">
+      <table class="w-full text-sm" id="timetable">
         <thead class="bg-slate-100">
           <tr>
             <th class="w-20 sm:w-24 p-2 sm:p-3 text-left">Tijd</th>
@@ -579,17 +578,19 @@
       }
     }
 
-    // set sticky top offset equal to header height (for sticky thead)
     (function(){
-      const apply = ()=>{
-        const hdr = document.querySelector('header');
-        const top = hdr ? hdr.offsetHeight : 0;
-        document.documentElement.style.setProperty('--stickyTop', top + 'px');
-      };
-      addEventListener('load', apply);
-      addEventListener('resize', apply);
-      apply();
-    })();
+  const wrap = document.getElementById('calendarWrap');
+  function setMaxHeight(){
+    if(!wrap) return;
+    const headerH = document.querySelector('header')?.offsetHeight || 0;
+    const controlsH = document.querySelector('.week-controls')?.offsetHeight || 0;
+    const extras = 56; // padding/margins
+    wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
+  }
+  addEventListener('resize', setMaxHeight, {passive:true});
+  addEventListener('load', setMaxHeight);
+  setMaxHeight();
+})();
 
     renderWeek();
     renderWorkshops();
