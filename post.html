@@ -8,31 +8,45 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{--brand:#86BC25;--brand-dark:#5D7A15}
-  
-    /* Active nav state (gekoppeld aan aria-current="page") */
+
+    /* Sticky-footer layout */
+    html,body{height:100%}
+    .page{min-height:100%; min-height:100dvh; display:flex; flex-direction:column}
+    .grow-main{flex:1}
+
+    /* Active nav */
     .nav-link[aria-current="page"]{
       color: var(--brand);
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-    .nav-link[aria-current="page"]:hover{
-      color: var(--brand) !important;
-    }
-  </style>
+    .nav-link[aria-current="page"]:hover{ color: var(--brand) !important; }
 
+    /* Animated underline on hover */
+    .link-underline{
+      background-image:linear-gradient(currentColor,currentColor);
+      background-repeat:no-repeat;background-position:0 100%;
+      background-size:0% 2px;transition:background-size .25s ease
+    }
+    .link-underline:hover{background-size:100% 2px}
+  </style>
 </head>
 <body class="bg-slate-50">
+<div class="page">
   <!-- Header -->
-  <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200 z-10">
+  <header class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-200 z-10 relative">
+    <!-- brand line -->
+    <div class="absolute inset-x-0 top-0 h-1" style="background:linear-gradient(90deg,#86BC25,#5D7A15)"></div>
+
     <div class="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
       <a href="index.html" aria-label="Naar home" class="shrink-0">
         <img src="casade-logo.svg" class="h-16 w-auto block" alt="Casade" height="64" decoding="async" />
       </a>
       <h1 class="text-xl font-bold" style="color:var(--brand)">Innovatie Blog</h1>
       <nav class="ml-auto text-sm flex gap-6">
-        <a href="index.html" class="hover:underline hover:text-slate-900 underline-offset-4">Home</a>
-        <a href="blog.html" class="hover: underline hover:text-slate-900 underline-offset-4">Blog</a>
-        <a href="planning.html" class="hover:underline hover:text-slate-900 underline-offset-4">Planning</a>
+        <a href="index.html" class="nav-link link-underline hover:text-slate-900">Home</a>
+        <a href="blog.html" class="nav-link link-underline hover:text-slate-900">Blog</a>
+        <a href="planning.html" class="nav-link link-underline hover:text-slate-900">Planning</a>
       </nav>
     </div>
   </header>
@@ -43,7 +57,7 @@
   </div>
 
   <!-- Content -->
-  <main class="max-w-4xl mx-auto px-4 py-8">
+  <main class="grow-main max-w-4xl mx-auto px-4 py-8">
     <a href="blog.html" class="inline-flex items-center gap-2 text-sm font-medium mb-6 px-3 py-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50" style="color:var(--brand)">
       ← Terug naar blogs
     </a>
@@ -62,95 +76,89 @@
     </div>
   </main>
 
-  <!-- shared posts -->
-  <script src="posts.js"></script>
+  <footer class="border-t border-slate-200 py-10">
+    <div class="max-w-4xl mx-auto px-4 text-sm text-slate-600">
+      © 2025 Casade — INNOvember
+    </div>
+  </footer>
+</div>
 
-  <script>
-    const $ = s => document.querySelector(s);
-    const id = new URLSearchParams(location.search).get('id');
+<!-- shared posts -->
+<script src="posts.js"></script>
 
-    function formatDate(iso){
-      if(!iso) return '';
-      const d = new Date(iso);
-      return isNaN(d) ? iso : d.toLocaleDateString('nl-NL', {
-        year:'numeric',
-        month:'long',
-        day:'numeric'
-      });
-    }
+<script>
+  const $ = s => document.querySelector(s);
+  const id = new URLSearchParams(location.search).get('id');
 
-    // Renderer: kan paragrafen (string) en kopjes ({type:'h2'}) tonen
-    function renderBlocks(blocks, container){
-      container.innerHTML = '';
-      (blocks || []).forEach(b => {
-        if (typeof b === 'string') {
-          const p = document.createElement('p');
-          p.textContent = b.trim();
-          if (p.textContent) container.appendChild(p);
-          return;
-        }
-        if (b && b.type === 'h2') {
-          const h = document.createElement('h2');
-          h.className = 'text-xl sm:text-2xl font-semibold mt-8';
-          h.textContent = b.text || '';
-          container.appendChild(h);
-          return;
-        }
-        if (b && b.type === 'hr') {
-          const hr = document.createElement('hr');
-          hr.className = 'my-6 border-slate-200';
-          container.appendChild(hr);
-          return;
-        }
-        // fallback: behandel als paragraaf
+  function formatDate(iso){
+    if(!iso) return '';
+    const d = new Date(iso);
+    return isNaN(d) ? iso : d.toLocaleDateString('nl-NL', {year:'numeric', month:'long', day:'numeric'});
+  }
+
+  // Simple block renderer (p, h2, hr)
+  function renderBlocks(blocks, container){
+    container.innerHTML = '';
+    (blocks || []).forEach(b => {
+      if (typeof b === 'string') {
         const p = document.createElement('p');
-        p.textContent = String(b || '').trim();
+        p.textContent = b.trim();
         if (p.textContent) container.appendChild(p);
-      });
-    }
-
-    function render(){
-      const list = window.POSTS || [];
-      const post = list.find(p => String(p.id) === String(id));
-      if(!post){
-        $('#post').classList.add('hidden');
-        $('#notFound').classList.remove('hidden');
-        document.title = 'Casade Blog — Niet gevonden';
         return;
       }
+      if (b && b.type === 'h2') {
+        const h = document.createElement('h2');
+        h.className = 'text-xl sm:text-2xl font-semibold mt-8';
+        h.textContent = b.text || '';
+        container.appendChild(h);
+        return;
+      }
+      if (b && b.type === 'hr') {
+        const hr = document.createElement('hr');
+        hr.className = 'my-6 border-slate-200';
+        container.appendChild(hr);
+        return;
+      }
+      const p = document.createElement('p');
+      p.textContent = String(b || '').trim();
+      if (p.textContent) container.appendChild(p);
+    });
+  }
 
-      document.title = `Casade Blog — ${post.title}`;
-      const banner = $('#banner');
-      banner.src = post.banner;
-      banner.alt = `Banner: ${post.title}`;
-
-      $('#meta').textContent = [post.company, formatDate(post.date)].filter(Boolean).join(' • ');
-      $('#title').textContent = post.title;
-
-      renderBlocks(post.content, $('#content'));
+  function render(){
+    const list = window.POSTS || [];
+    const post = list.find(p => String(p.id) === String(id));
+    if(!post){
+      $('#post').classList.add('hidden');
+      $('#notFound').classList.remove('hidden');
+      document.title = 'Casade Blog — Niet gevonden';
+      return;
     }
 
-    render();
-  </script>
+    document.title = `Casade Blog — ${post.title}`;
+    const banner = $('#banner');
+    banner.src = post.banner;
+    banner.alt = `Banner: ${post.title}`;
 
-  <script>
+    $('#meta').textContent = [post.company, formatDate(post.date)].filter(Boolean).join(' • ');
+    $('#title').textContent = post.title;
+
+    renderBlocks(post.content, $('#content'));
+  }
+  render();
+</script>
+
+<script>
+  // Active nav; special case: post.html -> mark Blog
   (() => {
     const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  
     document.querySelectorAll('.nav-link').forEach(a => {
       const target = (a.getAttribute('href') || '').split('/').pop().toLowerCase();
-  
-      // Normale match (index.html, planning.html, blog.html)
       let isActive = target === here;
-  
-      // Speciale case: je zit op een blogpost (post.html) → markeer "blog.html" als actief
-      if (!isActive && here.startsWith('post.html') && target === 'blog.html') {
-        isActive = true;
-      }
-  
+      if (!isActive && here.startsWith('post.html') && target === 'blog.html') isActive = true;
       if (isActive) a.setAttribute('aria-current', 'page');
     });
   })();
-  </script>
+</script>
 </body>
 </html>
