@@ -87,7 +87,7 @@
   </style>
 </head>
 <body class="bg-slate-50">
-  <!-- Header matches blog: logo + title left, nav right -->
+  <!-- Header styled like your blog header -->
   <header id="siteHeader" class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
       <a href="index.html" aria-label="Naar home" class="inline-flex items-center gap-2 shrink-0">
@@ -209,7 +209,13 @@
     const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 10 = Nov
     const NOVEMBER=10;
 
-    const WORKSHOPS = Array.isArray(window.WORKSHOPS) ? window.WORKSHOPS : [];
+    // Load workshops from either window.WORKSHOPS or a global const WORKSHOPS
+    const WORKSHOPS = (() => {
+      if (Array.isArray(window.WORKSHOPS)) return window.WORKSHOPS;
+      try { if (Array.isArray(WORKSHOPS)) return WORKSHOPS; } catch {}
+      console.warn('Geen workshops geladen — controleer workshops.js of het pad naar het bestand.');
+      return [];
+    })();
 
     // Availability map
     let AVAIL = {}; // { id: {capacity, registered, ...}, ... }
@@ -220,7 +226,8 @@
       const last=new Date(year, NOVEMBER+1, 0);
       const start=new Date(first);
       const day=(start.getDay()+6)%7; // Mon=0
-      start.setDate(start.setDate(start.getDate())-day);
+      // ✅ FIX: correct offset to Monday
+      start.setDate(start.getDate() - day);
       const weeks=[];
       let cur=new Date(start);
       while(cur<=last){
@@ -644,7 +651,7 @@
       function setMaxHeight(){
         if(!wrap) return;
         const headerH = document.getElementById('siteHeader')?.offsetHeight || 0;
-        const controlsH = 56;
+        const controlsH = 56; // planner bar height approximation
         const extras = 56;
         wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
       }
