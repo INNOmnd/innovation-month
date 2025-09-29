@@ -15,6 +15,9 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
+    .nav-link[aria-current="page"]:hover{
+      color: var(--brand) !important;
+    }
   </style>
 
 </head>
@@ -132,9 +135,20 @@
 
   <script>
   (() => {
-    const here = location.pathname.split('/').pop() || 'index.html';
+    const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  
     document.querySelectorAll('.nav-link').forEach(a => {
-      if (a.getAttribute('href') === here) a.setAttribute('aria-current','page');
+      const target = (a.getAttribute('href') || '').split('/').pop().toLowerCase();
+  
+      // Normale match (index.html, planning.html, blog.html)
+      let isActive = target === here;
+  
+      // Speciale case: je zit op een blogpost (post.html) → markeer "blog.html" als actief
+      if (!isActive && here.startsWith('post.html') && target === 'blog.html') {
+        isActive = true;
+      }
+  
+      if (isActive) a.setAttribute('aria-current', 'page');
     });
   })();
   </script>
