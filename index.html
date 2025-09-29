@@ -31,7 +31,7 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-    /* Animated underline on hover */
+    /* Underline hover */
     .link-underline{
       background-image:linear-gradient(currentColor,currentColor);
       background-repeat:no-repeat;background-position:0 100%;
@@ -57,10 +57,12 @@
     .ratio-16x9 { aspect-ratio: 16/9; }
     .ratio-4x3  { aspect-ratio: 4/3; }
 
-    /* Mobile type spacing */
+    /* Mobile-first sizing & spacing */
     @media (max-width: 640px){
-      .hero-title { font-size: 2rem; line-height: 1.15; }
+      .hero-title { font-size: 1.9rem; line-height: 1.15; letter-spacing:-.01em; }
       .hero-sub   { font-size: 1rem; }
+      .hero-pad   { padding: 1.25rem !important; }
+      .btn-lg     { padding: .75rem 1rem !important; }
     }
   </style>
 </head>
@@ -85,71 +87,60 @@
     </div>
   </header>
 
-  <main id="main" class="flex-1 px-4 py-10">
+  <main id="main" class="flex-1 px-4 py-8 md:py-10">
     <div class="max-w-6xl mx-auto">
 
-      <!-- HERO: one strong message + 1 CTA -->
+      <!-- HERO: single message + two CTAs -->
       <section class="hero-bg rounded-3xl border border-slate-200 overflow-hidden">
         <div class="grid md:grid-cols-2 items-stretch">
-          <div class="p-8 md:p-12">
+          <div class="hero-pad p-8 md:p-12">
             <p class="inline-flex items-center gap-2 text-xs font-medium text-slate-600 mb-3">
               <span class="inline-block h-2 w-2 rounded-full" style="background:var(--brand)"></span>
               INNOvember bij Casade
             </p>
-            <h2 class="hero-title text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-5">
+            <h1 class="hero-title text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-5">
               Samen <span style="color:var(--brand)">innoveren</span> bij Casade
-            </h2>
+            </h1>
             <p class="hero-sub text-lg text-slate-700 mb-6 max-w-prose">
               Doe mee met een workshop. Of lees een kort verhaal. Begin klein, vandaag.
             </p>
-            <a href="planning.html"
-               class="inline-block px-6 py-3 rounded-xl text-white font-medium focus:ring-4 focus:ring-[#86BC25]/30"
-               style="background:var(--brand)">Bekijk workshops</a>
+            <div class="flex flex-wrap gap-3">
+              <a href="planning.html"
+                 class="btn-lg inline-block px-5 py-3 rounded-xl text-white font-medium focus:ring-4 focus:ring-[#86BC25]/30"
+                 style="background:var(--brand)">Bekijk workshops</a>
+              <a href="blog.html"
+                 class="btn-lg inline-block px-5 py-3 rounded-xl font-medium border"
+                 style="border-color:var(--brand); color:var(--brand)">Lees blogs</a>
+            </div>
           </div>
-          <div class="ratio-4x3 md:ratio-16x9 bg-center bg-cover" style="background-image:url('pictures/werkenmetai.png')"></div>
+          <div class="ratio-4x3 md:ratio-16x9 bg-center bg-cover" style="background-image:url('pictures/werkenmetai.png')" role="img" aria-label="Illustratie: AI en innovatie"></div>
         </div>
       </section>
 
       <!-- UPCOMING WORKSHOPS (first 3) -->
-      <section class="mt-12">
-        <div class="flex items-end justify-between gap-4 mb-4">
-          <h3 class="text-xl font-semibold">Upcoming workshops</h3>
+      <section class="mt-10 md:mt-12">
+        <div class="flex items-end justify-between gap-4 mb-3 md:mb-4">
+          <h2 class="text-xl font-semibold">Upcoming workshops</h2>
           <a href="planning.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle workshops →</a>
         </div>
-        <div id="upcoming" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+        <div id="upcoming" class="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
       </section>
 
-      <!-- BLOG TEASER (2 cards = even calmer) -->
-      <section class="mt-12">
-        <div class="flex items-end justify-between gap-4 mb-4">
-          <h3 class="text-xl font-semibold">Nieuw op de blog</h3>
+      <!-- BLOG TEASER (2 cards for calmness) -->
+      <section class="mt-10 md:mt-12">
+        <div class="flex items-end justify-between gap-4 mb-3 md:mb-4">
+          <h2 class="text-xl font-semibold">Nieuw op de blog</h2>
           <a href="blog.html" class="text-sm link-underline font-medium" style="color:var(--brand)">Bekijk alle posts →</a>
         </div>
-        <div id="blogTeaser" class="grid gap-5 sm:grid-cols-2"></div>
-      </section>
-
-      <!-- SHORT FEATURE STRIP (moved down; low cognitive load) -->
-      <section class="mt-12 grid gap-4 sm:grid-cols-3">
-        <article class="card bg-white border border-slate-200 rounded-2xl p-4">
-          <h4 class="font-semibold">Overzichtelijke planning</h4>
-          <p class="text-sm text-slate-600">Zie wat er komt. Schrijf je in.</p>
-        </article>
-        <article class="card bg-white border border-slate-200 rounded-2xl p-4">
-          <h4 class="font-semibold">Korte verhalen</h4>
-          <p class="text-sm text-slate-600">Lees hoe collega’s innovatie toepassen.</p>
-        </article>
-        <article class="card bg-white border border-slate-200 rounded-2xl p-4">
-          <h4 class="font-semibold">Begin vandaag</h4>
-          <p class="text-sm text-slate-600">Kleine stap, groot effect.</p>
-        </article>
+        <div id="blogTeaser" class="grid gap-5 grid-cols-1 sm:grid-cols-2"></div>
       </section>
 
       <!-- CTA BANNER -->
-      <section class="mt-12">
+      <section class="mt-10 md:mt-12">
         <div class="rounded-3xl border border-slate-200 p-6 md:p-8 bg-gradient-to-r from-white to-[#F7FAEF] flex flex-col md:flex-row items-start md:items-center gap-4">
           <div class="flex-1">
             <h3 class="text-xl font-semibold">Doe mee in INNOvember</h3>
-            <p class="text-slate-700">Kies een workshop of lees een blog.</p>
+            <p class="text-slate-700">Kies een workshop of lees een blog — wat past vandaag bij jou?</p>
           </div>
           <div class="flex gap-3">
             <a href="planning.html" class="px-5 py-3 rounded-xl text-white font-medium" style="background:var(--brand)">Naar de planning</a>
@@ -207,7 +198,7 @@
 
     const card = (p)=> `
       <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
-        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-48 object-cover">
+        <img src="${p.banner}" alt="Banner: ${p.title}" class="w-full h-44 object-cover" loading="lazy">
         <div class="p-4 flex-1 flex flex-col">
           <h4 class="font-semibold leading-snug">${p.title}</h4>
           <p class="text-sm text-slate-600 line-clamp-2 mt-1">${p.summary || ''}</p>
@@ -244,7 +235,7 @@
 
     const card = (w)=>`
       <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden">
-        <img src="${w.banner}" alt="${w.title}" class="w-full h-44 object-cover">
+        <img src="${w.banner}" alt="${w.title}" class="w-full h-40 object-cover" loading="lazy">
         <div class="p-4">
           <p class="text-xs text-slate-500 mb-1">${days[new Date(w.date).getDay()]} ${fmt(w.date)} • ${w.start}–${w.end}</p>
           <h4 class="font-semibold leading-snug">${w.title}</h4>
