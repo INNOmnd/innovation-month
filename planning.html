@@ -11,26 +11,24 @@
     .cell { position: relative; pointer-events: none;}
     .event {
       position:absolute; 
-      /* was: left:2px; right:2px; */
-      left:2px;               /* JS controls left + width per lane */
+      left:2px; /* JS sets lane width/left */
       border-radius:10px; padding:6px 8px 28px; font-size:12px; line-height:1.2;
       background:#E6F3D0; border:1px solid #CDE5A5; cursor:pointer; z-index:1; pointer-events:auto;
       box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
     .event:hover { outline:2px solid var(--brand); }
+
     .tab-btn { padding:.5rem .75rem; border-radius:.75rem .75rem 0 0; }
     .tab-btn.active { background: white; border:1px solid #e2e8f0; border-bottom: none; }
     .tab-content { display:none; }
     .tab-content.active { display:block; }
 
-    /* (Bestond al) kleine styles voor availability-list */
     .workshop-list{list-style:none;padding:0;display:grid;gap:1rem}
     .workshop{padding:1rem;border:1px solid #eee;border-radius:.75rem;background:#fff}
     .badge{display:inline-block;padding:.25rem .5rem;border-radius:.5rem;background:#eee;font-size:.9rem;margin-top:.25rem}
     .badge.full{background:#ddd}
     .btn{display:inline-block;margin-top:.5rem;padding:.5rem .75rem;border:1px solid #ccc;border-radius:.5rem;text-decoration:none}
 
-    /* Nieuw: visuele hint voor disabled tab */
     .tab-btn[disabled]{ pointer-events:none; opacity:.5; }
 
     /* Availability chip inside calendar events */
@@ -39,18 +37,18 @@
       display:inline-flex; align-items:center; gap:6px;
       padding:4px 8px; border-radius:9999px; font-size:11px; font-weight:600;
       border:1px solid rgba(0,0,0,.06); box-shadow:0 1px 0 rgba(0,0,0,.04);
-      background:#F0FDF4; color:#166534;           /* soft green */
+      background:#F0FDF4; color:#166534;
     }
     .event .avail-chip svg{ width:14px; height:14px; display:block; }
     .event .avail-chip.full{
-      background:#FEF2F2; color:#991B1B;           /* soft red */
+      background:#FEF2F2; color:#991B1B;
       border-color: rgba(153,27,27,.15);
     }
 
     /* Active nav state */
     .nav-link[aria-current="page"]{ color:var(--brand); text-underline-offset:4px; text-decoration:underline; }
 
-    /* ---- NEW: animated underline like Home/Blog ---- */
+    /* animated underline like Home/Blog */
     .link-underline{
       background-image:linear-gradient(currentColor,currentColor);
       background-repeat:no-repeat; background-position:0 100%;
@@ -58,7 +56,7 @@
     }
     .link-underline:hover{ background-size:100% 2px; }
 
-    /* ---- NEW: header fade on scroll ---- */
+    /* header fade on scroll */
     #siteHeader{
       background-color: rgba(255,255,255,.85);
       transition: background-color .25s ease, box-shadow .25s ease;
@@ -68,23 +66,24 @@
       box-shadow: 0 1px 0 rgba(0,0,0,.06);
     }
 
-    /* ---- NEW: sticky table head inside wrapper ---- */
+    /* sticky table head */
     #calendarWrap thead th{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #f1f5f9; /* slate-100 */
-      box-shadow: 0 1px 0 rgba(0,0,0,.06);
+      position: sticky; top: 0; z-index: 20;
+      background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);
     }
 
-    /* Mobile-friendly tweaks (light) */
+    /* Mobile-friendly tweaks */
     @media (max-width: 640px){
       .event{ font-size:11px; padding:6px 6px 24px; }
     }
-    /* Optional: keep the first (time) column visible on small screens while swiping */
     @media (max-width: 768px){
       #calendarWrap th:first-child{ position: sticky; left: 0; z-index: 25; background:#ffffff; }
     }
+
+    /* --- New helpers for compact planner bar --- */
+    #weekRange { word-break: keep-all; }
+    #weekChip  { transition: border-color .2s ease, box-shadow .2s ease; }
+    #weekChip:hover { border-color: rgba(0,0,0,.15); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -106,12 +105,44 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-8">
-    <!-- Week navigation -->
-    <div class="week-controls flex items-center justify-between mb-4">
-      <button id="prevWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Vorige</button>
-      <h2 id="weekTitle" class="text-lg font-semibold"></h2>
-      <button id="nextWeek" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Volgende</button>
-    </div>
+
+    <!-- Week navigation (new compact planner bar) -->
+    <section class="mb-4">
+      <div class="flex items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur px-3 py-2 shadow-sm">
+
+        <!-- Left: Prev -->
+        <button id="prevWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          <span class="hidden sm:inline">Vorige</span>
+        </button>
+
+        <!-- Center: range + (chip) -->
+        <div class="min-w-0 text-center leading-tight">
+          <div id="weekRange" class="text-lg md:text-xl font-bold text-slate-900 md:whitespace-nowrap"></div>
+          <div class="mt-1 md:mt-0.5 md:flex md:items-center md:justify-center md:gap-2">
+            <span id="weekChip" class="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2.5 py-1 text-xs font-semibold md:text-sm" style="color:var(--brand)">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 md:h-4 md:w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              <span id="weekChipLabel">Week</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Today + Next -->
+        <div class="flex items-center gap-2">
+          <button id="todayBtn" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Vandaag
+          </button>
+          <button id="nextWeek" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+            <span class="hidden sm:inline">Volgende</span>
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
 
     <!-- Timetable -->
     <div id="calendarWrap" class="hidden md:block overflow-auto border border-slate-200 rounded-2xl bg-white">
@@ -129,13 +160,14 @@
         <tbody id="grid"></tbody>
       </table>
     </div>
+
     <!-- Mobile agenda (shown < md) -->
     <section id="mobileAgenda" class="md:hidden mt-4">
       <div id="mobileList" class="space-y-4"></div>
     </section>
     <p class="text-xs text-slate-500 mt-2">Klik op een sessie voor details of inschrijven.</p>
 
-    <!-- Availability-lijst (NIET tonen onderaan de planning) -->
+    <!-- Availability-lijst (hidden by default) -->
     <section class="mt-8 hidden" id="availSection">
       <h3 class="text-base font-semibold mb-2">Beschikbaarheid per workshop</h3>
       <ul id="workshops" class="workshop-list"></ul>
@@ -164,13 +196,11 @@
           <!-- Tab: Info -->
           <div id="panel-info" class="tab-content active border border-slate-200 rounded-b-2xl rounded-tr-2xl p-4">
             <p id="mDesc" class="text-slate-700"></p>
-            <!-- Nieuw: beschikbaarheid in de Info-tab -->
             <p id="mAvail" class="mt-2 text-sm text-slate-600"></p>
           </div>
 
           <!-- Tab: Inschrijven -->
           <div id="panel-inschrijven" class="tab-content border border-slate-200 rounded-b-2xl rounded-tr-2xl p-0 overflow-y-auto">
-            <!-- Iframe injected on demand -->
             <div id="mFormLoader" class="p-4 text-sm text-slate-500">Formulier laden…</div>
             <div id="mForm"></div>
           </div>
@@ -180,16 +210,16 @@
   </main>
 
   <script src="workshops.js"></script>
-  
+
   <script>
     // Use November of this year (if Nov already passed, use next year)
     const today=new Date();
-    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 0-based; 10 = Nov
+    const currentYear = (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear()+1; // 10 = Nov
     const NOVEMBER=10;
 
     const WORKSHOPS = Array.isArray(window.WORKSHOPS) ? window.WORKSHOPS : [];
 
-    // BESCHIKBAARHEID (nu per-workshop file i.p.v. één lijst)
+    // Availability map
     let AVAIL = {}; // { id: {capacity, registered, ...}, ... }
 
     // Build weeks of November (Mon–Fri)
@@ -214,14 +244,49 @@
     let weekIdx=1;
 
     const grid=document.getElementById('grid');
-    const weekTitle=document.getElementById('weekTitle');
 
     function timeToIdx(t){ const [h,m]=t.split(':').map(Number); return (h-9)*2 + (m>=30?1:0); } // 09:00 baseline
 
+    function formatWeekRange(days, year){
+      // Base range without year
+      const sameMonth = days[0].getMonth() === days[4].getMonth();
+      const fmtMonth  = new Intl.DateTimeFormat('nl-NL', { month: 'short' });
+      const d2 = d => String(d.getDate()).padStart(2,'0');
+      const m0 = fmtMonth.format(days[0]);
+      const m4 = fmtMonth.format(days[4]);
+
+      const base = sameMonth
+        ? `${d2(days[0])}–${d2(days[4])} ${m4}`
+        : `${d2(days[0])} ${m0}–${d2(days[4])} ${m4}`;
+
+      const isMobile = matchMedia('(max-width: 640px)').matches;
+      const currentYearLocal = new Date().getFullYear();
+
+      // Mobile: NO year (per your request), but prepend "Week X •" in the render step.
+      if (isMobile) return { mobile: base, desktop: `${base}${year !== currentYearLocal ? ' ' + year : ''}` };
+
+      // Desktop: append year only if it differs from current year
+      return { mobile: base, desktop: `${base}${year !== currentYearLocal ? ' ' + year : ''}` };
+    }
+
     function renderWeek(){
       const days=weeks[weekIdx];
-      const opts={ day:'2-digit', month:'short' };
-      weekTitle.textContent=`Week ${weekIdx+1} • ${days[0].toLocaleDateString(undefined,opts)} – ${days[4].toLocaleDateString(undefined,opts)} ${currentYear}`;
+
+      // --- Compact week heading compute
+      const { mobile, desktop } = formatWeekRange(days, currentYear);
+      const weekNo = weekIdx + 1;
+      const $weekRange   = document.getElementById('weekRange');
+      const $weekChipLbl = document.getElementById('weekChipLabel');
+
+      if (matchMedia('(max-width: 640px)').matches) {
+        // Mobile label: "Week X • 03–07 nov"
+        if ($weekRange)   $weekRange.textContent   = `Week ${weekNo} • ${mobile}`;
+        if ($weekChipLbl) $weekChipLbl.textContent = `Week ${weekNo}`;
+      } else {
+        // Desktop: range (maybe with year) + separate chip
+        if ($weekRange)   $weekRange.textContent   = desktop;
+        if ($weekChipLbl) $weekChipLbl.textContent = `Week ${weekNo}`;
+      }
 
       // times 09:00..17:00 per 30 min slots
       const times=[]; for(let h=9; h<=17; h++){ times.push(`${String(h).padStart(2,'0')}:00`); if(h<17) times.push(`${String(h).padStart(2,'0')}:30`); }
@@ -247,9 +312,8 @@
         if(col<=4) byDay[col].push(ev);
       });
 
-      // ---- Render events (fixed overlap + width per lane) ----
+      // ---- Render events with lanes ----
       byDay.forEach((events, col) => {
-        // sort stable: start, then end
         events.sort((a,b)=> timeToIdx(a.start) - timeToIdx(b.start) || timeToIdx(a.end) - timeToIdx(b.end));
 
         const active = [];
@@ -263,20 +327,15 @@
           clusterMaxLane = -1;
         }
 
-        // assign lanes + clusters
         events.forEach(ev => {
           const s = timeToIdx(ev.start);
           const e = timeToIdx(ev.end);
 
-          // drop finished from active
           for (let i = active.length - 1; i >= 0; i--) {
             if (active[i].end <= s) active.splice(i,1);
           }
-
-          // if no active, a new cluster starts
           if (active.length === 0 && cluster.length) finalizeCluster();
 
-          // pick first free lane index
           const used = new Set(active.map(a => a.lane));
           let lane = 0; while (used.has(lane)) lane++;
           ev._lane = lane;
@@ -308,19 +367,15 @@
 
           div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
 
-          // Nieuw: moderne chip met beschikbaarheid in het roosterblok
+          // Availability chip
           (function(){
             const a = AVAIL[ev.id];
             if (!a) return;
-          
             const left = Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0);
             const isFull = left === 0;
-          
             const chip = document.createElement('div');
             chip.className = `avail-chip ${isFull ? 'full' : ''}`;
             chip.setAttribute('aria-label', isFull ? 'Vol' : `${left} plekken vrij`);
-          
-            // Inline SVG icons
             const icon = isFull
               ? `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                    <path d="M6 10V8a6 6 0 1112 0v2M5 10h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z"
@@ -330,7 +385,6 @@
                    <path d="M9 12l2 2 4-4M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
                          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                  </svg>`;
-          
             chip.innerHTML = `${icon}<span>${isFull ? 'Vol' : `${left} vrij`}</span>`;
             div.appendChild(chip);
           })();
@@ -346,13 +400,11 @@
     function renderMobileAgenda(){
       const list = document.getElementById('mobileList');
       if(!list) return;
-    
-      // Determine current week range
+
       const days = weeks[weekIdx];
       const startOfWeek = new Date(days[0].toDateString());
       const endOfWeek   = new Date(days[4].toDateString());
-    
-      // Gather events for the week and sort
+
       const weekEvents = WORKSHOPS
         .filter(w => {
           const d = new Date(w.date);
@@ -363,8 +415,7 @@
           if (da !== 0) return da;
           return a.start.localeCompare(b.start);
         });
-    
-      // Group by day
+
       const fmtDay = new Intl.DateTimeFormat('nl-NL', { weekday:'long', day:'2-digit', month:'short' });
       const groups = new Map();
       weekEvents.forEach(ev => {
@@ -372,24 +423,24 @@
         if(!groups.has(key)) groups.set(key, []);
         groups.get(key).push(ev);
       });
-    
+
       list.innerHTML = '';
       if(groups.size === 0){
         list.innerHTML = '<p class="text-sm text-slate-600">Geen sessies deze week.</p>';
         return;
       }
-    
+
       groups.forEach((events, key) => {
         const d = new Date(key);
         const dayHeader = document.createElement('h3');
         dayHeader.className = 'text-base font-semibold text-slate-700 mt-4';
         dayHeader.textContent = fmtDay.format(d);
         list.appendChild(dayHeader);
-    
+
         events.forEach(ev => {
           const card = document.createElement('article');
           card.className = 'bg-white border border-slate-200 rounded-2xl p-4 shadow-sm';
-    
+
           // availability chip
           let chip = '';
           const a = AVAIL[ev.id];
@@ -400,7 +451,7 @@
                       ${full ? 'Vol' : `${left} vrij`}
                     </span>`;
           }
-    
+
           card.innerHTML = `
             <div class="flex items-start gap-3">
               <img src="${ev.banner}" alt="" class="w-14 h-14 rounded-lg object-cover border border-slate-200">
@@ -412,11 +463,11 @@
               <button class="text-sm font-medium px-3 py-1.5 rounded-full border border-slate-300 hover:bg-slate-50" data-open="${ev.id}" style="color:var(--brand)">Details</button>
             </div>
           `;
-    
+
           list.appendChild(card);
         });
       });
-    
+
       // Wire modal
       list.querySelectorAll('button[data-open]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -426,52 +477,41 @@
         });
       });
     }
-    
+
     // --- Modal logic with tabs ---
     let currentWorkshopId = null;
 
     function openModal(ev){
       currentWorkshopId = ev.id;
-    
-      // Fill header
+
       document.getElementById('mBanner').src = ev.banner;
       document.getElementById('mTitle').textContent = ev.title;
       document.getElementById('mMeta').textContent =
         `${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
-    
-      // Fill info tab
+
       document.getElementById('mDesc').textContent = ev.desc || '';
-    
-      // Availability + form presence → tab state
+
       (function(){
         const a = AVAIL[ev.id];
         const left = a ? Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0) : null;
         const hasForm = !!ev.form;
-    
-        // Info text
+
         const mAvail = document.getElementById('mAvail');
-        if (left === null) {
-          mAvail.textContent = '';
-        } else if (left === 0) {
-          mAvail.textContent = 'Beschikbaarheid: VOL';
-        } else {
-          mAvail.textContent = `Beschikbaarheid: ${left} plekken over`;
-        }
-    
-        // Disable "Inschrijven" when either full OR no form URL
+        if (left === null) { mAvail.textContent = ''; }
+        else if (left === 0) { mAvail.textContent = 'Beschikbaarheid: VOL'; }
+        else { mAvail.textContent = `Beschikbaarheid: ${left} plekken over`; }
+
         const tabBtn = document.getElementById('tab-inschrijven');
         const shouldDisable = (left === 0) || !hasForm;
         tabBtn.disabled = shouldDisable;
         tabBtn.classList.toggle('opacity-50', shouldDisable);
         tabBtn.classList.toggle('cursor-not-allowed', shouldDisable);
       })();
-    
-      // Reset tabs
-      activateTab('info', false); // don't load form yet
+
+      activateTab('info', false);
       document.getElementById('mForm').innerHTML = '';
       document.getElementById('mFormLoader').style.display = '';
-    
-      // Show modal
+
       const modal = document.getElementById('modal');
       modal.classList.remove('hidden'); 
       modal.classList.add('flex');
@@ -481,11 +521,9 @@
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
       document.body.style.overflow = '';
-      // optional: stop loading/unload iframe to save resources
       document.getElementById('mForm').innerHTML = '';
     }
 
-    // Tab activation helper
     function activateTab(which, loadForm = true){
       const btnInfo = document.getElementById('tab-info');
       const btnReg  = document.getElementById('tab-inschrijven');
@@ -498,67 +536,72 @@
       } else {
         btnReg.classList.add('active'); btnInfo.classList.remove('active');
         panelReg.classList.add('active'); panelInfo.classList.remove('active');
-
-        if(loadForm){
-          loadFormIframe(currentWorkshopId);
-        }
+        if(loadForm){ loadFormIframe(currentWorkshopId); }
       }
     }
 
     function loadFormIframe(workshopId){
-      // Read the URL from the shared workshop object
       const ev = WORKSHOPS.find(w => w.id === workshopId);
       const url = ev && ev.form;
-    
+
       const container = document.getElementById('mForm');
       const loader = document.getElementById('mFormLoader');
       container.innerHTML = '';
-    
+
       if(!url){
         loader.textContent = 'Geen inschrijfformulier beschikbaar.';
         return;
       }
-    
+
       const iframe = document.createElement('iframe');
       iframe.width = '100%';
-      iframe.height = '900';
       iframe.style.height = '70vh';
       iframe.style.maxHeight = '900px';
-      iframe.style.border = '0';
       iframe.style.minHeight = '600px';
+      iframe.style.border = '0';
       iframe.setAttribute('frameborder','0');
       iframe.setAttribute('allowfullscreen','');
       iframe.src = url;
-    
-      // Show loader until first load event
+
       loader.style.display = '';
       iframe.addEventListener('load', () => { loader.style.display = 'none'; }, { once: true });
-    
+
       container.appendChild(iframe);
     }
 
-
-    // Close when clicking the dark backdrop (outside the card)
     document.getElementById('modal').addEventListener('click', (e) => {if (e.target === e.currentTarget) closeModal();});
-
-    // Close with Escape key
     document.addEventListener('keydown', (e) => {if (e.key === 'Escape') closeModal();});
-    
-    // Wire up UI controls
+
     document.getElementById('closeModal').addEventListener('click', closeModal);
     document.getElementById('tab-info').addEventListener('click', () => activateTab('info', false));
     document.getElementById('tab-inschrijven').addEventListener('click', () => activateTab('inschrijven', true));
     document.getElementById('prevWeek').addEventListener('click',()=>{ weekIdx=Math.max(0,weekIdx-1); renderWeek(); });
     document.getElementById('nextWeek').addEventListener('click',()=>{ weekIdx=Math.min(weeks.length-1,weekIdx+1); renderWeek(); });
 
-    // ---------- Nieuw: per-workshop availability ----------
+    // Jump to "Vandaag"
+    function findWeekIndexForDate(d){
+      for (let i = 0; i < weeks.length; i++){
+        const w = weeks[i];
+        const start = new Date(w[0].toDateString());
+        const end   = new Date(w[4].toDateString());
+        if (d >= start && d <= end) return i;
+      }
+      return Math.min(
+        Math.max(0, weeks.findIndex(w => new Date(w[0].toDateString()) >= d)),
+        weeks.length - 1
+      );
+    }
+    document.getElementById('todayBtn')?.addEventListener('click', () => {
+      weekIdx = findWeekIndexForDate(new Date());
+      renderWeek();
+    });
+
+    // ---------- Availability (per-workshop JSON) ----------
     async function fetchAvailabilityFor(id){
       const tryPaths = [
         `data/availability/${id}.json`,
         `data/${id}.json`
       ];
-
-      // helpers
       const toNum = (v) => {
         if (v === null || v === undefined || v === '') return null;
         const n = Number(String(v).replace(',', '.').trim());
@@ -570,10 +613,7 @@
         try{
           const res = await fetch(path, { cache: 'no-store' });
           if (!res.ok) continue;
-
           const json = await res.json();
-
-          // vang verschillende sleutel-namen op (NL/EN/varianten)
           const capRaw = firstNonNull(
             json.capacity, json.cap, json.max, json.maxSeats, json.max_seats,
             json.places, json.plaatsen, json.aantal, json.total
@@ -582,20 +622,10 @@
             json.registered, json.registrations, json.taken, json.occupied,
             json.ingeschreven, json.inschrijvingen
           );
-
           const capacity   = toNum(capRaw);
           const registered = toNum(regRaw);
-
-          // Belangrijk: eerst ...json en daarna onze genormaliseerde velden
-          return {
-            ...json,
-            id,
-            capacity: capacity ?? 0,
-            registered: registered ?? 0
-          };
-        } catch(e){
-          // probeer volgende pad
-        }
+          return { ...json, id, capacity: capacity ?? 0, registered: registered ?? 0 };
+        } catch(e){ /* try next path */ }
       }
       return null;
     }
@@ -604,16 +634,12 @@
       const ids = [...new Set(WORKSHOPS.map(w => w.id))];
       const results = await Promise.allSettled(ids.map(fetchAvailabilityFor));
       const map = {};
-      results.forEach((r, idx) => {
-        if(r.status === 'fulfilled' && r.value){
-          map[r.value.id] = r.value;
-        }
+      results.forEach((r) => {
+        if(r.status === 'fulfilled' && r.value){ map[r.value.id] = r.value; }
       });
       AVAIL = map;
     }
-    // ------------------------------------------------------
 
-    // Beschikbaarheid-lijst opbouwen uit AVAIL (sectie blijft hidden)
     function buildAvailabilityList(){
       const byId = Object.fromEntries(WORKSHOPS.map(w => [w.id, w]));
       const $ul = document.getElementById('workshops');
@@ -636,7 +662,6 @@
         $ul.appendChild(li);
       });
 
-      // open modal op "Inschrijven" en ga direct naar Inschrijven-tab
       $ul.addEventListener('click', (e) => {
         const btn = e.target.closest('button.btn');
         if(!btn) return;
@@ -649,12 +674,11 @@
       }, { once: true });
     }
 
-    // Render flow
     async function renderWorkshops(){
       try{
-        await loadAllAvailability();   // <-- per-file fetch
-        buildAvailabilityList();       // (optional UI list; section remains hidden)
-        renderWeek();                  // draw calendar badges using AVAIL
+        await loadAllAvailability();
+        buildAvailabilityList();
+        renderWeek();
         renderMobileAgenda();
       }catch(err){
         console.error('Fout bij laden beschikbaarheid', err);
@@ -669,7 +693,7 @@
         if(!wrap) return;
         const headerH = document.getElementById('siteHeader')?.offsetHeight || 0;
         const controlsH = document.querySelector('.week-controls')?.offsetHeight || 0;
-        const extras = 56; // padding/margins
+        const extras = 56;
         wrap.style.maxHeight = `calc(100vh - ${headerH + controlsH + extras}px)`;
       }
       addEventListener('resize', setMaxHeight, {passive:true});
@@ -689,7 +713,6 @@
     });
   })();
 
-  // fade header on scroll (matches post/blog)
   addEventListener('scroll', () => {
     document.body.classList.toggle('scrolled', window.scrollY > 8);
   }, { passive: true });
