@@ -135,7 +135,8 @@
       return;
     }
 
-    document.title = `Casade Blog — ${post.title}`;
+    const shortTab = post.tab || post.company || (post.title || '').split('—')[0].trim() || 'Casade Blog';
+    document.title = `Casade Blog — ${shortTab}`;
     const banner = $('#banner');
     banner.src = post.banner;
     banner.alt = `Banner: ${post.title}`;
