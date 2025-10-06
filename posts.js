@@ -1,6 +1,7 @@
 window.POSTS = [
   {
     id:"Kodak",
+    tab:"Kodak",
     title:"Hoe Kodak de Toekomst in Handen Had – en Losliet",
     company:"Kodak",
     summary:"Het verhaal van Kodak en het innovatie dilemma.",
@@ -44,6 +45,7 @@ window.POSTS = [
   },
     {
     id:"PostIt",
+    tab:"3M",
     title:"Hoe 3M een Plakkerige Revolutie Startte – en de Post-it Redde",
     company:"3M",
     summary:"Het verhaal van de toevallige uitvinding van de Post-it Note en hoe 3M het tot wereldsucces maakte.",
