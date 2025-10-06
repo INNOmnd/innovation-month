@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [update_workshops]
 
+# Minimal token scope so the job can push
+permissions:
+  contents: write
+
 # Prevent concurrent runs from racing each other
 concurrency:
   group: workshop-json-updates
@@ -18,10 +22,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # ⬇️ Use the SAME identity as your GPG key
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "INNOmnd CI"
+          git config user.email "233744009+INNOmnd@users.noreply.github.com"
 
       - name: Ensure we're on latest main
         run: |
@@ -51,8 +56,6 @@ jobs:
           mv tmp.json "$FP"
           echo "FILEPATH=$FP" >> $GITHUB_OUTPUT
 
-
-
       - name: Rebuild workshops index
         run: |
           mkdir -p data/workshops
@@ -63,11 +66,20 @@ jobs:
             echo "[]" > data/workshops/index.json
           fi
 
+      # ⬇️ NEW: import the key and enable signing (must be before commit)
+      - name: Import GPG key and enable signing
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Commit & push to main with retries
         run: |
           set -e
           git add "${{ steps.prep.outputs.FILEPATH }}" data/workshops/index.json
-          git commit -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
+          git commit -S -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
 
           # Retry push up to 5 times to survive race conditions
           n=0
