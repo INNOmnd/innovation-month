@@ -54,22 +54,53 @@
 
   // Map workshop IDs to Microsoft Forms embed URLs
   const formLinks = {
+    // 04-11
+    "ongemakkenjacht-1": "FORM_URL_ONGEMAKKENJACHT1",
+    "ongemakkenjacht-2": "FORM_URL_ONGEMAKKENJACHT2",
+    "ongemakkenjacht-3": "FORM_URL_ONGEMAKKENJACHT3",
+  
+    // 05-11
     "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
+    "ongemakkenjacht-4": "FORM_URL_ONGEMAKKENJACHT4",
+  
+    // 06-11
+    "ongemakkenjacht-5": "FORM_URL_ONGEMAKKENJACHT5",
+    "bewonersteams": "FORM_URL_BEWONERSTEAMS",
+    "ongemakkenjacht-6": "FORM_URL_ONGEMAKKENJACHT6",
+    "ongemakkenjacht-7": "FORM_URL_ONGEMAKKENJACHT7",
+  
+    // 11-11
     "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
     "wrk-ai-beginner": "FORM_URL_AI_BEGINNER",
+  
+    // 13-11
     "goeie-buurtaal-ai": "FORM_URL_BUURTAAL_AI",
     "dwam": "FORM_URL_DWAM",
-    "taal-tool2": "FORM_URL_TAALTOOL2",
     "wrk-ai-intermediate": "FORM_URL_AI_ADVANCED",
+    "taal-tool2": "FORM_URL_TAALTOOL2",
+  
+    // 17-11
     "shortcut": "FORM_URL_SHORTCUT",
+  
+    // 18-11
     "agile-scrum": "FORM_URL_AGILE",
+  
+    // 20-11
     "omaia": "FORM_URL_OMAIA1",
     "thuisapp": "FORM_URL_THUISAPP1",
     "omaia2": "FORM_URL_OMAIA2",
     "thuisapp2": "FORM_URL_THUISAPP2",
+  
+    // 25-11
+    "vr-x4": "FORM_URL_VR",
+    "zig-ai": "FORM_URL_ZIGAI",
     "goeie-buurtaal": "FORM_URL_BUURTAAL",
+  
+    // 27-11
+    "digitale-klantreis": "FORM_URL_KLANTREIS",
     "taal-tool3": "FORM_URL_TAALTOOL3"
   };
+
 
   // Merge forms into workshops
   window.WORKSHOPS = WORKSHOPS.map(w => ({
