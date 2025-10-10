@@ -380,8 +380,6 @@
               chip.setAttribute('aria-label','Inschrijvingen nog niet geopend');
               div.appendChild(chip);
               return;
-            }
-            
             } else if (st.state === 'full') {
               chip.className = 'avail-chip full';
               chip.innerHTML = `
@@ -456,7 +454,6 @@
               </svg>`;
             chip = `<span class="inline-flex items-center rounded-full border bg-amber-50 text-amber-800 border-amber-200 icon-only"
                            title="Inschrijvingen nog niet geopend" aria-label="Inschrijvingen nog niet geopend">${lock}</span>`;
-          }
           } else if (st.state === 'full') {
             chip = `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border bg-red-50 text-red-800 border-red-200">
                       Vol
