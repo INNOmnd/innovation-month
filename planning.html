@@ -52,6 +52,11 @@
       border-color: #FECACA;
     }
 
+    .event .avail-chip.not-open {
+      background: #FFF7ED;   
+      color: #92400E;      
+      border-color: #FED7AA; 
+    }
 
     /* ——— Modal tabs ——— */
     .tab-btn { padding:.5rem .75rem; border-radius:.75rem .75rem 0 0; }
@@ -227,6 +232,28 @@
     // ——— Availability map ———
     let AVAIL = {};
 
+    // ——— Enrollment state helper ———
+    function getEnrollmentState(ev) {
+      // Manual override
+      if (ev.status === 'closed') {
+        return { state: 'not_open', left: null };
+      }
+      // Time-based override
+      if (ev.openAt) {
+        const now = new Date();
+        const openTime = new Date(ev.openAt);
+        if (now < openTime) return { state: 'not_open', left: null };
+      }
+    
+      // Fall back to availability (capacity - registered)
+      const a = AVAIL[ev.id];
+      if (!a) return { state: 'unknown', left: null };
+    
+      const left = Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0);
+      if (left === 0) return { state: 'full', left: 0 };
+      return { state: 'open', left };
+    }
+    
     // ——— Build November weeks (Mon–Fri) ———
     function getWeeks(year){
       const first = new Date(year, NOVEMBER, 1);
@@ -327,16 +354,39 @@
 
           div.innerHTML=`<strong>${ev.title}</strong><br><span>${ev.start}–${ev.end}</span><br><em>${ev.speaker}</em>`;
 
-          // availability chip in block
+          // availability chip in block (supports "nog niet geopend")
           (function(){
-            const a = AVAIL[ev.id]; if(!a) return;
-            const left = Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0);
-            const full = left === 0;
+            const st = getEnrollmentState(ev);
             const chip = document.createElement('div');
-            chip.className = `avail-chip ${full ? 'full' : ''}`;
-            chip.innerHTML = full
-              ? `<svg viewBox="0 0 24 24" fill="none"><path d="M6 10V8a6 6 0 1112 0v2M5 10h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Vol</span>`
-              : `<svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${left} vrij</span>`;
+          
+            if (st.state === 'not_open') {
+              chip.className = 'avail-chip not-open';
+              chip.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 17v.01M3 21h18M7 10a5 5 0 0110 0v2M5 10h14v5a3 3 0 01-3 3H8a3 3 0 01-3-3v-5z"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Inschrijvingen nog niet geopend</span>`;
+            } else if (st.state === 'full') {
+              chip.className = 'avail-chip full';
+              chip.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 10V8a6 6 0 1112 0v2M5 10h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Vol</span>`;
+            } else if (st.state === 'open') {
+              chip.className = 'avail-chip';
+              chip.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12l2 2 4-4M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>${st.left} vrij</span>`;
+            } else {
+              return; // no chip if unknown
+            }
+          
             div.appendChild(chip);
           })();
 
@@ -380,12 +430,22 @@
         list.appendChild(dayHeader);
 
         events.forEach(ev => {
-          const a = AVAIL[ev.id];
-          const left = a ? Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0) : null;
-          const chip = left === null ? '' :
-            `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border ${left===0 ? 'bg-red-50 text-red-800 border-red-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'}">
-              ${left===0 ? 'Vol' : `${left} vrij`}
-            </span>`;
+          const st = getEnrollmentState(ev);
+          let chip = '';
+          if (st.state === 'not_open') {
+            chip = `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border bg-amber-50 text-amber-800 border-amber-200">
+                      Inschrijvingen nog niet geopend
+                    </span>`;
+          } else if (st.state === 'full') {
+            chip = `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border bg-red-50 text-red-800 border-red-200">
+                      Vol
+                    </span>`;
+          } else if (st.state === 'open') {
+            chip = `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border bg-emerald-50 text-emerald-800 border-emerald-200">
+                      ${st.left} vrij
+                    </span>`;
+          }
+
 
           const card = document.createElement('article');
           card.className = 'bg-white border border-slate-200 rounded-2xl p-4 shadow-sm';
@@ -424,17 +484,22 @@
       document.getElementById('mDesc').textContent = ev.desc || '';
 
       (function(){
-        const a = AVAIL[ev.id];
-        const left = a ? Math.max((a.capacity ?? 0) - (a.registered ?? 0), 0) : null;
+        const st = getEnrollmentState(ev);
         const hasForm = !!ev.form;
-
         const mAvail = document.getElementById('mAvail');
-        if (left === null) mAvail.textContent = '';
-        else if (left === 0) mAvail.textContent = 'Beschikbaarheid: VOL';
-        else mAvail.textContent = `Beschikbaarheid: ${left} plekken over`;
-
+      
+        if (st.state === 'not_open') {
+          mAvail.textContent = 'Inschrijvingen nog niet geopend';
+        } else if (st.state === 'full') {
+          mAvail.textContent = 'Beschikbaarheid: VOL';
+        } else if (st.state === 'open' && st.left !== null) {
+          mAvail.textContent = `Beschikbaarheid: ${st.left} plekken over`;
+        } else {
+          mAvail.textContent = '';
+        }
+      
         const tabBtn = document.getElementById('tab-inschrijven');
-        const disable = (left === 0) || !hasForm;
+        const disable = (st.state !== 'open') || !hasForm; // block when not open OR no form
         tabBtn.disabled = disable;
         tabBtn.classList.toggle('opacity-50', disable);
         tabBtn.classList.toggle('cursor-not-allowed', disable);
