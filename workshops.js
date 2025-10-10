@@ -4,23 +4,52 @@
   const currentYear =
     (today.getMonth() <= 10) ? today.getFullYear() : today.getFullYear() + 1; // 10 = November
 
-  // Workshops (edit as needed)
   const WORKSHOPS = [
-    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:30', end:'11:30', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool', status: "closed" },
-    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie.', status: "closed" },
-    { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Een AI cursus voor beginners', status: "closed" },
-    { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Gebruik AI om jouw goeie buurtaal te verbeteren.', status: "closed" },
-    { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Zie hoe drones in ons werkveld zorgen voor innovatie.', status: "closed" },
-    { id:'taal-tool2', title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'10:00', end:'12:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool.', status: "closed" },
-    { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Werken met AI voor gevorderden.', status: "closed" },
-    { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'09:00', end:'11:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'Leer AI toe te passen in jouw werk.', status: "closed" },
-    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile scrum.', status: "closed" },
-    { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA.', status: "closed" },
-    { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.', status: "closed" },
-    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA.', status: "closed" },
-    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp.', status: "closed" },
-    { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie buurtaal zonder AI.', status: "closed" },
-    { id:'taal-tool3', title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool.', status: "closed" }
+    // Dinsdag 04-11
+    { id:'ongemakkenjacht-1', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed" },
+    { id:'ongemakkenjacht-2', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).', status: "closed" },
+    { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'15:30', end:'16:00', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 pers).', status: "closed" },
+  
+    // Woensdag 05-11
+    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Verkenning van de taaltool (Werkhuis, 10 personen).', status: "closed" },
+    { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed" },
+  
+    // Donderdag 06-11
+    { id:'ongemakkenjacht-5', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Tes', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed" },
+    { id:'bewonersteams', title:'Bewonersteams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'', banner:'pictures/bewonersteams.png', desc:'Bewonersteams in het Werkhuis (12 personen).', status: "closed" },
+    { id:'ongemakkenjacht-6', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Molenhuis (6 personen).', status: "closed" },
+    { id:'ongemakkenjacht-7', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'15:00', end:'17:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed" },
+  
+    // Dinsdag 11-11
+    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).', status: "closed" },
+    { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Introductie Werken met AI (Lagerhuis, 15 personen).', status: "closed" },
+  
+    // Donderdag 13-11
+    { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal met AI (Lagerhuis, 15 personen).', status: "closed" },
+    { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Drone with a Mission (Lagerhuis, 15 personen).', status: "closed" },
+    { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Werken met AI in het Werkhuis (10 personen).', status: "closed" },
+    { id:'taal-tool2', title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'15:00', end:'17:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Vervolg Taaltool (Lagerhuis, 15 personen).', status: "closed" },
+  
+    // Maandag 17-11
+    { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'13:00', end:'15:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'The Shortcut (Lagerhuis, 15 personen).', status: "closed" },
+  
+    // Dinsdag 18-11
+    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).', status: "closed" },
+  
+    // Donderdag 20-11
+    { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).', status: "closed" },
+    { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp in het Werkhuis (10 personen).', status: "closed" },
+    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).', status: "closed" },
+    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp in het Werkhuis (10 personen).', status: "closed" },
+  
+    // Dinsdag 25-11
+    { id:'vr-x4', title:'VR? x 4', date:`${currentYear}-11-25`, start:'08:30', end:'13:00', speaker:'', banner:'pictures/vr.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).', status: "closed" },
+    { id:'zig-ai', title:'ZIG & AI', date:`${currentYear}-11-25`, start:'09:00', end:'11:00', speaker:'', banner:'pictures/zigai.png', desc:'ZIG & AI in het Werkhuis (16 personen).', status: "closed" },
+    { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).', status: "closed" },
+  
+    // Donderdag 27-11
+    { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass', banner:'pictures/klantreis.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).', status: "closed" },
+    { id:'taal-tool3', title:'Taaltool Sessie 3', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Taaltool in het Werkhuis (10 personen).', status: "closed" }
   ];
 
   // Map workshop IDs to Microsoft Forms embed URLs
