@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg" href="pictures/beeldmerk-casade-transp.svg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Casade Blog — Post</title>
+  <title>Casade Leesvoer — Post</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{--brand:#86BC25;--brand-dark:#5D7A15}
@@ -42,10 +42,10 @@
       <a href="index.html" aria-label="Naar home" class="shrink-0">
         <img src="casade-logo.svg" class="h-16 w-auto block" alt="Casade" height="64" decoding="async" />
       </a>
-      <h1 class="text-xl font-bold" style="color:var(--brand)">Innovatie Blog</h1>
+      <h1 class="text-xl font-bold" style="color:var(--brand)">Innovatie Leesvoer</h1>
       <nav class="ml-auto text-sm flex gap-6">
         <a href="index.html" class="nav-link link-underline hover:text-slate-900">Home</a>
-        <a href="blog.html" class="nav-link link-underline hover:text-slate-900">Blog</a>
+        <a href="blog.html" class="nav-link link-underline hover:text-slate-900">Leesvoer</a>
         <a href="planning.html" class="nav-link link-underline hover:text-slate-900">Planning</a>
       </nav>
     </div>
@@ -59,7 +59,7 @@
   <!-- Content -->
   <main class="grow-main max-w-4xl mx-auto px-4 py-8">
     <a href="blog.html" class="inline-flex items-center gap-2 text-sm font-medium mb-6 px-3 py-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50" style="color:var(--brand)">
-      ← Terug naar blogs
+      ← Terug naar leesvoer
     </a>
 
     <article id="post" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -71,7 +71,7 @@
     </article>
 
     <div id="notFound" class="hidden text-center text-slate-600 mt-16">
-      <p class="text-xl font-semibold">Deze blogpost is niet gevonden.</p>
+      <p class="text-xl font-semibold">Deze post is niet gevonden.</p>
       <p class="mt-2">Ga terug naar het <a href="blog.html" class="underline" style="color:var(--brand)">overzicht</a>.</p>
     </div>
   </main>
@@ -135,8 +135,8 @@
       return;
     }
 
-    const shortTab = post.tab || post.company || (post.title || '').split('—')[0].trim() || 'Casade Blog';
-    document.title = `Casade Blog — ${shortTab}`;
+    const shortTab = post.tab || post.company || (post.title || '').split('—')[0].trim() || 'Casade Leesvoer';
+    document.title = `Casade Leesvoer — ${shortTab}`;
     const banner = $('#banner');
     banner.src = post.banner;
     banner.alt = `Banner: ${post.title}`;
