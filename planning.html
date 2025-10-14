@@ -232,6 +232,14 @@
   <script src="workshops.js"></script>
   <script src="descriptions.js"></script>
   <script src="desc-enhancer.js"></script>
+
+  <script>
+  // Ensure rich descriptions are applied BEFORE anything renders/binds
+  if (window.WORKSHOPS && window._descEnhancer) {
+    window.WORKSHOPS = window._descEnhancer.applyRichDescriptions(window.WORKSHOPS);
+  }
+  </script>
+  
   <script>
     // ——— Year & month constants ———
     const today = new Date();
