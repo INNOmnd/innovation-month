@@ -21,7 +21,7 @@
     { id:'ongemakkenjacht-7', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'15:00', end:'17:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-7.html' },
   
     // Dinsdag 11-11
-    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'cover', status: "closed", descFile:'descriptions/aftrap.html' },
+    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'', status: "closed", descFile:'descriptions/aftrap.html' },
     { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Introductie Werken met AI (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/wrk-ai-beginner.html' },
   
     // Donderdag 13-11
@@ -34,18 +34,18 @@
     { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'13:00', end:'15:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'The Shortcut (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/shortcut.html' },
   
     // Dinsdag 18-11
-    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/agile-scrum.html' },
+    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Rogier', banner:'pictures/aftrap.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/agile-scrum.html' },
   
     // Donderdag 20-11
-    { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/omaia.html' },
+    { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
     { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/thuisapp.html' },
-    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/omaia2.html' },
+    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia2.html' },
     { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisapp.png', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/thuisapp2.html' },
   
     // Dinsdag 25-11
     { id:'vr-x4', title:'VR? x 4', date:`${currentYear}-11-25`, start:'08:30', end:'13:00', speaker:'', banner:'pictures/vr.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/vr-x4.html' },
     { id:'zig-ai', title:'ZIG & AI', date:`${currentYear}-11-25`, start:'09:00', end:'11:00', speaker:'', banner:'pictures/zigai.png', desc:'ZIG & AI in het Werkhuis (16 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/zig-ai.html' },
-    { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/goeie-buurtaal.html' },
+    { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/goeie-buurtaal.html' },
   
     // Donderdag 27-11
     { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass', banner:'pictures/klantreis.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/digitale-klantreis.html' },
