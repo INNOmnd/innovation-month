@@ -110,6 +110,12 @@
     #weekRange { word-break: keep-all; }
     #weekChip  { transition: border-color .2s ease, box-shadow .2s ease; }
     #weekChip:hover { border-color: rgba(0,0,0,.15); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
+
+    /* Rich text styling for the Info tab */
+    .prose { line-height:1.6 }
+    .prose h1,.prose h2,.prose h3{ font-weight:700; margin:.75rem 0 .25rem }
+    .prose ul{ margin:.5rem 0 .25rem 1.25rem; list-style:disc }
+    .prose li{ margin:.15rem 0 } 
   </style>
 </head>
 <body class="bg-slate-50">
@@ -224,6 +230,8 @@
   </main>
 
   <script src="workshops.js"></script>
+  <script src="descriptions.js"></script>
+  <script src="desc-enhancer.js"></script>
   <script>
     // ——— Year & month constants ———
     const today = new Date();
@@ -240,6 +248,9 @@
       console.warn('Geen workshops geladen — controleer workshops.js of het pad naar het bestand.');
       return [];
     })();
+
+    // enrich with rich descriptions from descriptions.js (no data model change)
+    window.WORKSHOPS = window._descEnhancer.applyRichDescriptions(WORKSHOPS);
 
     // ——— Availability map ———
     let AVAIL = {};
@@ -521,23 +532,25 @@
       (function(){
         const st = getEnrollmentState(ev);
         const hasForm = !!ev.form;
-        const mAvail = document.getElementById('mAvail');
       
-        if (st.state === 'not_open') {
-          mAvail.textContent = 'Inschrijvingen nog niet geopend';
-        } else if (st.state === 'full') {
-          mAvail.textContent = 'Beschikbaarheid: VOL';
-        } else if (st.state === 'open' && st.left !== null) {
-          mAvail.textContent = `Beschikbaarheid: ${st.left} plekken over`;
-        } else {
-          mAvail.textContent = '';
-        }
-      
+        // enable/disable the Inschrijven tab
         const tabBtn = document.getElementById('tab-inschrijven');
-        const disable = (st.state !== 'open') || !hasForm; // block when not open OR no form
+        const disable = (st.state !== 'open') || !hasForm;
         tabBtn.disabled = disable;
         tabBtn.classList.toggle('opacity-50', disable);
         tabBtn.classList.toggle('cursor-not-allowed', disable);
+      
+        // build availability line
+        const availLine =
+          st.state === 'not_open' ? '<p class="text-sm text-slate-600 mt-2">Inschrijvingen nog niet geopend</p>' :
+          st.state === 'full'     ? '<p class="text-sm text-slate-600 mt-2">Beschikbaarheid: VOL</p>' :
+          (st.state === 'open' && st.left !== null) ? `<p class="text-sm text-slate-600 mt-2">Beschikbaarheid: ${st.left} plekken over</p>` :
+          '';
+      
+        // write rich description HTML into the Info panel
+        const infoPanel = document.getElementById('panel-info');
+        const descHtml  = window._descEnhancer.getDescHtml(ev);
+        infoPanel.innerHTML = `<div class="prose">${descHtml}${availLine}</div>`;
       })();
 
       activateTab('info', false);
