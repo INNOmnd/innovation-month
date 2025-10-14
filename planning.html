@@ -116,6 +116,9 @@
     .prose h1,.prose h2,.prose h3{ font-weight:700; margin:.75rem 0 .25rem }
     .prose ul{ margin:.5rem 0 .25rem 1.25rem; list-style:disc }
     .prose li{ margin:.15rem 0 } 
+
+    /* Keep calendar events fully clickable, never blocked by inner elements */
+    .event * { pointer-events: none; }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -572,10 +575,15 @@
     }
 
     function closeModal() {
-      document.getElementById('modal').classList.add('hidden');
-      document.body.style.overflow = '';
+      const modal = document.getElementById('modal');
+      modal.classList.add('hidden');           // display: none
+      document.body.style.overflow = '';       // restore scroll
+      currentWorkshopId = null;                // reset selection
       document.getElementById('mForm').innerHTML = '';
+      const loader = document.getElementById('mFormLoader');
+      if (loader) loader.style.display = '';   // show loader next time until iframe loads
     }
+
 
     function activateTab(which, loadForm = true){
       const btnInfo = document.getElementById('tab-info');
