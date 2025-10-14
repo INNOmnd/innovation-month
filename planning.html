@@ -118,6 +118,15 @@
     .rich-desc ul, .rich-desc ol { margin: .5rem 1.25rem; padding-left: 1rem; }
     .rich-desc img { max-width: 100%; height: auto; border-radius: .5rem; border:1px solid #e5e7eb; }
     .rich-desc a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; }
+    /* ensure bullets always render inside rich descriptions */
+    .rich-desc ul,
+    .rich-desc ol { margin: .5rem 0 .5rem 1.25rem; padding-left: .25rem; }
+    
+    .rich-desc ul { list-style: disc outside; }
+    .rich-desc ol { list-style: decimal outside; }
+    
+    /* make sure list items actually show a bullet/number */
+    .rich-desc li { display: list-item; list-style: inherit; }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -281,7 +290,7 @@
       const last  = new Date(year, NOVEMBER+1, 0);
       const start = new Date(first);
       const day = (start.getDay()+6)%7; // Mon=0
-      start.setDate(start.getDate() - day); // ✅ FIXED
+      start.setDate(start.getDate() - day); 
       const weeks = [];
       let cur = new Date(start);
       while(cur <= last){
