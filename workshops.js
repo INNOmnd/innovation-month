@@ -11,7 +11,7 @@
     { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'15:30', end:'16:00', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 pers).', status: "closed", descFile:'descriptions/ongemakkenjacht-3.html' },
   
     // Woensdag 05-11
-    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).', status: "open", descFile:'descriptions/taal-tool.html' },
+    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).', status: "closed", descFile:'descriptions/taal-tool.html' },
     { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed", descFile:'descriptions/ongemakkenjacht-4.html' },
   
     // Donderdag 06-11
