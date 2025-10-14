@@ -11,7 +11,7 @@
     { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'15:30', end:'16:00', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 pers).', status: "closed", descFile:'descriptions/ongemakkenjacht-3.html' },
   
     // Woensdag 05-11
-    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).', status: "closed", descFile:'descriptions/taal-tool.html' },
+    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).', status: "closed", descFile:'descriptions/taal-tool.html' },
     { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).', status: "closed", descFile:'descriptions/ongemakkenjacht-4.html' },
   
     // Donderdag 06-11
@@ -25,7 +25,7 @@
     { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Introductie Werken met AI (Lagerhuis, 15 personen).', status: "closed", descFile:'descriptions/wrk-ai-beginner.html' },
   
     // Donderdag 13-11
-    { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal met AI (Lagerhuis, 15 personen).', status: "closed", descFile:'descriptions/goeie-buurtaal-ai.html' },
+    { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/goeie-buurtaal-ai.png', desc:'Goeie Buur-taal met AI (Lagerhuis, 15 personen).', status: "closed", descFile:'descriptions/goeie-buurtaal-ai.html' },
     { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Inzet van drones voor inspecties, vastgoedbeheer en bouw – met demo’s en praktijkvoorbeelden.', status: "closed", descFile:'descriptions/dwam.html' },
     { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Werken met AI in het Werkhuis (10 personen).', status: "closed", descFile:'descriptions/wrk-ai-intermediate.html' },
     { id:'taal-tool2', title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'15:00', end:'17:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Vervolg Taaltool (Lagerhuis, 15 personen).', status: "closed", descFile:'descriptions/taal-tool2.html' },
