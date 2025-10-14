@@ -11,7 +11,7 @@
     { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'15:30', end:'16:00', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 pers).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-3.html' },
   
     // Woensdag 05-11
-    { id:'taal-tool', title:'Taaltool Sessie 1', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
+    { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
     { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-4.html' },
   
     // Donderdag 06-11
@@ -28,7 +28,7 @@
     { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy en Wendy', banner:'pictures/goeie-buurtaal-ai.png', desc:'Goeie Buur-taal met AI (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/goeie-buurtaal-ai.html' },
     { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Inzet van drones voor inspecties, vastgoedbeheer en bouw – met demo’s en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/dwam.html' },
     { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werkenmetai.png', desc:'Werken met AI in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/wrk-ai-intermediate.html' },
-    { id:'taal-tool2', title:'Taaltool Sessie 2', date:`${currentYear}-11-13`, start:'15:00', end:'17:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Vervolg Taaltool (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool2.html' },
+    { id:'taal-tool2', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-13`, start:'15:00', end:'17:00', speaker:'Joan', banner:'pictures/taaltool.png', desc:'Vervolg Taaltool (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool2.html' },
   
     // Maandag 17-11
     { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'13:00', end:'15:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'The Shortcut (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/shortcut.html' },
@@ -45,7 +45,7 @@
     // Dinsdag 25-11
     { id:'vr-x4', title:'VR? x 4', date:`${currentYear}-11-25`, start:'08:30', end:'13:00', speaker:'', banner:'pictures/vr.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/vr-x4.html' },
     { id:'zig-ai', title:'ZIG & AI', date:`${currentYear}-11-25`, start:'09:00', end:'11:00', speaker:'', banner:'pictures/zigai.png', desc:'ZIG & AI in het Werkhuis (16 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/zig-ai.html' },
-    { id:'goeie-buurtaal', title:'Goeie Buurtaal', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/goeie-buurtaal.html' },
+    { id:'goeie-buurtaal', title:'Goeie Buurtaal met AI', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/buurtaal.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/goeie-buurtaal.html' },
   
     // Donderdag 27-11
     { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass', banner:'pictures/klantreis.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/digitale-klantreis.html' },
