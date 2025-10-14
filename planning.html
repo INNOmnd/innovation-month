@@ -111,14 +111,13 @@
     #weekChip  { transition: border-color .2s ease, box-shadow .2s ease; }
     #weekChip:hover { border-color: rgba(0,0,0,.15); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
 
-    /* Rich text styling for the Info tab */
-    .prose { line-height:1.6 }
-    .prose h1,.prose h2,.prose h3{ font-weight:700; margin:.75rem 0 .25rem }
-    .prose ul{ margin:.5rem 0 .25rem 1.25rem; list-style:disc }
-    .prose li{ margin:.15rem 0 } 
-
-    /* Keep calendar events fully clickable, never blocked by inner elements */
-    .event * { pointer-events: none; }
+    /* —— Rich description styling (NEW) —— */
+    .rich-desc { line-height: 1.6; }
+    .rich-desc h1, .rich-desc h2, .rich-desc h3 { margin-top: .75rem; font-weight: 700; }
+    .rich-desc p { margin: .5rem 0; }
+    .rich-desc ul, .rich-desc ol { margin: .5rem 1.25rem; padding-left: 1rem; }
+    .rich-desc img { max-width: 100%; height: auto; border-radius: .5rem; border:1px solid #e5e7eb; }
+    .rich-desc a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -219,7 +218,8 @@
           </div>
 
           <div id="panel-info" class="tab-content active border border-slate-200 rounded-b-2xl rounded-tr-2xl p-4">
-            <p id="mDesc" class="text-slate-700"></p>
+            <!-- CHANGED: allow HTML -->
+            <div id="mDesc" class="rich-desc text-slate-700"></div>
             <p id="mAvail" class="mt-2 text-sm text-slate-600"></p>
           </div>
 
@@ -233,16 +233,6 @@
   </main>
 
   <script src="workshops.js"></script>
-  <script src="descriptions.js"></script>
-  <script src="desc-enhancer.js"></script>
-
-  <script>
-  // Ensure rich descriptions are applied BEFORE anything renders/binds
-  if (window.WORKSHOPS && window._descEnhancer) {
-    window.WORKSHOPS = window._descEnhancer.applyRichDescriptions(window.WORKSHOPS);
-  }
-  </script>
-  
   <script>
     // ——— Year & month constants ———
     const today = new Date();
@@ -259,9 +249,6 @@
       console.warn('Geen workshops geladen — controleer workshops.js of het pad naar het bestand.');
       return [];
     })();
-
-    // enrich with rich descriptions from descriptions.js (no data model change)
-    window.WORKSHOPS = window._descEnhancer.applyRichDescriptions(WORKSHOPS);
 
     // ——— Availability map ———
     let AVAIL = {};
@@ -529,6 +516,42 @@
       });
     }
 
+    // —— NEW: Description loader helpers —— //
+    const DESC_CACHE = new Map();
+
+    async function loadDescription(ev){
+      const $desc = document.getElementById('mDesc');
+      $desc.innerHTML = '<p class="text-sm text-slate-500">Beschrijving laden…</p>';
+
+      const candidates = [];
+      if (ev.descFile) candidates.push(ev.descFile);
+      candidates.push(`descriptions/${ev.id}.html`);
+
+      for (const url of candidates) {
+        try {
+          if (DESC_CACHE.has(url)) {
+            $desc.innerHTML = DESC_CACHE.get(url);
+            return;
+          }
+          const res = await fetch(url, { cache:'no-store' });
+          if (!res.ok) continue;
+          const html = await res.text();
+          DESC_CACHE.set(url, html);
+          $desc.innerHTML = html;
+          return;
+        } catch (e) {
+          /* try next */
+        }
+      }
+
+      // Fallback to inline text if provided
+      if (ev.desc && ev.desc.trim()) {
+        $desc.textContent = ev.desc;
+      } else {
+        $desc.innerHTML = '<p class="text-sm text-slate-500">Geen beschrijving beschikbaar.</p>';
+      }
+    }
+
     // ——— Modal logic ———
     let currentWorkshopId = null;
 
@@ -538,30 +561,30 @@
       document.getElementById('mTitle').textContent = ev.title;
       document.getElementById('mMeta').textContent =
         `${new Date(ev.date).toLocaleDateString()} • ${ev.start}–${ev.end} • ${ev.speaker}`;
-      document.getElementById('mDesc').textContent = ev.desc || '';
+
+      // CHANGED: load HTML description file (with fallback)
+      loadDescription(ev);
 
       (function(){
         const st = getEnrollmentState(ev);
         const hasForm = !!ev.form;
+        const mAvail = document.getElementById('mAvail');
       
-        // enable/disable the Inschrijven tab
+        if (st.state === 'not_open') {
+          mAvail.textContent = 'Inschrijvingen nog niet geopend';
+        } else if (st.state === 'full') {
+          mAvail.textContent = 'Beschikbaarheid: VOL';
+        } else if (st.state === 'open' && st.left !== null) {
+          mAvail.textContent = `Beschikbaarheid: ${st.left} plekken over`;
+        } else {
+          mAvail.textContent = '';
+        }
+      
         const tabBtn = document.getElementById('tab-inschrijven');
-        const disable = (st.state !== 'open') || !hasForm;
+        const disable = (st.state !== 'open') || !hasForm; // block when not open OR no form
         tabBtn.disabled = disable;
         tabBtn.classList.toggle('opacity-50', disable);
         tabBtn.classList.toggle('cursor-not-allowed', disable);
-      
-        // build availability line
-        const availLine =
-          st.state === 'not_open' ? '<p class="text-sm text-slate-600 mt-2">Inschrijvingen nog niet geopend</p>' :
-          st.state === 'full'     ? '<p class="text-sm text-slate-600 mt-2">Beschikbaarheid: VOL</p>' :
-          (st.state === 'open' && st.left !== null) ? `<p class="text-sm text-slate-600 mt-2">Beschikbaarheid: ${st.left} plekken over</p>` :
-          '';
-      
-        // write rich description HTML into the Info panel
-        const infoPanel = document.getElementById('panel-info');
-        const descHtml  = window._descEnhancer.getDescHtml(ev);
-        infoPanel.innerHTML = `<div class="prose">${descHtml}${availLine}</div>`;
       })();
 
       activateTab('info', false);
@@ -575,15 +598,10 @@
     }
 
     function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.add('hidden');           // display: none
-      document.body.style.overflow = '';       // restore scroll
-      currentWorkshopId = null;                // reset selection
+      document.getElementById('modal').classList.add('hidden');
+      document.body.style.overflow = '';
       document.getElementById('mForm').innerHTML = '';
-      const loader = document.getElementById('mFormLoader');
-      if (loader) loader.style.display = '';   // show loader next time until iframe loads
     }
-
 
     function activateTab(which, loadForm = true){
       const btnInfo = document.getElementById('tab-info');
