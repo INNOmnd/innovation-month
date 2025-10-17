@@ -6,15 +6,15 @@
 
   const WORKSHOPS = [
     // Dinsdag 04-11
-    { id:'ongemakkenjacht-1', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-1.html' },
-    { id:'ongemakkenjacht-2', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-2.html' },
+    { id:'ongemakkenjacht-1', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-2', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
 
     // Woensdag 05-11
     { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
-    { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-4.html' },
+    { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
   
     // Donderdag 06-11
-    { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Amy & Wendy', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht-5.html' },
+    { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Amy & Wendy', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
     { id:'bewonersteams', title:'Bewonersteams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/bewonersteams.html' },
   
     // Dinsdag 11-11
@@ -37,8 +37,8 @@
     // Donderdag 20-11
     { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
     { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp.html' },
-    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia2.html' },
-    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp2.html' },
+    { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
+    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp.html' },
   
     // Dinsdag 25-11
     { id:'vr-x4-1', title:'VR beleving dementie Into D\'mentia', date:`${currentYear}-11-25`, start:'08:30', end:'09:30', speaker:'Ideon', banner:'pictures/vr-x4.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'', status: "closed", descFile:'descriptions/vr-x4.html' },
@@ -46,7 +46,7 @@
     { id:'vr-x4-3', title:'VR beleving dementie Into D\'mentia', date:`${currentYear}-11-25`, start:'10:45', end:'11:45', speaker:'Ideon', banner:'pictures/vr-x4.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'', status: "closed", descFile:'descriptions/vr-x4.html' },
     { id:'vr-x4-4', title:'VR beleving dementie Into D\'mentia', date:`${currentYear}-11-25`, start:'11:45', end:'12:45', speaker:'Ideon', banner:'pictures/vr-x4.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'', status: "closed", descFile:'descriptions/vr-x4.html' },
     { id:'zig-ai', title:'ZIG & AI', date:`${currentYear}-11-25`, start:'09:00', end:'11:00', speaker:'', banner:'pictures/zig.gif', desc:'ZIG & AI in het Werkhuis (16 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/zig-ai.html' },
-    { id:'goeie-buurtaal-ai2', title:'Goeie Buurtaal met AI', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/goeie-buurtaal-ai.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/goeie-buurtaal.html' },
+    { id:'goeie-buurtaal-ai2', title:'Goeie Buurtaal met AI', date:`${currentYear}-11-25`, start:'11:00', end:'13:00', speaker:'Amy en Wendy', banner:'pictures/goeie-buurtaal-ai.png', desc:'Goeie Buur-taal in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/goeie-buurtaal-ai.html' },
   
     // Donderdag 27-11
     { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass', banner:'pictures/carglass.svg.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/digitale-klantreis.html' },
@@ -61,10 +61,10 @@
   
     // 05-11
     "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
-    "ongemakkenjacht-3": "FORM_URL_ONGEMAKKENJACHT4",
+    "ongemakkenjacht-3": "FORM_URL_ONGEMAKKENJACHT3",
   
     // 06-11
-    "ongemakkenjacht-4": "FORM_URL_ONGEMAKKENJACHT5",
+    "ongemakkenjacht-4": "FORM_URL_ONGEMAKKENJACHT4",
     "bewonersteams": "FORM_URL_BEWONERSTEAMS",
   
     // 11-11
@@ -91,16 +91,16 @@
     "thuisapp2": "FORM_URL_THUISAPP2",
   
     // 25-11
-    "vr-x4-1": "FORM_URL_VR",
-    "vr-x4-2": "FORM_URL_VR",
-    "vr-x4-3": "FORM_URL_VR",
-    "vr-x4-4": "FORM_URL_VR",
+    "vr-x4-1": "FORM_URL_VR-1",
+    "vr-x4-2": "FORM_URL_VR-2",
+    "vr-x4-3": "FORM_URL_VR-3",
+    "vr-x4-4": "FORM_URL_VR-4",
     "zig-ai": "FORM_URL_ZIGAI",
-    "goeie-buurtaal-ai2": "FORM_URL_BUURTAAL",
+    "goeie-buurtaal-ai2": "FORM_URL_BUURTAAL2",
   
     // 27-11
     "digitale-klantreis": "FORM_URL_KLANTREIS",
-    "stem-henk": "FORM_URL_TAALTOOL3",
+    "stem-henk": "FORM_URL_STEMHENK",
   };
 
   // Merge forms into workshops
