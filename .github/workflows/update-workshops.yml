@@ -8,7 +8,7 @@ on:
 permissions:
   contents: write
 
-# Prevent concurrent runs from racing each other
+# Ensure only one run at a time; others queue and run sequentially
 concurrency:
   group: workshop-json-updates
   cancel-in-progress: false
@@ -22,7 +22,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # ⬇️ Use the SAME identity as your GPG key
       - name: Configure Git
         run: |
           git config user.name "INNOmnd CI"
@@ -37,10 +36,10 @@ jobs:
         id: prep
         run: |
           CONTENT="${{ github.event.client_payload.content_b64 }}"
-          # strip CR/LF/spaties en zet URL-safe b64 om
+          # strip CR/LF/spaces and convert URL-safe b64
           CONTENT=$(echo "$CONTENT" | tr -d '\r\n ' | tr '_-' '/+')
-      
-          # Decode en verwijder extra array-lagen als de top een array-van-arrays is
+
+          # Decode and unwrap single/nested arrays
           printf %s "$CONTENT" | base64 -d \
             | jq -c '
                 def unwrap:
@@ -50,7 +49,7 @@ jobs:
                 unwrap
               ' \
             > tmp.json
-      
+
           FP="${{ github.event.client_payload.filePath }}"
           mkdir -p "$(dirname "$FP")"
           mv tmp.json "$FP"
@@ -59,29 +58,19 @@ jobs:
       - name: Rebuild workshops index
         run: |
           mkdir -p data/workshops
-          # Build a minimal index of all workshops: [{id,title}]
           if ls data/workshops/*.json >/dev/null 2>&1; then
             jq -s '[.[] | {id: .id, title: .title}]' data/workshops/*.json > data/workshops/index.json
           else
             echo "[]" > data/workshops/index.json
           fi
 
-      # ⬇️ NEW: import the key and enable signing (must be before commit)
-      - name: Import GPG key and enable signing
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-
       - name: Commit & push to main with retries
         run: |
           set -e
           git add "${{ steps.prep.outputs.FILEPATH }}" data/workshops/index.json
-          git commit -S -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
+          git commit -m "${{ github.event.client_payload.commitMessage }}" || echo "No changes to commit"
 
-          # Retry push up to 5 times to survive race conditions
+          # Retry push up to 5 times to survive any late races
           n=0
           until [ $n -ge 5 ]
           do
