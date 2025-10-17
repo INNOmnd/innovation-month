@@ -57,50 +57,50 @@
   const formLinks = {
     // 04-11
     "ongemakkenjacht-1": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUREZXUThUTDQySk41WDJDM1ZWVDNTT0FIRC4u&embed=true",
-    "ongemakkenjacht-2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMEE5WEVGTlJZRUxXRkY1M0lYWEo1OE5BSS4u",
+    "ongemakkenjacht-2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMEE5WEVGTlJZRUxXRkY1M0lYWEo1OE5BSS4u&embed=true",
   
     // 05-11
     "taal-tool": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOEg2VE5CTTZBRlhUSkMwS0IxMlpRWURRUC4u&embed=true",
-    "ongemakkenjacht-3": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQ04yTDNKUktEQkRNNUZTTldQUDRQRTVEQy4u",
+    "ongemakkenjacht-3": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQ04yTDNKUktEQkRNNUZTTldQUDRQRTVEQy4u&embed=true",
   
     // 06-11
-    "ongemakkenjacht-4": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMDBaU0MwVjFHNEJIUDdVSE1XSFlLUzUyUy4u",
-    "bewonersteams": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlFHMkwxWjBKMkdSMk5GQ1hDRDc1VU1QUS4u",
+    "ongemakkenjacht-4": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMDBaU0MwVjFHNEJIUDdVSE1XSFlLUzUyUy4u&embed=true",
+    "bewonersteams": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlFHMkwxWjBKMkdSMk5GQ1hDRDc1VU1QUS4u&embed=true",
   
     // 11-11
     "aftrap": "",
-    "wrk-ai-beginner": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURTRHQVBHWldURFdPV1JBQkxUNjQ5SjBQVi4u",
-    "taal-tool2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMk5SN1lCU000N0FXVk1CRkpTM1U3MzdUMS4u",
+    "wrk-ai-beginner": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURTRHQVBHWldURFdPV1JBQkxUNjQ5SjBQVi4u&embed=true",
+    "taal-tool2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMk5SN1lCU000N0FXVk1CRkpTM1U3MzdUMS4u&embed=true",
   
     // 13-11
-    "goeie-buurtaal-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUNjJORjI4MkpWTTdVMkVWVUZUR05BNkpMUi4u",
-    "dwam": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMENPRk5EMDFWRzJTVjc4MDI4UjMwSTlPOC4u",
-    "wrk-ai-intermediate": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUN1pPWDlESTRDN0hGMU1PMU1STkczQThaWC4u",
-    "digital-twin": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u",
+    "goeie-buurtaal-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUNjJORjI4MkpWTTdVMkVWVUZUR05BNkpMUi4u&embed=true",
+    "dwam": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMENPRk5EMDFWRzJTVjc4MDI4UjMwSTlPOC4u&embed=true",
+    "wrk-ai-intermediate": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUN1pPWDlESTRDN0hGMU1PMU1STkczQThaWC4u&embed=true",
+    "digital-twin": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
   
     // 17-11
-    "shortcut": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUM05UUFZBQVVRWlRBQUJWSzhQQUpaUjJSTi4u",
+    "shortcut": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUM05UUFZBQVVRWlRBQUJWSzhQQUpaUjJSTi4u&embed=true",
   
     // 18-11
-    "agile-scrum": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQ0kwQkpCOElLQVdYS1ZUT1hRQzNPWTZPQi4u",
+    "agile-scrum": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQ0kwQkpCOElLQVdYS1ZUT1hRQzNPWTZPQi4u&embed=true",
   
     // 20-11
-    "omaia": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQUpDVENTVzhSWERDSTQ4UlM0OTlRMFIxSi4u",
-    "thuisapp": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURTlKN1RWQTJaU1gwREc3NUdTTk9UU0RKMC4u",
-    "omaia2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQUhDS0w5NktWMFIwQzFSRUtTSE1NUTdSUS4u",
-    "thuisapp2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMzRURFQ4UVEwNE5DRllUN0lZQ1VGWE9QSC4u",
+    "omaia": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQUpDVENTVzhSWERDSTQ4UlM0OTlRMFIxSi4u&embed=true",
+    "thuisapp": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURTlKN1RWQTJaU1gwREc3NUdTTk9UU0RKMC4u&embed=true",
+    "omaia2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQUhDS0w5NktWMFIwQzFSRUtTSE1NUTdSUS4u&embed=true",
+    "thuisapp2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMzRURFQ4UVEwNE5DRllUN0lZQ1VGWE9QSC4u&embed=true",
   
     // 25-11
-    "vr-x4-1": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUREtCUzdERjlGMk0yQ1E1RkQxT0JUWDFENy4u",
-    "vr-x4-2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMVA2U0xNTFRSM1VSVFFXMkRZSzdDRzk2MC4u",
-    "vr-x4-3": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURU8yRFozWVdFUlE5NTAxRkNSVFFWNjZYMS4u",
-    "vr-x4-4": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURUxCMEJRMEZZTUNJT0dTNTVNVEJaOTEyNC4u",
-    "zig-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQTBXRzZQTUVOSFZLWlE3TkNIQktPQk05US4u",
-    "goeie-buurtaal-ai2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMVRURlRWWTBQU1FRUUs1UklSRFY4RVFHTS4u",
+    "vr-x4-1": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUREtCUzdERjlGMk0yQ1E1RkQxT0JUWDFENy4u&embed=true",
+    "vr-x4-2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMVA2U0xNTFRSM1VSVFFXMkRZSzdDRzk2MC4u&embed=true",
+    "vr-x4-3": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURU8yRFozWVdFUlE5NTAxRkNSVFFWNjZYMS4u&embed=true",
+    "vr-x4-4": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURUxCMEJRMEZZTUNJT0dTNTVNVEJaOTEyNC4u&embed=true",
+    "zig-ai": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQTBXRzZQTUVOSFZLWlE3TkNIQktPQk05US4u&embed=true",
+    "goeie-buurtaal-ai2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMVRURlRWWTBQU1FRUUs1UklSRFY4RVFHTS4u&embed=true",
   
     // 27-11
-    "digitale-klantreis": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOUtUUkNLV1BSQUZFV01aWFI3TENYVDlYVi4u",
-    "stem-henk": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMEkxS0RTRURaM05TNDRDR1A1UjNaRUtOOS4u",
+    "digitale-klantreis": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOUtUUkNLV1BSQUZFV01aWFI3TENYVDlYVi4u&embed=true",
+    "stem-henk": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMEkxS0RTRURaM05TNDRDR1A1UjNaRUtOOS4u&embed=true",
   };
 
   // Merge forms into workshops
