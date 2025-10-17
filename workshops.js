@@ -100,7 +100,7 @@
   
     // 27-11
     "digitale-klantreis": "FORM_URL_KLANTREIS",
-    "stem-henk": "FORM_URL_TAALTOOL3"
+    "stem-henk": "FORM_URL_TAALTOOL3",
   };
 
   // Merge forms into workshops
