@@ -37,9 +37,9 @@
   
     // Donderdag 20-11
     { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Rogier', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
-    { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/thuisapp.html' },
+    { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp.html' },
     { id:'omaia2', title:'OMAIA Sessie 2', date:`${currentYear}-11-20`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/omaia.png', desc:'OMAIA in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia2.html' },
-    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/thuisapp2.html' },
+    { id:'thuisapp2', title:'Thuisapp Sessie 2', date:`${currentYear}-11-20`, start:'15:00', end:'17:00', speaker:'Tessa', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp2.html' },
   
     // Dinsdag 25-11
     { id:'vr-x4', title:'VR? x 4', date:`${currentYear}-11-25`, start:'08:30', end:'13:00', speaker:'', banner:'pictures/vr.png', desc:'VR? x 4 in Huis vd Toekomst (6 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/vr-x4.html' },
