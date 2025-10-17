@@ -70,7 +70,7 @@
     // 11-11
     "aftrap": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
     "wrk-ai-beginner": "FORM_URL_AI_BEGINNER",
-    "taal-tool2": "FORM_URL_TAAL_TOOL2"
+    "taal-tool2": "FORM_URL_TAAL_TOOL2",
   
     // 13-11
     "goeie-buurtaal-ai": "FORM_URL_BUURTAAL_AI",
