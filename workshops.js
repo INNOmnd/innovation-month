@@ -15,7 +15,7 @@
   
     // Donderdag 06-11
     { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Amy & Wendy', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
-    { id:'bewonersteams', title:'Bewonersteams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/bewonersteams.html' },
+    { id:'bewonersteams', title:'Bewonersparticipatie: activeren van bewoners met BewonersTeams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/bewonersteams.html' },
   
     // Dinsdag 11-11
     { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'', status: "closed", descFile:'descriptions/aftrap.html' },
