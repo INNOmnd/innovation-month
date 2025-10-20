@@ -23,7 +23,7 @@
 </head>
 <body class="bg-white text-slate-800">
   <!-- Header -->
-  <header class="sticky top-0 z-30 backdrop-blur bg-white/80 border-b border-slate-200">
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/85 border-b border-slate-200">
     <div class="absolute inset-x-0 top-0 h-1" style="background:linear-gradient(90deg,#86BC25,#5D7A15)"></div>
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
       <a href="index.html" class="shrink-0">
@@ -39,68 +39,121 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <section class="grid md:grid-cols-3 gap-6">
-      <div class="md:col-span-2">
-        <h1 class="text-3xl font-extrabold tracking-tight">Doe mee met de ideeënwedstrijd</h1>
-        <p class="mt-3 text-slate-700">
-          Tijdens INNOvember betrekken we collega’s actief bij het bedenken van vernieuwende, creatieve en praktische ideeën.
-          De winnende ideeën voeren we écht uit – er is budget beschikbaar.
+  <main class="max-w-6xl mx-auto px-4">
+    <!-- HERO -->
+    <section class="mt-8 md:mt-10 grid grid-cols-12 gap-6 items-center rounded-3xl border border-slate-200 p-6 md:p-8 bg-gradient-to-r from-white to-[#F7FAEF]">
+      <div class="col-span-12 md:col-span-7">
+        <p class="text-xs font-medium text-slate-600 mb-2">INNOvember bij Casade</p>
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          Doe mee met de <span style="color:var(--brand)">Ideeënwedstrijd</span>
+        </h1>
+        <p class="mt-3 text-slate-700 max-w-prose">
+          Bedenk een vernieuwend, creatief of praktisch idee. De winnaars worden niet alleen beloond,
+          maar ook écht uitgevoerd—er is budget beschikbaar.
         </p>
-
-        <div class="mt-6 space-y-6">
-          <div class="p-5 rounded-2xl border border-slate-200 bg-white">
-            <h2 class="text-xl font-semibold">Categorieën &amp; prijzen</h2>
-            <ul class="mt-3 list-disc pl-5 text-slate-700">
-              <li><strong>Beste idee:</strong> grootste impact, vernieuwend en haalbaar.</li>
-              <li><strong>Gekste idee:</strong> creatief, onverwacht, inspirerend.</li>
-              <li><strong>Morgen realiseerbaar:</strong> direct uitvoerbaar, lage kosten.</li>
-            </ul>
-          </div>
-
-          <div class="p-5 rounded-2xl border border-slate-200 bg-white">
-            <h2 class="text-xl font-semibold">Selectie &amp; beoordeling</h2>
-            <ol class="mt-3 list-decimal pl-5 text-slate-700">
-              <li>Voorselectie door jury – shortlist per categorie.</li>
-              <li>Stemronde door collega’s – samen met juryoordeel bepalen we de winnaars.</li>
-            </ol>
-            <p class="mt-3 text-slate-700">
-              Indienen kan de hele maand. Je vult een titel, korte beschrijving en motivatie in.
-              Je hoeft niet zelf te presenteren – wij verzamelen en tonen de inzendingen.
-            </p>
-          </div>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="#indienen" class="px-5 py-3 rounded-xl text-white font-medium" style="background:var(--brand)">Dien je idee in</a>
+          <a href="#info" class="px-5 py-3 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Lees hoe het werkt</a>
         </div>
       </div>
 
-      <!-- 3 call-to-action kaarten -->
-      <aside class="space-y-4">
-        <a href="idee-beste.html" class="block p-5 rounded-2xl border border-slate-200 hover:shadow-md transition">
+      <!-- HERO-AFBEELDING -->
+      <!-- Vervang 'pictures/ideeen-hero.png' door jouw beeld. Gebruik 1200×800 of 4:3/16:9. PNG met transparantie werkt mooi. -->
+      <figure class="col-span-12 md:col-span-5 order-first md:order-none">
+        <img src="pictures/ideeen-hero.png" alt="Illustratie ideeënwedstrijd"
+             class="w-full h-64 md:h-72 object-contain rounded-2xl" loading="eager" decoding="async">
+      </figure>
+    </section>
+
+    <!-- CTA-KAARTEN: drie categorieën -->
+    <section id="indienen" class="mt-8 md:mt-10">
+      <h2 class="sr-only">Dien je idee in</h2>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Beste idee -->
+        <a href="idee-beste.html" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
           <h3 class="text-lg font-semibold">Dien in: Beste idee</h3>
           <p class="text-sm text-slate-600 mt-1">Vernieuwend en met grote impact.</p>
           <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
         </a>
-
-        <a href="idee-gekste.html" class="block p-5 rounded-2xl border border-slate-200 hover:shadow-md transition">
+        <!-- Gekste idee -->
+        <a href="idee-gekste.html" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
           <h3 class="text-lg font-semibold">Dien in: Gekste idee</h3>
           <p class="text-sm text-slate-600 mt-1">Creatief, onverwacht, inspirerend.</p>
           <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
         </a>
-
-        <a href="idee-morgen.html" class="block p-5 rounded-2xl border border-slate-200 hover:shadow-md transition">
+        <!-- Morgen realiseerbaar -->
+        <a href="idee-morgen.html" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
           <h3 class="text-lg font-semibold">Dien in: Morgen realiseerbaar</h3>
           <p class="text-sm text-slate-600 mt-1">Praktisch, eenvoudig en snel uitvoerbaar.</p>
           <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
         </a>
-      </aside>
+      </div>
     </section>
 
-    <section class="mt-10 p-6 rounded-3xl border border-slate-200 bg-gradient-to-r from-white to-[#F7FAEF]">
-      <h2 class="text-xl font-semibold">Communicatie</h2>
-      <ul class="mt-2 list-disc pl-5 text-slate-700">
-        <li><strong>Vooraf:</strong> uitleg wedstrijd, categorieën, indienen.</li>
-        <li><strong>Tijdens:</strong> updates en voorbeelden.</li>
-        <li><strong>Na afloop:</strong> winnaars + zichtbare uitvoering.</li>
-      </ul>
+    <!-- DUNNE scheiding voor rust -->
+    <div class="my-10 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+
+    <!-- INFO BLOKKEN -->
+    <section id="info" class="grid grid-cols-12 gap-6 items-start">
+      <!-- Categorieën -->
+      <div class="col-span-12 md:col-span-7">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5">
+          <h2 class="text-xl font-semibold">Categorieën &amp; prijzen</h2>
+          <div class="mt-4 grid sm:grid-cols-2 gap-4">
+            <div class="rounded-xl border border-slate-200 p-4">
+              <h3 class="font-semibold">Beste idee</h3>
+              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
+                <li>Grote impact op organisatie/werkprocessen</li>
+                <li>Haalbaar binnen middelen</li>
+                <li>Originaliteit & vernieuwingskracht</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-4">
+              <h3 class="font-semibold">Gekste idee</h3>
+              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
+                <li>Creatief en onverwacht</li>
+                <li>Inspirerend/prikkelend</li>
+                <li>Draagt bij aan fun & betrokkenheid</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-4 sm:col-span-2">
+              <h3 class="font-semibold">Morgen realiseerbaar</h3>
+              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
+                <li>Direct uitvoerbaar (zonder groot project)</li>
+                <li>Lage kosten en beperkte middelen</li>
+                <li>Snel zichtbaar resultaat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selectie & beoordeling -->
+      <div class="col-span-12 md:col-span-5">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5">
+          <h2 class="text-xl font-semibold">Selectie &amp; beoordeling</h2>
+          <ol class="mt-3 list-decimal pl-5 text-slate-700">
+            <li>Voorselectie door jury – shortlist per categorie.</li>
+            <li>Stemronde door collega’s – samen met het juryoordeel bepalen we de winnaars.</li>
+          </ol>
+          <p class="mt-3 text-slate-700 text-sm">
+            Indienen kan de hele maand. Je vult een titel, korte beschrijving en motivatie in.
+            Je hoeft niet zelf te presenteren: wij verzamelen en tonen de inzendingen.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Communicatie -->
+    <section class="mt-8 md:mt-10 mb-12">
+      <div class="rounded-3xl border border-slate-200 p-6 bg-[#FBFEF6]">
+        <h2 class="text-xl font-semibold">Communicatie</h2>
+        <ul class="mt-2 list-disc pl-5 text-slate-700">
+          <li><strong>Vooraf:</strong> uitleg wedstrijd, categorieën, indienen.</li>
+          <li><strong>Tijdens:</strong> updates en voorbeelden.</li>
+          <li><strong>Na afloop:</strong> winnaars + zichtbare uitvoering.</li>
+        </ul>
+      </div>
     </section>
   </main>
 
@@ -112,4 +165,3 @@
   </footer>
 </body>
 </html>
-
