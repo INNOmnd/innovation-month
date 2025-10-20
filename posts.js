@@ -5,7 +5,7 @@ window.POSTS = [
     title:"Hoe Kodak de Toekomst in Handen Had – en Losliet",
     company:"Kodak",
     summary:"Het verhaal van Kodak en het innovatie dilemma.",
-    banner:"picturesblog/kodak.webp",
+    banner:"picturesblog/kodak.webp", 
     date:"2015-09-01",
     content: [
       "Er zijn verhalen in de wereld van innovatie die bijna mythische proporties aannemen. Ze worden verteld en herhaald, niet alleen omdat ze spannend zijn, maar omdat ze ons iets leren over succes en falen. Een van de bekendste verhalen is dat van Kodak. Ooit hét merk dat stond voor fotografie, voor herinneringen en voor het vastleggen van het leven zelf. Maar uiteindelijk ook een merk dat ten onder ging, juist omdat het niet durfde los te laten wat het groot had gemaakt.",
