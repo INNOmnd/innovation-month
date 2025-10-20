@@ -95,7 +95,7 @@
 
     /* ——— Calendar table ——— */
     #calendarWrap thead th{
-      position: sticky; top: 0; z-index: 20;
+      position: sticky; top: 0; z-index: 40;
       background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);
 
     /* Make borders render predictably */
@@ -126,19 +126,6 @@
       background: #e5e7eb;   /* same as Tailwind slate-200 */
       pointer-events: none;
       z-index: 2;            /* show above events (z=1) */
-    }
-    
-    /* Also apply line in the header */
-    #timetable thead th + th { position: relative; }
-    #timetable thead th + th::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: #e5e7eb;
-      z-index: 3;
     }
 
     /* ——— Compact planner bar ——— */
@@ -429,11 +416,9 @@
           td.className = 'relative h-14 align-top border-t border-slate-100 cell';
       
           // add the vertical line overlay (skip Monday)
-          if (c > 0) {
-            const v = document.createElement('div');
-            v.className = 'vline';
-            td.appendChild(v);
-          }      
+          const v = document.createElement('div');
+          v.className = 'vline';
+          td.appendChild(v);   
           tr.appendChild(td);
         }     
         grid.appendChild(tr);
