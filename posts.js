@@ -90,7 +90,7 @@ window.POSTS = [
     title: "On the Job Hulp: Xtendis en Slimmer Brieven Maken",
     company: "Casade",
     summary: "Persoonlijke ondersteuning op de werkvloer om beter, sneller en slimmer te werken met Xtendis en bij het maken van brieven.",
-    banner: "pictures/Xtendis.png",
+    banner: "picturesblog/Xtendis_seg.png",
     date: "2025-11-05",
     content: [
       { "type": "h2", "text": "Maatwerk/on the job hulp: 'beter en sneller archiveren en zoeken in Xtendis'" },
