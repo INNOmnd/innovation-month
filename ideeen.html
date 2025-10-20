@@ -13,16 +13,10 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-    .link-underline{
-      background-image:linear-gradient(currentColor,currentColor);
-      background-repeat:no-repeat;background-position:0 100%;
-      background-size:0% 2px;transition:background-size .25s ease
-    }
+    .link-underline{background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 2px;transition:background-size .25s ease}
     .link-underline:hover{background-size:100% 2px}
     .card{background:#fff;border:1px solid #e2e8f0;border-radius:1rem}
     .kicker{font-size:.7rem;letter-spacing:.08em;color:#64748b;font-weight:600;text-transform:uppercase}
-    .step-dot{width:.875rem;height:.875rem;border-radius:9999px;border:2px solid var(--brand);background:#fff}
-    .prose-small p{margin:.5rem 0}
   </style>
 </head>
 <body class="bg-white text-slate-800">
@@ -43,225 +37,114 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4">
-    <!-- HERO -->
+  <main class="max-w-4xl mx-auto px-4">
+    <!-- HERO (kort en duidelijk) -->
     <section class="mt-8 md:mt-10 card p-6 md:p-8">
       <div class="grid grid-cols-12 gap-6 items-center">
         <figure class="col-span-12 md:col-span-5 order-first md:order-none">
           <img src="pictures/ideeen-hero.png" alt="Illustratie ideeënwedstrijd"
-               class="w-full h-64 md:h-72 object-contain rounded-2xl" loading="eager" decoding="async">
+               class="w-full h-56 md:h-64 object-contain rounded-2xl" loading="eager" decoding="async">
         </figure>
         <div class="col-span-12 md:col-span-7">
-          <p class="kicker mb-2">INNOvember bij Casade</p>
-          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-            Doe mee met de <span style="color:var(--brand)">Ideeënwedstrijd</span>
-          </h1>
-          <p class="mt-3 text-slate-700 max-w-prose">
-            Bedenk een vernieuwend, creatief of praktisch idee. De winnaars worden beloond én echt uitgevoerd — er is budget beschikbaar.
+          <p class="kicker mb-2">INNOvember</p>
+          <h1 class="text-3xl font-extrabold tracking-tight leading-tight">Dien jouw idee in</h1>
+          <p class="mt-3 text-slate-700">
+            Heb je een slim, leuk of direct uitvoerbaar idee? Dien het deze maand in.
+            Winnaars worden bekendgemaakt na INNOvember en de winnende ideeën worden echt uitgevoerd.
           </p>
-          <div class="mt-4 flex flex-wrap gap-3">
-            <a href="#indienen" class="px-5 py-3 rounded-xl text-white font-medium" style="background:var(--brand)">Dien je idee in</a>
-            <a href="#hoe-het-werkt" class="px-5 py-3 rounded-xl font-medium border" style="border-color:var(--brand); color:var(--brand)">Hoe het werkt</a>
+          <div class="mt-4">
+            <a href="#indienen" class="px-5 py-3 rounded-xl text-white font-medium" style="background:var(--brand)">Direct indienen</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- LAYOUT: side-nav + content -->
-    <section class="mt-8 md:mt-10 grid grid-cols-12 gap-6">
-      <!-- Side navigation (desktop) -->
-      <aside class="hidden md:block md:col-span-3">
-        <nav class="card p-4 sticky top-24 text-sm">
-          <p class="kicker mb-2">Inhoud</p>
-          <ul class="space-y-2">
-            <li><a class="link-underline hover:text-slate-900" href="#indienen">Indienen</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#hoe-het-werkt">Hoe het werkt</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#categorieen">Categorieën</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#criteria">Criteria</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#selectie">Selectie & stemming</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#tijdlijn">Tijdlijn</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#faq">FAQ</a></li>
-            <li><a class="link-underline hover:text-slate-900" href="#communicatie">Communicatie</a></li>
-          </ul>
-        </nav>
-      </aside>
+    <!-- FORMULIEREN (blijft, positie vrij) -->
+    <section id="indienen" class="mt-8 md:mt-10 card p-5">
+      <p class="kicker mb-1">Indienen</p>
+      <h2 class="text-xl font-semibold">Kies je categorie</h2>
+      <div class="mt-5 grid gap-5 sm:grid-cols-3">
+        <a href="idee-beste.html" class="block rounded-xl border border-slate-200 p-4 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <h3 class="font-semibold">Beste idee</h3>
+          <p class="text-sm text-slate-600 mt-1">Grootste impact.</p>
+          <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
+        </a>
+        <a href="idee-gekste.html" class="block rounded-xl border border-slate-200 p-4 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <h3 class="font-semibold">Gekste idee</h3>
+          <p class="text-sm text-slate-600 mt-1">Creatief & verrassend.</p>
+          <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
+        </a>
+        <a href="idee-morgen.html" class="block rounded-xl border border-slate-200 p-4 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <h3 class="font-semibold">Morgen realiseerbaar</h3>
+          <p class="text-sm text-slate-600 mt-1">Direct uitvoerbaar.</p>
+          <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
+        </a>
+      </div>
+    </section>
 
-      <!-- Content column -->
-      <div class="col-span-12 md:col-span-9 space-y-8 md:space-y-10">
+    <!-- ZO WERKT HET (3 bullets) -->
+    <section class="mt-8 md:mt-10 card p-5">
+      <p class="kicker mb-1">Zo werkt het</p>
+      <ul class="text-slate-700 text-sm space-y-2">
+        <li>• Vul titel, korte beschrijving en motivatie in.</li>
+        <li>• Jury maakt per categorie een shortlist, daarna stemmen collega’s.</li>
+        <li>• Bekendmaking na INNOvember; winnende ideeën voeren we echt uit (budget is beschikbaar).</li>
+      </ul>
+    </section>
 
-        <!-- CTA-KAARTEN: drie categorieën (FORMULIEREN) -->
-        <section id="indienen" class="card p-5">
-          <div class="flex items-center justify-between gap-4 flex-wrap">
-            <div>
-              <p class="kicker mb-1">Indienen</p>
-              <h2 class="text-xl font-semibold">Kies je categorie en dien direct in</h2>
-              <p class="text-slate-700 text-sm mt-1">Je vult een titel, korte beschrijving en motivatie in. Presenteren hoeft niet.</p>
-            </div>
-            <a href="#hoe-het-werkt" class="text-sm font-medium link-underline" style="color:var(--brand)">Hoe het werkt →</a>
-          </div>
-          <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <a href="idee-beste.html" class="block rounded-2xl border border-slate-200 p-5 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-              <h3 class="text-lg font-semibold">Beste idee</h3>
-              <p class="text-sm text-slate-600 mt-1">Vernieuwend en met grote impact.</p>
-              <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
-            </a>
-            <a href="idee-gekste.html" class="block rounded-2xl border border-slate-200 p-5 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-              <h3 class="text-lg font-semibold">Gekste idee</h3>
-              <p class="text-sm text-slate-600 mt-1">Creatief, onverwacht, inspirerend.</p>
-              <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
-            </a>
-            <a href="idee-morgen.html" class="block rounded-2xl border border-slate-200 p-5 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-              <h3 class="text-lg font-semibold">Morgen realiseerbaar</h3>
-              <p class="text-sm text-slate-600 mt-1">Praktisch en direct uitvoerbaar.</p>
-              <span class="inline-block mt-3 text-sm font-medium" style="color:var(--brand)">Open formulier →</span>
-            </a>
-          </div>
-        </section>
+    <!-- WAAR LET DE JURY OP? (zeer compact) -->
+    <section class="mt-8 md:mt-10 card p-5">
+      <p class="kicker mb-1">Beoordeling</p>
+      <div class="grid sm:grid-cols-3 gap-4 text-sm">
+        <div class="rounded-lg border border-slate-200 p-4">
+          <h3 class="font-semibold">Beste idee</h3>
+          <p class="text-slate-700 mt-1">Impact • Haalbaarheid • Vernieuwing</p>
+        </div>
+        <div class="rounded-lg border border-slate-200 p-4">
+          <h3 class="font-semibold">Gekste idee</h3>
+          <p class="text-slate-700 mt-1">Creativiteit • Inspiratie • Fun</p>
+        </div>
+        <div class="rounded-lg border border-slate-200 p-4">
+          <h3 class="font-semibold">Morgen realiseerbaar</h3>
+          <p class="text-slate-700 mt-1">Eenvoud • Lage kosten • Snel effect</p>
+        </div>
+      </div>
+    </section>
 
-        <!-- HOE HET WERKT: 3 stappen -->
-        <section id="hoe-het-werkt" class="card p-5">
-          <p class="kicker mb-1">Uitleg</p>
-          <h2 class="text-xl font-semibold">Hoe het werkt</h2>
-          <ol class="mt-4 space-y-4">
-            <li class="flex items-start gap-3">
-              <span class="step-dot mt-1.5"></span>
-              <div>
-                <strong>1) Dien je idee in</strong>
-                <p class="text-sm text-slate-700 mt-1">Kies een categorie en vul titel, korte beschrijving en motivatie in.</p>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="step-dot mt-1.5"></span>
-              <div>
-                <strong>2) Shortlist door jury</strong>
-                <p class="text-sm text-slate-700 mt-1">Een kleine, diverse jury selecteert per categorie een shortlist.</p>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="step-dot mt-1.5"></span>
-              <div>
-                <strong>3) Collega’s stemmen mee</strong>
-                <p class="text-sm text-slate-700 mt-1">Stemmen + juryoordeel bepalen samen de winnaars. Bekendmaking tijdens de slotbijeenkomst.</p>
-              </div>
-            </li>
-          </ol>
-        </section>
+    <!-- PLANNING (1 regel per fase) -->
+    <section class="mt-8 md:mt-10 card p-5">
+      <p class="kicker mb-1">Planning</p>
+      <ul class="text-slate-700 text-sm space-y-1">
+        <li><strong>1–30 november:</strong> Indienen</li>
+        <li><strong>Begin december:</strong> Shortlist door jury</li>
+        <li><strong>December:</strong> Stemmen door collega’s</li>
+        <li><strong>Slotbijeenkomst:</strong> Winnaars & start uitvoering</li>
+      </ul>
+    </section>
 
-        <!-- CATEGORIEËN -->
-        <section id="categorieen" class="card p-5">
-          <p class="kicker mb-1">Categorieën</p>
-          <h2 class="text-xl font-semibold">Waar kun je op insturen?</h2>
-          <div class="mt-4 grid sm:grid-cols-2 gap-4">
-            <div class="rounded-xl border border-slate-200 p-4">
-              <h3 class="font-semibold">Beste idee</h3>
-              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
-                <li>Grote impact op organisatie/werkprocessen</li>
-                <li>Haalbaar binnen beschikbare middelen</li>
-                <li>Originaliteit & vernieuwingskracht</li>
-              </ul>
-            </div>
-            <div class="rounded-xl border border-slate-200 p-4">
-              <h3 class="font-semibold">Gekste idee</h3>
-              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
-                <li>Creatief en onverwacht</li>
-                <li>Inspirerend/prikkelend</li>
-                <li>Bijdrage aan plezier en betrokkenheid</li>
-              </ul>
-            </div>
-            <div class="rounded-xl border border-slate-200 p-4 sm:col-span-2">
-              <h3 class="font-semibold">Morgen realiseerbaar</h3>
-              <ul class="mt-2 list-disc pl-5 text-slate-700 text-sm">
-                <li>Direct uitvoerbaar zonder groot project</li>
-                <li>Lage kosten en beperkte middelen</li>
-                <li>Snel zichtbaar resultaat</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- CRITERIA -->
-        <section id="criteria" class="card p-5">
-          <p class="kicker mb-1">Beoordeling</p>
-          <h2 class="text-xl font-semibold">Waar let de jury op?</h2>
-          <div class="mt-4 grid sm:grid-cols-2 gap-4 prose-small">
-            <div class="rounded-xl border border-slate-200 p-4">
-              <h3 class="font-semibold">Beste idee</h3>
-              <p class="text-sm text-slate-700">Impact • Haalbaarheid • Originaliteit</p>
-            </div>
-            <div class="rounded-xl border border-slate-200 p-4">
-              <h3 class="font-semibold">Gekste idee</h3>
-              <p class="text-sm text-slate-700">Creativiteit • Inspiratie • Fun-factor</p>
-            </div>
-            <div class="rounded-xl border border-slate-200 p-4 sm:col-span-2">
-              <h3 class="font-semibold">Morgen realiseerbaar</h3>
-              <p class="text-sm text-slate-700">Eenvoud • Lage kosten • Direct effect</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SELECTIE & STEMMING -->
-        <section id="selectie" class="card p-5">
-          <p class="kicker mb-1">Proces</p>
-          <h2 class="text-xl font-semibold">Selectie & stemming</h2>
-          <ol class="mt-3 list-decimal pl-5 text-slate-700">
-            <li>Voorselectie door jury – shortlist per categorie.</li>
-            <li>Stemronde door collega’s – samen met het juryoordeel bepalen we de winnaars.</li>
-          </ol>
-          <p class="mt-3 text-slate-700 text-sm">
-            Indienen kan de hele maand. Je hoeft niet zelf te presenteren: wij verzamelen en tonen de inzendingen.
-          </p>
-        </section>
-
-        <!-- TIJDLIJN -->
-        <section id="tijdlijn" class="card p-5">
-          <p class="kicker mb-1">Tijdlijn</p>
-          <h2 class="text-xl font-semibold">Wanneer gebeurt wat?</h2>
-          <ul class="mt-4 space-y-3 text-sm">
-            <li class="flex items-start gap-3"><span class="step-dot mt-1.5"></span><div><strong>1–30 november:</strong> Indienen van ideeën</div></li>
-            <li class="flex items-start gap-3"><span class="step-dot mt-1.5"></span><div><strong>Begin december:</strong> Jury shortlists</div></li>
-            <li class="flex items-start gap-3"><span class="step-dot mt-1.5"></span><div><strong>December:</strong> Stemronde collega’s</div></li>
-            <li class="flex items-start gap-3"><span class="step-dot mt-1.5"></span><div><strong>Slotbijeenkomst:</strong> Bekendmaking winnaars & commitment voor uitvoering</div></li>
-          </ul>
-        </section>
-
-        <!-- FAQ -->
-        <section id="faq" class="card p-5">
-          <p class="kicker mb-1">Veelgestelde vragen</p>
-          <h2 class="text-xl font-semibold">FAQ</h2>
-          <div class="mt-4 space-y-4 text-sm">
-            <details class="rounded-lg border border-slate-200 p-4">
-              <summary class="font-medium cursor-pointer">Moet ik mijn idee presenteren?</summary>
-              <p class="mt-2 text-slate-700">Nee. Het innovatieteam verzamelt en presenteert alle inzendingen.</p>
-            </details>
-            <details class="rounded-lg border border-slate-200 p-4">
-              <summary class="font-medium cursor-pointer">Kan ik samen met iemand indienen?</summary>
-              <p class="mt-2 text-slate-700">Zeker. Vermeld gewoon alle namen in het formulier.</p>
-            </details>
-            <details class="rounded-lg border border-slate-200 p-4">
-              <summary class="font-medium cursor-pointer">Wat gebeurt er na de winst?</summary>
-              <p class="mt-2 text-slate-700">De winnende ideeën worden met beschikbaar budget daadwerkelijk uitgevoerd en de voortgang wordt gedeeld.</p>
-            </details>
-          </div>
-        </section>
-
-        <!-- COMMUNICATIE -->
-        <section id="communicatie" class="card p-5 mb-2">
-          <p class="kicker mb-1">Communicatie</p>
-          <h2 class="text-xl font-semibold">Zo houden we iedereen mee</h2>
-          <ul class="mt-2 list-disc pl-5 text-slate-700">
-            <li><strong>Vooraf:</strong> uitleg wedstrijd, categorieën, indienen.</li>
-            <li><strong>Tijdens:</strong> updates en voorbeelden ter inspiratie.</li>
-            <li><strong>Na afloop:</strong> winnaars + zichtbare uitvoering.</li>
-          </ul>
-        </section>
-
+    <!-- FAQ (kort) -->
+    <section class="mt-8 md:mt-12 mb-12 card p-5">
+      <p class="kicker mb-1">FAQ</p>
+      <div class="text-sm text-slate-700 space-y-3">
+        <details class="rounded-lg border border-slate-200 p-4">
+          <summary class="font-medium cursor-pointer">Moet ik presenteren?</summary>
+          <p class="mt-2">Nee, wij presenteren de inzendingen.</p>
+        </details>
+        <details class="rounded-lg border border-slate-200 p-4">
+          <summary class="font-medium cursor-pointer">Mag ik samen indienen?</summary>
+          <p class="mt-2">Ja, vermeld alle namen in het formulier.</p>
+        </details>
+        <details class="rounded-lg border border-slate-200 p-4">
+          <summary class="font-medium cursor-pointer">Wat gebeurt er met de winnaars?</summary>
+          <p class="mt-2">Die worden uitgevoerd met beschikbaar budget.</p>
+        </details>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-slate-200 py-10 relative mt-10">
+  <footer class="border-t border-slate-200 py-10 relative">
     <div class="absolute -top-[1px] inset-x-0 h-[1px]" style="background:linear-gradient(90deg,#86BC25,#5D7A15)"></div>
-    <div class="max-w-6xl mx-auto px-4 text-sm text-slate-600">
+    <div class="max-w-4xl mx-auto px-4 text-sm text-slate-600">
       © 2025 Casade — INNOvember
     </div>
   </footer>
