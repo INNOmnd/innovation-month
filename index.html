@@ -245,7 +245,7 @@
     if (!container) return;
 
     posts.sort((a,b)=> (new Date(b.date) - new Date(a.date)) || 0);
-    const pick = posts.slice(0,2);
+    const pick = posts.slice(0,3);
 
     const card = (p)=> `
       <article class="card bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
