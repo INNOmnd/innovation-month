@@ -97,9 +97,25 @@
     #calendarWrap thead th{
       position: sticky; top: 0; z-index: 40;
       background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);
-
-    /* Make borders render predictably */
-    #timetable { border-collapse: separate; border-spacing: 0; }
+    }
+    
+    /* Make borders render predictably + even column sizing */
+    #timetable{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;            /* ← force even distribution */
+    }
+    
+    /* Fix the time column to 6rem (Tailwind w-24) */
+    #timetable th:first-child,
+    #timetable td:first-child{ width: 6rem; }
+    
+    /* Split the remaining width equally over 5 days */
+    #timetable thead th:not(:first-child),
+    #timetable tbody td:not(:first-child){
+      width: calc((100% - 6rem)/5);
+    }
     
     /* Vertical lines that always show (inside the cells) */
     #timetable thead th + th { box-shadow: inset 1px 0 0 #e5e7eb; }
