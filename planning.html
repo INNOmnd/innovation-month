@@ -97,6 +97,16 @@
     #calendarWrap thead th{
       position: sticky; top: 0; z-index: 20;
       background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);
+
+    /* Vertical separators for day columns */
+    #timetable thead th + th { border-left: 1px solid #e5e7eb; }
+    #timetable tbody td + td { border-left: 1px solid #e5e7eb; }
+
+    /* Outlook-style day headers */
+    .dayhead { line-height: 1.1; text-align:left; }
+    .dayhead .d { font-size: 1.125rem; font-weight: 700; } 
+    .dayhead .w { font-size: .75rem; color: #475569; }     
+  
     }
     @media (max-width: 640px){ .event{ font-size:11px; padding:6px 6px 24px; } }
     @media (max-width: 768px){
@@ -325,13 +335,51 @@
         : `${d2(days[0])} ${m0}–${d2(days[4])} ${m4}`;
     }
 
+    // Capitalize first letter of Dutch weekday/month names
+    function capFirst(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+    
+    // ISO week number (for "week 43" like Outlook)
+    function getISOWeek(d){
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const day = (date.getUTCDay() + 6) % 7; // Mon=0..Sun=6
+      date.setUTCDate(date.getUTCDate() - day + 3); // Thursday
+      const firstThursday = new Date(Date.UTC(date.getUTCFullYear(), 0, 4));
+      const week = 1 + Math.round(((date - firstThursday) / 86400000 - 3) / 7);
+      return week;
+    }
+    
+    // Outlook-like range: "20–26 Oktober, 2025 (week 43)"
+    function formatOutlookRange(days){
+      const dd = d => String(d.getDate()).padStart(2, '0');
+      const monthLong = new Intl.DateTimeFormat('nl-NL', { month: 'long' }).format(days[0]);
+      const monthCap  = capFirst(monthLong);
+      const year      = days[0].getFullYear();
+      const isoWeek   = getISOWeek(days[0]); // Monday of shown week
+      return `${dd(days[0])}–${dd(days[4])} ${monthCap}, ${year} (week ${isoWeek})`;
+    }
+
     function renderWeek(){
       const days = weeks[weekIdx];
 
+      // —— Outlook-style column headers (big date + small weekday) —— //
+      {
+        const heads = document.querySelectorAll('#timetable thead th');
+        // heads[0] is "Tijd", heads[1..5] are the weekdays
+        for (let i = 1; i <= 5; i++) {
+          const d = days[i - 1];
+          const dd = String(d.getDate()).padStart(2, '0');
+          const w  = capFirst(new Intl.DateTimeFormat('nl-NL', { weekday: 'long' }).format(d));
+          heads[i].innerHTML = `<div class="dayhead"><div class="d">${dd}</div><div class="w">${w}</div></div>`;
+        }
+      }
+
       // ——— planner bar text ———
-      const weekNo = weekIdx + 1;
-      document.getElementById('weekRange').textContent = formatShortRange(days);
-      document.getElementById('weekChipLabel').textContent = `Week ${weekNo}`;
+      document.getElementById('weekRange').textContent = formatOutlookRange(days);
+      
+      // Hide the separate week chip (week number is in the title now)
+      const chip = document.getElementById('weekChip');
+      if (chip) chip.style.display = 'none';
+
 
       /// ——— grid skeleton ———
       const times = [];
