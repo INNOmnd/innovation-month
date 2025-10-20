@@ -98,9 +98,12 @@
       position: sticky; top: 0; z-index: 20;
       background: #f1f5f9; box-shadow: 0 1px 0 rgba(0,0,0,.06);
 
-    /* Vertical separators for day columns */
-    #timetable thead th + th { border-left: 1px solid #e5e7eb; }
-    #timetable tbody td + td { border-left: 1px solid #e5e7eb; }
+    /* Make borders render predictably */
+    #timetable { border-collapse: separate; border-spacing: 0; }
+    
+    /* Vertical lines that always show (inside the cells) */
+    #timetable thead th + th { box-shadow: inset 1px 0 0 #e5e7eb; }
+    #timetable tbody td + td { box-shadow: inset 1px 0 0 #e5e7eb; }
 
     /* Outlook-style day headers */
     .dayhead { line-height: 1.1; text-align:left; }
