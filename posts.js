@@ -83,5 +83,25 @@ window.POSTS = [
       "De Post-it Note is meer dan een stukje papier met lijm. Het is een symbool van innovatie die begint met een fout en eindigt als wereldwijd icoon.",
       "Het verhaal van 3M laat zien dat de echte kunst van innoveren niet alleen in het bedenken van ideeën ligt, maar in het bouwen van een omgeving waar zelfs ‘mislukkingen’ kunnen uitgroeien tot revoluties."
     ]
+  }, 
+    {
+    id: "maatwerk-hulp",
+    tab: "Maatwerk",
+    title: "On the Job Hulp: Xtendis en Slimmer Brieven Maken",
+    company: "Casade",
+    summary: "Persoonlijke ondersteuning op de werkvloer om beter, sneller en slimmer te werken met Xtendis en bij het maken van brieven.",
+    banner: "picturesblog/Xtendis.png",
+    date: "2025-11-05",
+    content: [
+      { "type": "h2", "text": "Maatwerk/on the job hulp: 'beter en sneller archiveren en zoeken in Xtendis'" },
+      "Werk je met Xtendis? Af en toe of juist vaak? Maar merk je dat iets niet lekker loopt of denk je: dit kan vast handiger? Dan helpen we je graag!",
+      "Wij kijken één op één met je mee naar wat mogelijk is. Wat valt mij op in jouw manier van werken? En hoe kunnen we Xtendis beter laten aansluiten op wat jij nodig hebt? Geen lange uitleg, maar direct aan de slag. Praktisch, op de werkvloer en helemaal afgestemd op jouw situatie.",
+      "Samen maken we Xtendis nog makkelijker voor jou! In overleg zoeken we een datum die ons beiden uitkomt. Mail voor een afspraak Ester of Dick.",
+
+      { "type": "h2", "text": "Maatwerk/on the job hulp: 'slimmer en sneller brieven maken'" },
+      "Stuur je regelmatig brieven? Af en toe of juist vaak? Met én zonder Word-link. Maar merk je dat iets niet lekker loopt of denk je: dit kan vast handiger? Dan helpen wij je graag!",
+      "Wij kijken één op één met je mee naar wat mogelijk is. Wat valt mij op in jouw manier van werken? En kunnen we ‘slimmer brieven maken’ laten aansluiten op wat jij nodig hebt? Geen lange uitleg, maar direct aan de slag. Praktisch, op de werkvloer en helemaal afgestemd op jouw situatie.",
+      "Samen maken we brieven maken nog makkelijker voor jou! In overleg zoeken we een datum die ons beiden uitkomt. Mail voor een afspraak Ester of Dick."
+    ]
   }
 ];
