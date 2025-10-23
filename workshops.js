@@ -10,7 +10,6 @@
     { id:'ongemakkenjacht-2', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
 
     // Woensdag 05-11
-    { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-05`, start:'09:00', end:'11:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
     { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
   
     // Donderdag 06-11
@@ -33,7 +32,8 @@
   
     // Dinsdag 18-11
     { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/agile-scrum.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/agile-scrum.html' },
-  
+    { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
+    
     // Donderdag 20-11
     { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Omaia', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
     { id:'thuisapp', title:'Thuisapp Sessie 1', date:`${currentYear}-11-20`, start:'10:00', end:'12:00', speaker:'Woonzorg', banner:'pictures/thuisappwoonz.jpg', desc:'Thuisapp in het Werkhuis (10 personen).',bannerFit:'', status: "closed", descFile:'descriptions/thuisapp.html' },
