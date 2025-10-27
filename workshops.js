@@ -26,6 +26,7 @@
     { id:'dwam', title:'Drone With A Mission', date:`${currentYear}-11-13`, start:'11:00', end:'13:00', speaker:'Ruud Janssen', banner:'pictures/dwam.png', desc:'Inzet van drones voor inspecties, vastgoedbeheer en bouw – met demo’s en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/dwam.html' },
     { id:'wrk-ai-intermediate', title:'Werken met AI Gevorderd', date:`${currentYear}-11-13`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werken-met-ai-gevorderd.jpg', desc:'Werken met AI in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/wrk-ai-intermediate.html' },
     { id:'digital-twin', title:'Digital Twin', date:`${currentYear}-11-13`, start:'15:00', end:'17:00', speaker:'BIM - Dirk Jan & Wouter', banner:'pictures/digital-twin.svg', desc:'Digital Twin',bannerFit:'', status: "closed", descFile:'descriptions/digital-twin.html' },
+    { id:'tips1', title:'Outlook Tips & Tricks 1', date:`${currentYear}-11-13`, start:'10:00', end:'12:00', speaker:'Valesca & Debbie', banner:'pictures/tips.jpg', desc:'Office tips & tricks',bannerFit:'', status: "closed", descFile:'descriptions/tips.html' },
   
     // Maandag 17-11
     { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'13:00', end:'15:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'The Shortcut (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/shortcut.html' },
@@ -33,6 +34,7 @@
     // Dinsdag 18-11
     { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/agile-scrum.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/agile-scrum.html' },
     { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "closed", descFile:'descriptions/taal-tool.html' },
+    { id:'tips2', title:'Outlook Tips & Tricks 2', date:`${currentYear}-11-18`, start:'09:00', end:'11:00', speaker:'Valesca & Debbie', banner:'pictures/tips.jpg', desc:'Office tips & tricks',bannerFit:'', status: "closed", descFile:'descriptions/tips.html' },
     
     // Donderdag 20-11
     { id:'omaia', title:'OMAIA Sessie 1', date:`${currentYear}-11-20`, start:'09:00', end:'11:00', speaker:'Omaia', banner:'pictures/omaia.png', desc:'OMAIA in het Lagerhuis (15 personen).',bannerFit:'', status: "closed", descFile:'descriptions/omaia.html' },
@@ -77,12 +79,14 @@
     "dwam": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMENPRk5EMDFWRzJTVjc4MDI4UjMwSTlPOC4u&embed=true",
     "wrk-ai-intermediate": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUN1pPWDlESTRDN0hGMU1PMU1STkczQThaWC4u&embed=true",
     "digital-twin": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQlNGQzM1NFNPRllUQTlOTUM4SDRENVI3Si4u&embed=true",
+    "tips1": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURjJGRVZKUzVPWjZKQkVNWkhKM0tRNURVOS4u&embed=true",
   
     // 17-11
     "shortcut": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUM05UUFZBQVVRWlRBQUJWSzhQQUpaUjJSTi4u&embed=true",
   
     // 18-11
     "agile-scrum": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQ0kwQkpCOElLQVdYS1ZUT1hRQzNPWTZPQi4u&embed=true",
+    "tips2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUM0UzWk1FOTZVWTFMWU1NUzJNWE4yODA0RS4u&embed=true",
   
     // 20-11
     "omaia": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUQUpDVENTVzhSWERDSTQ4UlM0OTlRMFIxSi4u&embed=true",
