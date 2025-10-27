@@ -6,14 +6,14 @@
 
   const WORKSHOPS = [
     // Dinsdag 04-11
-    { id:'ongemakkenjacht-1', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
-    { id:'ongemakkenjacht-2', title:'Ongemakken Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-1', title:'Innovatie Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-2', title:'Innovatie Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
 
     // Woensdag 05-11
-    { id:'ongemakkenjacht-3', title:'Ongemakken Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-3', title:'Innovatie Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
   
     // Donderdag 06-11
-    { id:'ongemakkenjacht-4', title:'Ongemakken Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Amy & Wendy', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-4', title:'Innovatie Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Amy & Wendy', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "closed", descFile:'descriptions/ongemakkenjacht.html' },
     { id:'bewonersteams', title:'Bewonersparticipatie: activeren van bewoners met BewonersTeams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "closed", descFile:'descriptions/bewonersteams.html' },
   
     // Dinsdag 11-11
