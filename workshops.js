@@ -19,7 +19,7 @@
     // Dinsdag 11-11
     { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'', status: "", descFile:'descriptions/aftrap.html' },
     { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werken-met-ai-beginner.jpg', desc:'Introductie Werken met AI (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/wrk-ai-beginner.html' },
-    { id:'taal-tool2', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-11`, start:'15:00', end:'17:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
+    { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-11`, start:'15:00', end:'17:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
     
     // Donderdag 13-11
     { id:'goeie-buurtaal-ai', title:'Goeie Buur-taal met AI', date:`${currentYear}-11-13`, start:'09:00', end:'11:00', speaker:'Amy & Wendy', banner:'pictures/goeie-buurtaal-ai.png', desc:'Goeie Buur-taal met AI (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/goeie-buurtaal-ai.html' },
@@ -33,7 +33,7 @@
   
     // Dinsdag 18-11
     { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/agile-scrum.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/agile-scrum.html' },
-    { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
+    { id:'taal-tool2', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
     { id:'tips2', title:'Outlook Tips & Tricks 2', date:`${currentYear}-11-18`, start:'10:00', end:'11:00', speaker:'Valesca & Debbie', banner:'pictures/tips1.jpg', desc:'Office tips & tricks',bannerFit:'cover', status: "", descFile:'descriptions/tips.html' },
     
     // Donderdag 20-11
