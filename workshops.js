@@ -32,7 +32,7 @@
     { id:'shortcut', title:'The Shortcut', date:`${currentYear}-11-17`, start:'13:00', end:'15:00', speaker:'Sanne Cornelissen', banner:'pictures/sanne.jpg', desc:'The Shortcut (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/shortcut.html' },
   
     // Dinsdag 18-11
-    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Agile Scrum groep', banner:'pictures/agile-scrum.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/agile-scrum.html' },
+    { id:'agile-scrum', title:'Agile Scrum', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Agile Scrum Group', banner:'pictures/agile-scrum-group.png', desc:'Agile-Scrum (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/agile-scrum.html' },
     { id:'taal-tool2', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-18`, start:'13:00', end:'15:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
     { id:'tips2', title:'Outlook Tips & Tricks 2', date:`${currentYear}-11-18`, start:'10:00', end:'11:00', speaker:'Valesca & Debbie', banner:'pictures/tips1.jpg', desc:'Office tips & tricks',bannerFit:'cover', status: "", descFile:'descriptions/tips.html' },
     
