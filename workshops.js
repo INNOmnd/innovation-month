@@ -12,7 +12,7 @@
     { id:'ongemakkenjacht-3', title:'Innovatie Jacht', date:`${currentYear}-11-05`, start:'10:00', end:'12:00', speaker:'Rogier & Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "", descFile:'descriptions/ongemakkenjacht.html' },
   
     // Donderdag 06-11
-    { id:'ongemakkenjacht-4', title:'Innovatie Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "", descFile:'descriptions/ongemakkenjacht.html' },
+    { id:'ongemakkenjacht-4', title:'Innovatie Jacht', date:`${currentYear}-11-06`, start:'10:00', end:'12:00', speaker:'Tessa & Ries', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "", descFile:'descriptions/ongemakkenjacht.html' },
     { id:'bewonersteams', title:'Bewonersparticipatie: activeren van bewoners met BewonersTeams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "", descFile:'descriptions/bewonersteams.html' },
   
     // Dinsdag 11-11
