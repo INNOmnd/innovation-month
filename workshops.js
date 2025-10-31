@@ -6,7 +6,6 @@
 
   const WORKSHOPS = [
     // Dinsdag 04-11
-    { id:'ongemakkenjacht-1', title:'Innovatie Jacht', date:`${currentYear}-11-04`, start:'13:00', end:'15:00', speaker:'Tessa', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in het Werkhuis (10 personen).',bannerFit:'cover', status: "", descFile:'descriptions/ongemakkenjacht.html' },
     { id:'ongemakkenjacht-2', title:'Innovatie Jacht', date:`${currentYear}-11-04`, start:'14:00', end:'15:30', speaker:'Ries & Rogier', banner:'pictures/ongemakkenjacht.png', desc:'Ongemakkenjacht in Huis vd Toekomst (10 personen).',bannerFit:'cover', status: "", descFile:'descriptions/ongemakkenjacht.html' },
 
     // Woensdag 05-11
