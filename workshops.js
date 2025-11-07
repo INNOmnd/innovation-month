@@ -16,7 +16,7 @@
     { id:'bewonersteams', title:'Bewonersparticipatie: activeren van bewoners met BewonersTeams', date:`${currentYear}-11-06`, start:'13:00', end:'15:00', speaker:'Vincent & Reggie', banner:'pictures/bewonersteams.png', desc:'Workshop over bewonersparticipatie via BewonersTeams, met aanpak van SWA en praktijkvoorbeelden.',bannerFit:'cover', status: "", descFile:'descriptions/bewonersteams.html' },
   
     // Dinsdag 11-11
-    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:00', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'', status: "", descFile:'descriptions/aftrap.html' },
+    { id:'aftrap', title:'De Aftrap', date:`${currentYear}-11-11`, start:'09:30', end:'11:00', speaker:'Ergin', banner:'pictures/aftrap.png', desc:'We nemen jullie mee in het hele plaatje van innovatie (Boomgaard, Heel Casade).',bannerFit:'', status: "", descFile:'descriptions/aftrap.html' },
     { id:'wrk-ai-beginner', title:'Werken met AI beginner', date:`${currentYear}-11-11`, start:'13:00', end:'15:00', speaker:'Job', banner:'pictures/werken-met-ai-beginner.jpg', desc:'Introductie Werken met AI (Lagerhuis, 15 personen).',bannerFit:'cover', status: "", descFile:'descriptions/wrk-ai-beginner.html' },
     { id:'taal-tool', title:'Maak je persoonlijke AI assistent', date:`${currentYear}-11-11`, start:'15:00', end:'17:00', speaker:'Amy & Joan', banner:'pictures/taal-tool.png', desc:'Wil jij gepersonaliseerde antwoorden ontvangen van Copilot of ChatGPT? … (verkorte intro, volledige uitleg staat in het HTML-bestand).',bannerFit:'cover', status: "", descFile:'descriptions/taal-tool.html' },
     
