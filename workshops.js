@@ -50,11 +50,11 @@
     // Donderdag 27-11
     { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass - Bjorn', banner:'pictures/carglass.svg.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'cover', status: "", descFile:'descriptions/digitale-klantreis.html' },
     { id:'stem-henk', title:'De stem van HenK', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Tessa', banner:'pictures/stem-henk.jpg', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'', status: "", descFile:'descriptions/stem-henk.html' },
-    { id:'mis-1', title:'Mystery Game 1', date:`${currentYear}-11-27`, start:'09:00', end:'09:30', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
-    { id:'mis-2', title:'Mystery Game 2', date:`${currentYear}-11-27`, start:'09:30', end:'10:00', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
-    { id:'mis-3', title:'Mystery Game 3', date:`${currentYear}-11-27`, start:'10:00', end:'10:30', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
-    { id:'mis-4', title:'Mystery Game 4', date:`${currentYear}-11-27`, start:'10:30', end:'11:00', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
-    { id:'mis-5', title:'Mystery Guest', date:`${currentYear}-11-27`, start:'11:30', end:'12:30', speaker:'Mystery', banner:'pictures/guest.png', desc:'Mystery Guest',bannerFit:'', status: "", descFile:'descriptions/guest.html' },
+    { id:'mis-1', title:'Mystery Game 1', date:`${currentYear}-11-27`, start:'09:00', end:'09:30', speaker:'', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'cover', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-2', title:'Mystery Game 2', date:`${currentYear}-11-27`, start:'09:30', end:'10:00', speaker:'', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'cover', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-3', title:'Mystery Game 3', date:`${currentYear}-11-27`, start:'10:00', end:'10:30', speaker:'', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'cover', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-4', title:'Mystery Game 4', date:`${currentYear}-11-27`, start:'10:30', end:'11:00', speaker:'', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'cover', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-5', title:'Mystery Guest', date:`${currentYear}-11-27`, start:'11:30', end:'12:30', speaker:'Mystery', banner:'pictures/guest.png', desc:'Mystery Guest',bannerFit:'cover', status: "", descFile:'descriptions/guest.html' },
   ];
 
   // Map workshop IDs to Microsoft Forms embed URLs
