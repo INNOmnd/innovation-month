@@ -50,6 +50,12 @@
     // Donderdag 27-11
     { id:'digitale-klantreis', title:'Digitale klantreis Carglass', date:`${currentYear}-11-27`, start:'09:30', end:'11:30', speaker:'Carglass - Bjorn', banner:'pictures/carglass.svg.png', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'cover', status: "", descFile:'descriptions/digitale-klantreis.html' },
     { id:'stem-henk', title:'De stem van HenK', date:`${currentYear}-11-27`, start:'12:30', end:'14:00', speaker:'Tessa', banner:'pictures/stem-henk.jpg', desc:'Digitale klantreis Carglass in het Werkhuis (12 personen).',bannerFit:'', status: "", descFile:'descriptions/stem-henk.html' },
+    { id:'mis-1', title:'Mystery Game 1', date:`${currentYear}-11-27`, start:'09:00', end:'09:30', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-2', title:'Mystery Game 2', date:`${currentYear}-11-27`, start:'09:30', end:'10:00', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-3', title:'Mystery Game 3', date:`${currentYear}-11-27`, start:'10:00', end:'10:30', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-4', title:'Mystery Game 4', date:`${currentYear}-11-27`, start:'10:30', end:'11:00', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
+    { id:'mis-5', title:'Mystery Guest', date:`${currentYear}-11-27`, start:'11:30', end:'12:30', speaker:'Mystery', banner:'pictures/guest.png', desc:'Mystery Guest',bannerFit:'', status: "", descFile:'descriptions/guest.html' },
+  ];
   ];
 
   // Map workshop IDs to Microsoft Forms embed URLs
@@ -102,6 +108,11 @@
     // 27-11
     "digitale-klantreis": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOUtUUkNLV1BSQUZFV01aWFI3TENYVDlYVi4u&embed=true",
     "stem-henk": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMEkxS0RTRURaM05TNDRDR1A1UjNaRUtOOS4u&embed=true",
+    "mis-1": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUN0czMFBIUzBEQkMzU0lTTDFBUVpSMVRDWi4u&embed=true",
+    "mis-2": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUOUIzSDdEVTVISE5CMjdIWDRSR0hSNDJWTS4u&embed=true",
+    "mis-3": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURDMxVEtUOUo1UjNDQVhDR0NSRlhYTlAwSC4u&embed=true",
+    "mis-4": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNUMDk4TkhPTjlPSExTUEk4NldUTk9QV0U2OC4u&embed=true",
+    "mis-5": "https://forms.office.com/Pages/ResponsePage.aspx?id=0YvUK1a-i0OZ8wod-zrRqXmwJqIUyTxEgXwvF60HDQNURUhLQ1VKS05CTUQ0RFhQUzgzNUExSlpNWi4u&embed=true",
   };
 
   // Merge forms into workshops
