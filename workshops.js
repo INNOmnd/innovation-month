@@ -56,7 +56,6 @@
     { id:'mis-4', title:'Mystery Game 4', date:`${currentYear}-11-27`, start:'10:30', end:'11:00', speaker:'Mystery', banner:'pictures/mis.webp', desc:'Mystery Game',bannerFit:'', status: "", descFile:'descriptions/mis.html' },
     { id:'mis-5', title:'Mystery Guest', date:`${currentYear}-11-27`, start:'11:30', end:'12:30', speaker:'Mystery', banner:'pictures/guest.png', desc:'Mystery Guest',bannerFit:'', status: "", descFile:'descriptions/guest.html' },
   ];
-  ];
 
   // Map workshop IDs to Microsoft Forms embed URLs
   const formLinks = {
