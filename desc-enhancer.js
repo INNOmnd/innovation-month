@@ -1,4 +1,4 @@
-// desc-enhancer.js
+// desc-enhancer.js yes
 (function () {
   function mdToHtml(md) {
     if (!md) return '';
